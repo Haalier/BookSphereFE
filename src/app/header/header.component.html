@@ -1,0 +1,32 @@
+<header class="header">
+  <nav class="header__nav">
+  <div class="header__box-left">
+    <div class="header__logo">
+      <a routerLink="/"><h1>BookSphere</h1></a>
+    </div>
+  </div>
+  <div class="header__box-right">
+    <ul class="header__links">
+      <li class="header__links-item">
+        <a href="">Books</a>
+      </li>
+      <li class="header__links-item">
+        @if(isLoggedIn){
+          <a href="">Log out</a>
+        } @else {
+        <a href="">Log in</a>
+        }
+      </li>
+      <li class="header__links-item">
+        <a href="">Sign Up</a>
+      </li>
+    </ul>
+  </div>
+  </nav>
+  <div class="header__search-bar">
+    <input type="text" placeholder="Search...">
+    <div class="icon">
+      <span class="material-symbols-outlined">search</span>
+    </div>
+  </div>
+</header>
