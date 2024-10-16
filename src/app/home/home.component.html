@@ -1,2 +1,41 @@
-<p>home</p>
+<section class="home">
+  <nav>
+    <div class="home__search-bar">
+      <input type="text" placeholder="Search...">
+      <div class="icon__box">
+        <span class="icon material-symbols-outlined">search</span>
+      </div>
+      <button class="home__search-btn">Search</button>
+    </div>
+  </nav>
 
+<div class="products wrapper">
+
+  @for (book of books; track book._id){
+    <div class="product">
+      <div class="product__image">
+        <img src="" alt="Here should be a book">
+      </div>
+      <div class="product__info">
+        <h4 class="product__title">{{book.title}}</h4>
+        <p class="product__author">by <i>{{book.author}}</i></p>
+        <div class="product__rating-box">
+          <p class="product__category"><span class="icon material-symbols-outlined">
+menu_book
+</span> {{ book.category }}</p>
+          <p class="product__rating"><span class="icon material-symbols-outlined">
+thumb_up
+</span> {{book.ratingsAverage}}/5</p>
+        </div>
+        <a href="">More info</a>
+        <div class="product__add-to-cart">
+          <button class="decrease_btn">-</button>
+          <p class="item_count">0</p>
+          <button class="increase_btn">+</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+
+</section>

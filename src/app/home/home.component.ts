@@ -1,5 +1,7 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import { BookService } from '../services/book.service';
+import {Book} from '../models/book.model';
 
 
 @Component({
@@ -10,17 +12,23 @@ import {HttpClient} from '@angular/common/http';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
- books: any;
+bookService = inject(BookService);
+destroyRef = inject(DestroyRef);
+books: Book[] = [];
+results= '';
+page: number = 1;
+limit: number = 20;
 
- private httpClient = inject(HttpClient);
- private destroyRef = inject(DestroyRef);
+
+
 
 ngOnInit() {
-  const subscription = this.httpClient.get('http://localhost:8080/api/v1/books').subscribe({
-    next: (resData) => {
-      console.log(resData);
-    }
-  })
+const subscription = this.bookService.getBooks(this.page, this.limit).subscribe({
+  next: result => {
+    console.log(result.data.books);
+    this.books = result.data.books;
+  }
+})
 
   this.destroyRef.onDestroy(() => {
     subscription.unsubscribe();
