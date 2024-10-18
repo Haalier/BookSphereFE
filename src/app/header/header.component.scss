@@ -4,7 +4,7 @@
   padding: 2rem;
   height: 10vh;
   width: 100%;
-  font-size: 1.8rem;
+  font-size: 2rem;
   color: #4d4d4d;
   background-color: #cbcbcb;
 
@@ -24,6 +24,7 @@
   font-family: "Lobster", sans-serif;
   font-size: 3rem;
   text-shadow: 5px 7px 8px #9a9898;
+    cursor: pointer;
 
   }
 
@@ -35,6 +36,7 @@
   &__links-item{
     position: relative;
     margin: 0 2rem;
+    font-weight: 500;
   }
 
 }

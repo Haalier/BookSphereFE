@@ -1,17 +1,19 @@
 import { Routes } from '@angular/router';
 import {HomeComponent} from './home/home.component';
-import {AddBookComponent} from './add-book/add-book.component';
 
 export const routes: Routes = [
   {
     path: '',
-    title: 'Home Page',
-    component: HomeComponent
+    redirectTo: '/books?page=1',
+    pathMatch: 'full',
   },
   {
-    path: 'addBook',
-    title: 'Add new book',
-    component: AddBookComponent,
+    path: 'books',
+    component: HomeComponent,
   },
+  {
+    path: '**',
+    redirectTo: '/books?page=1',
+  }
 
 ];

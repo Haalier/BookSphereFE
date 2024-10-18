@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {RouterLink} from '@angular/router';
+import {Component, inject} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -12,4 +12,13 @@ import {RouterLink} from '@angular/router';
 })
 export class HeaderComponent {
 isLoggedIn = false;
+router = inject(Router);
+// TODO
+  onHomePage() {
+    this.router.navigate(['/books'], {
+      queryParams: {page: 1}
+    }).then(() => {
+      window.location.reload()
+    });
+  }
 }

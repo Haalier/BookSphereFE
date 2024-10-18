@@ -1,4 +1,7 @@
 <section class="home">
+  @if(isLoading){
+    <app-app-loader></app-app-loader>
+  }
   <nav>
     <div class="home__search-bar">
       <input type="text" placeholder="Search...">
@@ -8,34 +11,61 @@
       <button class="home__search-btn">Search</button>
     </div>
   </nav>
+<div class="home__results">
+  <p>Results: {{results}}</p>
+</div>
+
 
 <div class="products wrapper">
-
   @for (book of books; track book._id){
     <div class="product">
       <div class="product__image">
-        <img src="" alt="Here should be a book">
+        <img [src]="book.photoUrl" alt="Here should be an image of book">
       </div>
       <div class="product__info">
         <h4 class="product__title">{{book.title}}</h4>
         <p class="product__author">by <i>{{book.author}}</i></p>
-        <div class="product__rating-box">
-          <p class="product__category"><span class="icon material-symbols-outlined">
+        <div class="product__info-bottom">
+        <p class="product__category"><span class="icon material-symbols-outlined">
 menu_book
 </span> {{ book.category }}</p>
+          <div class="product__rating-price-box">
           <p class="product__rating"><span class="icon material-symbols-outlined">
 thumb_up
+
 </span> {{book.ratingsAverage}}/5</p>
-        </div>
-        <a href="">More info</a>
+          <p class="product__price">
+        <span class="icon material-symbols-outlined">
+payments
+</span> {{book.price | currency:'USD':'symbol' }}</p>
+          </div>
+      </div>
+
         <div class="product__add-to-cart">
-          <button class="decrease_btn">-</button>
-          <p class="item_count">0</p>
-          <button class="increase_btn">+</button>
+          <a href="" class="add-btn">Add to cart</a>
+          <a href="" class="buy-btn">Buy now</a>
         </div>
       </div>
     </div>
   }
 </div>
-
 </section>
+@if (!isLoading){
+<section class="pagination">
+  @if (page !== 1 && previousPage !== 1){
+  <a (click)="onFirstPage()">1</a>
+    <span>...</span>
+  }
+  @if(hasPreviousPage){
+    <a (click)="onPreviousPage()">{{previousPage}}</a>
+  }
+  <a class="active">{{page}}</a>
+  @if (hasNextPage){
+  <a (click)="onNextPage()">{{nextPage}}</a>
+  }
+  @if (lastPage !== page && nextPage !== lastPage){
+    <span>...</span>
+  <a (click)="onLastPage()">{{lastPage}}</a>
+  }
+</section>
+}
