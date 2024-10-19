@@ -1,9 +1,9 @@
-import {Component, DestroyRef, inject, OnInit} from '@angular/core';
-import { ApiService } from '../services/api.service';
+import {Component, inject, OnInit} from '@angular/core';
 import {Book} from '../models/book.model';
 import {CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
+import {BookService} from '../services/book.service';
 
 
 @Component({
@@ -18,22 +18,21 @@ import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-apiService = inject(ApiService);
-destroyRef = inject(DestroyRef);
+bookService = inject(BookService);
 activatedRoute = inject(ActivatedRoute);
 router = inject(Router);
 isLoading = false;
 
 
 books: Book[] = [];
-results: number = 0;
+results!: number;
 page: number = 1;
-limit: number = 20;
-hasNextPage: boolean | undefined;
-hasPreviousPage: boolean | undefined;
-nextPage: number = 0;
-previousPage: number = 0;
-lastPage: number = 0;
+limit: number = this.bookService.limit;
+hasNextPage!: boolean;
+hasPreviousPage!: boolean;
+nextPage!: number;
+previousPage!: number;
+lastPage!: number;
 
 
 ngOnInit() {
@@ -42,13 +41,20 @@ ngOnInit() {
     if(!pageParam){
       this.onFirstPage();
     }
-    console.log(pageParam);
     this.page = +pageParam;
   });
-  this.apiService.loading$.subscribe(loading => {
+  this.fetchBooks()
+  this.bookService.loading$.subscribe(loading => {
     this.isLoading = loading;
   })
-  this.fetchBooks()
+  this.bookService.bookResults$.subscribe(results => {
+    this.results = results;
+    this.paginate();
+  })
+  this.bookService.bookList$.subscribe(books => {
+    this.books = books;
+  })
+
 
 }
 
@@ -60,29 +66,25 @@ scrollToTop() {
 }
 
 fetchBooks() {
-const subscription = this.apiService.getBooks(this.page, this.limit).subscribe({
-  next: result => {
-    this.results = result.results;
-    this.books = result.data.books;
-    this.hasNextPage = this.limit * this.page < this.results;
-    this.hasPreviousPage = this.page > 1;
-    this.nextPage = this.page + 1;
-    this.previousPage = this.page - 1;
-    this.lastPage= Math.ceil(this.results / this.limit);
-  }
-})
+    this.bookService.getBooks(this.page);
 
-  this.destroyRef.onDestroy(() => {
-    subscription.unsubscribe();
-
-  })
 }
+
+paginate(){
+  this.hasNextPage = this.limit * this.page < this.results;
+  this.hasPreviousPage = this.page > 1;
+  this.nextPage = this.page + 1;
+  this.previousPage = this.page - 1;
+  this.lastPage= Math.ceil(this.results / this.limit);
+}
+
 
 navigateTo(page: number){
   this.router.navigate(['/books'], {
     relativeTo: this.activatedRoute,
     queryParams: {page: page},
     queryParamsHandling: 'merge'});
+  this.paginate()
 }
 
   onFirstPage() {
@@ -90,6 +92,7 @@ navigateTo(page: number){
     this.navigateTo(this.page);
     this.fetchBooks();
     this.scrollToTop();
+
   }
   onPreviousPage() {
     if(this.hasPreviousPage) {
@@ -97,6 +100,7 @@ navigateTo(page: number){
       this.navigateTo(this.page);
       this.fetchBooks();
       this.scrollToTop()
+
     }
   }
   onNextPage() {

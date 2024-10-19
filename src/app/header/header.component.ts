@@ -1,5 +1,7 @@
 import {Component, inject} from '@angular/core';
-import {Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {BookService} from '../services/book.service';
+
 
 @Component({
   selector: 'app-header',
@@ -13,12 +15,14 @@ import {Router, RouterLink} from '@angular/router';
 export class HeaderComponent {
 isLoggedIn = false;
 router = inject(Router);
-// TODO
+bookService = inject(BookService);
+
+
   onHomePage() {
+      this.bookService.getBooks(1);
     this.router.navigate(['/books'], {
       queryParams: {page: 1}
-    }).then(() => {
-      window.location.reload()
-    });
+    })
+
   }
 }
