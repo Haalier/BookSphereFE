@@ -3,11 +3,18 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, finalize, Observable} from 'rxjs';
 import {Book} from '../models/book.model';
 
-export interface BookResponse {
+export interface BooksResponse {
   status: string;
   results: number;
   data: {
-    books: Book[];  // Assuming you already have a Book interface
+    books: Book[];
+  };
+}
+
+export interface BookResponse {
+  status: string;
+  data: {
+    books: Book;
   };
 }
 
@@ -30,7 +37,7 @@ export class BookService {
 
   getBooks(page:number): void {
     this.loadingSubject.next(true);
-    this.http.get<BookResponse>(`${this.apiUrl}?page=${page}&limit=${this.limit}`).pipe(
+    this.http.get<BooksResponse>(`${this.apiUrl}?page=${page}&limit=${this.limit}`).pipe(
       finalize(() => this.loadingSubject.next(false))
     ).subscribe({
       next: (res) => {
@@ -40,5 +47,9 @@ export class BookService {
     });
   }
 
+  getBook(bookId:number): Observable<BookResponse>{
+    this.loadingSubject.next(true);
+    return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.loadingSubject.next(false)));
+  }
 
 }

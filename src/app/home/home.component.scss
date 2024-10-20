@@ -1,7 +1,10 @@
+@import "mixins";
+
 .home{
   padding: 1rem 3rem;
   width: 100%;
   font-size: 1.8rem;
+
 &__search-bar{
   position: relative;
   display: flex;
@@ -17,10 +20,22 @@
     border-radius: 6px;
     transition: all .2s;
 
+    @include respons(large){
+      width: 45%;
+    }
+
+    @include respons(stp){
+      width: 55%;
+    }
+
   }
   input:focus{
     width: 50%;
     max-width: 700px;
+
+    @include respons(stp){
+      width: 65%;
+    }
   }
   input::placeholder{
     color: rgba(0, 0, 0, 0.5);
@@ -47,6 +62,10 @@
     background-color: #4d4d4d;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+
+    @include respons(stp){
+    padding: .4rem .7rem;
+    }
   }
 
   &__results{
@@ -71,6 +90,15 @@
     height: 100%;
     border: 1px solid #dadada;
     border-radius: 5px;
+
+    @include respons(large){
+      max-width: 300px;
+    }
+
+    @include respons(stl){
+      max-width: 320px;
+    }
+
     .icon{
       font-size: 2rem;
     }
@@ -125,6 +153,34 @@
       margin-top: 1rem;
       justify-content: space-between;
       align-items: flex-end;
+
+      @include respons(xxlarge){
+        font-size: 1.6rem;
+      }
+
+      @include respons(xlarge){
+        font-size: 1.8rem;
+      }
+
+      @include respons(large){
+        font-size: 1.6rem;
+      }
+
+      @include respons(stl){
+        font-size: 1.8rem;
+      }
+
+      @include respons(stp){
+        font-size: 1.6rem;
+      }
+
+      @include respons(ml){
+        font-size: 2rem;
+      }
+
+      @include respons(mp){
+        font-size: 1.7rem;
+      }
 
       .add-btn, .buy-btn{
         padding: 5px 6px;

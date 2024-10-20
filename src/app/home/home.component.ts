@@ -67,7 +67,6 @@ scrollToTop() {
 
 fetchBooks() {
     this.bookService.getBooks(this.page);
-
 }
 
 paginate(){

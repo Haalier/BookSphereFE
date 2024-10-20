@@ -2,8 +2,7 @@
 // font styles
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
-
-
+@import "mixins";
 /* Box sizing rules */
 *,
 *::before,
@@ -77,6 +76,17 @@ a:not([class]) {
 .link:hover::after{
   transform: scaleX(1);
 }
+
+@include respons(tp){
+  .link::after{
+    display: none;
+  }
+  .link:hover{
+    color: white;
+    transform: translateY(5px);
+  }
+}
+
 
 /* Make images easier to work with */
 img,

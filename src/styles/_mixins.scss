@@ -1,0 +1,43 @@
+// Mixin to handle responsiveness
+
+$mp: 480px; // mobile portrait
+$ml: 595px; // mobile landscape
+$stp: 690px; // small tablet portrait
+$tp: 800px; // tablet portrait
+$stl: 1024px; // small tablet landscape
+$tl: 1224px; // tablet landscape
+$large: 1320px; // desktops
+$xlarge: 1550px;
+$xxlarge: 1650px;
+
+
+@mixin respons($breakpoint) {
+  @if $breakpoint == mp {
+    @media (max-width: $mp) { @content; }
+  }
+  @if $breakpoint == ml {
+    @media (max-width: $ml) { @content; }
+  }
+  @if $breakpoint == stp {
+    @media (max-width: $stp) { @content; }
+  }
+  @if $breakpoint == tp {
+    @media (max-width: $tp) { @content; }
+  }
+  @if $breakpoint == stl {
+    @media (max-width: $stl) { @content; }
+  }
+  @if $breakpoint == tl {
+    @media (max-width: $tl) { @content; }
+  }
+  @if $breakpoint == large {
+    @media (max-width: $large) { @content; }
+  }
+  @if $breakpoint == xlarge {
+    @media (max-width: $xlarge) { @content; }
+  }
+  @if $breakpoint == xxlarge {
+    @media (max-width: $xxlarge) { @content; }
+  }
+
+}

@@ -5,7 +5,14 @@
       <a (click)="onHomePage()"><h1>BookSphere</h1></a>
     </div>
   </div>
-  <div class="header__box-right">
+
+    <div class="header__hamburger" (click)="toggleMenu()" [ngClass]="{ 'is-active': isMenuOpen}">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  <div class="header__box-right" [ngClass]="{ 'is-active': isMenuOpen}">
     <ul class="header__links">
       <li class="header__links-item">
         <a class="link" routerLink="/addBook">Add Book</a>
