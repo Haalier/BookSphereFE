@@ -1,3 +1,51 @@
 <section class="book">
+  @if(book){
+<div class="book__item">
+    <div class="book__item-title">
+      <h3>{{book.title}}</h3>
+      <p class="book-author">by <i>{{ book.author }}</i></p>
+    </div>
+  <div class="book__item-box">
+    <div class="book__item-box--one">
+    <div class="book__item-img">
+      <img [src]="book.photoUrl" [alt]="'The book: '+ book.title">
+    </div>
+    </div>
+    <div class="book__item-box--two">
+    <div class="book__item-info">
 
+      <p class="book-category"><span class="icon material-symbols-outlined">
+category
+</span> {{ book.category }}</p>
+      <p class="book-ratings"><span class="icon material-symbols-outlined">
+thumb_up
+</span> {{book.ratingsAverage}} / 5</p>
+      <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
+      <p class="book-reviews">{{book.reviews?.length}} reviews</p>
+      <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>
+      <div class="book__item-add-to">
+        <button class="add-btn">Add to cart</button>
+        <button class="buy-btn">Buy now</button>
+      </div>
+    </div>
+
+    </div>
+  </div>
+
+  <div class="book__item-description desc" >
+      <p class="desc" [@panelState]="folded" [ngClass]="{'collapsed': isCollapsed}">{{book.description}}</p>
+      <button class="expand-btn"
+              (click)="onExpand()">{{isCollapsed ? 'Expand description' : 'Collapse description'}}
+        <span
+        class="icon material-symbols-outlined">
+
+          {{isCollapsed ? "arrow_drop_down" : "arrow_drop_up"}}
+</span></button>
+
+    </div>
+</div>
+  }
 </section>
+@if(book){
+<app-reviews [book]="book"></app-reviews>
+}

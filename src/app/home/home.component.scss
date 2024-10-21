@@ -13,27 +13,24 @@
   margin: 2rem 0;
   input{
     padding: 1rem 1.5rem;
-    width: 35%;
+    width: 65%;
     max-width: 550px;
     border: 1px solid gray;
     outline: none;
     border-radius: 6px;
     transition: all .2s;
 
-    @include respons(large){
-      width: 45%;
-    }
-
-    @include respons(stp){
+    @include respons(medium){
       width: 55%;
     }
 
+
   }
   input:focus{
-    width: 50%;
+    width: 75%;
     max-width: 700px;
 
-    @include respons(stp){
+    @include respons(medium){
       width: 65%;
     }
   }
@@ -57,14 +54,15 @@
 
   &__search-btn{
     transform: translateX(-10%);
-    padding: 1rem 1.5rem;
+    padding: .4rem .7rem;
+
     color: white;
     background-color: #4d4d4d;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 
-    @include respons(stp){
-    padding: .4rem .7rem;
+    @include respons(medium){
+      padding: 1rem 1.5rem;
     }
   }
 
@@ -86,17 +84,14 @@
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    max-width: 320px;
     width: 100%;
     height: 100%;
     border: 1px solid #dadada;
     border-radius: 5px;
 
-    @include respons(large){
+    @include respons(medium){
       max-width: 300px;
-    }
-
-    @include respons(stl){
-      max-width: 320px;
     }
 
     .icon{
@@ -153,54 +148,33 @@
       margin-top: 1rem;
       justify-content: space-between;
       align-items: flex-end;
+      font-size: 1.5rem;
 
-      @include respons(xxlarge){
+      @include respons(xsmall){
         font-size: 1.6rem;
       }
 
-      @include respons(xlarge){
+      @include respons(small){
         font-size: 1.8rem;
       }
 
+      @include respons(medium){
+        font-size: 1.6rem;
+      }
       @include respons(large){
-        font-size: 1.6rem;
-      }
-
-      @include respons(stl){
         font-size: 1.8rem;
       }
-
-      @include respons(stp){
+      @include respons(xlarge){
         font-size: 1.6rem;
       }
-
-      @include respons(ml){
-        font-size: 2rem;
+      @include respons(xxlarge){
+        font-size: 1.8rem;
       }
-
-      @include respons(mp){
-        font-size: 1.7rem;
+      @include respons(desk){
+        font-size: 1.6rem;
       }
-
-      .add-btn, .buy-btn{
-        padding: 5px 6px;
-        border-radius: 6px;
-        color: white;
-        cursor: pointer;
-        transition: background-color .2s ease;
-        text-decoration: none;
-      }
-      .add-btn{
-        background-color: #28a745;
-      }
-      .add-btn:hover{
-        background-color: #32805a;
-      }
-      .buy-btn{
-        background-color: #008080;
-      }
-      .buy-btn:hover{
-        background-color: #9b59b6;
+      @include respons(xdesk){
+        font-size: 1.8rem;
       }
     }
   }

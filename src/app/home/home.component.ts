@@ -3,7 +3,7 @@ import {Book} from '../models/book.model';
 import {CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
-import {BookService} from '../services/book.service';
+import {BooksService} from '../services/books.service';
 
 
 @Component({
@@ -18,7 +18,7 @@ import {BookService} from '../services/book.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-bookService = inject(BookService);
+booksService = inject(BooksService);
 activatedRoute = inject(ActivatedRoute);
 router = inject(Router);
 isLoading = false;
@@ -27,7 +27,7 @@ isLoading = false;
 books: Book[] = [];
 results!: number;
 page: number = 1;
-limit: number = this.bookService.limit;
+limit: number = this.booksService.limit;
 hasNextPage!: boolean;
 hasPreviousPage!: boolean;
 nextPage!: number;
@@ -44,14 +44,14 @@ ngOnInit() {
     this.page = +pageParam;
   });
   this.fetchBooks()
-  this.bookService.loading$.subscribe(loading => {
+  this.booksService.loading$.subscribe(loading => {
     this.isLoading = loading;
   })
-  this.bookService.bookResults$.subscribe(results => {
+  this.booksService.bookResults$.subscribe(results => {
     this.results = results;
     this.paginate();
   })
-  this.bookService.bookList$.subscribe(books => {
+  this.booksService.bookList$.subscribe(books => {
     this.books = books;
   })
 
@@ -61,12 +61,11 @@ ngOnInit() {
 scrollToTop() {
   window.scrollTo({
     top: 0,
-
   });
 }
 
 fetchBooks() {
-    this.bookService.getBooks(this.page);
+    this.booksService.getBooks(this.page);
 }
 
 paginate(){
@@ -116,5 +115,10 @@ navigateTo(page: number){
     this.navigateTo(this.page);
     this.fetchBooks();
     this.scrollToTop();
+  }
+
+  onBook(id: string, slug: string) {
+  this.router.navigate(['/books', id, slug], {relativeTo: this.activatedRoute});
+  this.scrollToTop();
   }
 }

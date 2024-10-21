@@ -18,7 +18,7 @@
 
 <div class="products wrapper">
   @for (book of books; track book._id){
-    <div class="product">
+    <div class="product" (click)="onBook(book._id, book.slug)">
       <div class="product__image">
         <img [src]="book.photoUrl" alt="Here should be an image of book">
       </div>

@@ -1,6 +1,6 @@
 import {Component, inject} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
-import {BookService} from '../services/book.service';
+import {BooksService} from '../services/books.service';
 import {NgClass} from '@angular/common';
 
 
@@ -18,11 +18,11 @@ export class HeaderComponent {
 isLoggedIn = false;
 isMenuOpen = false;
 router = inject(Router);
-bookService = inject(BookService);
+booksService = inject(BooksService);
 
 
   onHomePage() {
-      this.bookService.getBooks(1);
+      this.booksService.getBooks(1);
     this.router.navigate(['/books'], {
       queryParams: {page: 1}
     })

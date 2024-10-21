@@ -30,23 +30,23 @@
   justify-content: center;
   height: 100%;
   font-family: "Lobster", sans-serif;
-  font-size: 3rem;
+  font-size: 2.5rem;
   text-shadow: 5px 7px 8px #9a9898;
     cursor: pointer;
 
-    @include respons(mp){
-      font-size: 2.5rem;
+    @include respons(medium){
+      font-size: 3rem;
     }
   }
 
   &__hamburger{
-    display: none;
+    display: flex;
     flex-direction: column;
+    padding: 5px 5px;
     cursor: pointer;
 
-    @include respons(tp){
-      display: flex;
-      padding: 5px 5px;
+    @include respons(xlarge){
+      display: none;
     }
 
     span{
@@ -57,29 +57,24 @@
       transition: .4s;
     }
     &.is-active span:nth-child(1){
-      @include respons(tp){
         transform: rotate(-45deg) translate(-25%,9px);
-      }
     }
     &.is-active span:nth-child(2){
-      @include respons(tp){
         opacity: 0;
-      }
     }
     &.is-active span:nth-child(3){
-      @include respons(tp){
         transform: rotate(45deg) translate(-25%, -9px);
-      }
     }
   }
 
   &__box-right{
-    @include respons(tp){
       display: none;
+
+    @include respons(xlarge){
+      display: flex;
     }
   }
   &__box-right.is-active{
-    @include respons(tp){
       display: block;
       position: absolute;
       top: 4em;
@@ -87,17 +82,24 @@
       right: 0;
       background-color: #9a9898;
       z-index: 1000;
+
+    @include respons(xlarge){
+      display: none;
     }
 
     ul{
-      @include respons(tp){
         flex-direction: column;
+
+      @include respons(xlarge){
+        flex-direction: row;
       }
 
       .header__links-item{
-        @include respons(tp){
           text-align: center;
           margin: 10px 0;
+
+        @include respons(xlarge){
+          margin: 0;
         }
       }
     }

@@ -1,43 +1,39 @@
 // Mixin to handle responsiveness
 
-$mp: 480px; // mobile portrait
-$ml: 595px; // mobile landscape
-$stp: 690px; // small tablet portrait
-$tp: 800px; // tablet portrait
-$stl: 1024px; // small tablet landscape
-$tl: 1224px; // tablet landscape
-$large: 1320px; // desktops
-$xlarge: 1550px;
-$xxlarge: 1650px;
+$xsmall: 320px;
+$small: 480px;
+$medium: 650px;
+$large: 768px;
+$xlarge: 950px;
+$xxlarge: 1320px;
+$desk: 1550px;
+$xdesk: 1650px;
 
 
 @mixin respons($breakpoint) {
-  @if $breakpoint == mp {
-    @media (max-width: $mp) { @content; }
+  @if $breakpoint == xsmall {
+    @media (min-width: $xsmall) { @content; }
   }
-  @if $breakpoint == ml {
-    @media (max-width: $ml) { @content; }
+  @if $breakpoint == small {
+    @media (min-width: $small) { @content; }
   }
-  @if $breakpoint == stp {
-    @media (max-width: $stp) { @content; }
-  }
-  @if $breakpoint == tp {
-    @media (max-width: $tp) { @content; }
-  }
-  @if $breakpoint == stl {
-    @media (max-width: $stl) { @content; }
-  }
-  @if $breakpoint == tl {
-    @media (max-width: $tl) { @content; }
+  @if $breakpoint == medium {
+    @media (min-width: $medium) { @content; }
   }
   @if $breakpoint == large {
-    @media (max-width: $large) { @content; }
+    @media (min-width: $large) { @content; }
   }
   @if $breakpoint == xlarge {
-    @media (max-width: $xlarge) { @content; }
+    @media (min-width: $xlarge) { @content; }
   }
   @if $breakpoint == xxlarge {
-    @media (max-width: $xxlarge) { @content; }
+    @media (min-width: $xxlarge) { @content; }
+  }
+  @if $breakpoint == desk {
+    @media (min-width: $desk) { @content; }
+  }
+  @if $breakpoint == xdesk {
+    @media (min-width: $xdesk) { @content; }
   }
 
 }

@@ -14,14 +14,14 @@ export interface BooksResponse {
 export interface BookResponse {
   status: string;
   data: {
-    books: Book;
+    book: Book;
   };
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class BookService {
+export class BooksService {
   private apiUrl = 'http://localhost:8080/api/v1/books';
   private http = inject(HttpClient);
   public limit = 20;
@@ -47,7 +47,7 @@ export class BookService {
     });
   }
 
-  getBook(bookId:number): Observable<BookResponse>{
+  getBook(bookId:string, slug: string): Observable<BookResponse>{
     this.loadingSubject.next(true);
     return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.loadingSubject.next(false)));
   }

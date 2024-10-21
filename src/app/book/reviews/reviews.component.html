@@ -1,0 +1,18 @@
+<section class="reviews">
+  @if(isLogged){
+    <form method="POST" class="reviews__new-review">
+     <textarea  placeholder="Your review"></textarea>
+      <button class="reviews__btn-add" type="submit">Add review</button>
+    </form>
+  }
+  <div class="reviews__box">
+  <div class="reviews__box-content">
+    <p>review text sdafdsfsdfds</p>
+  </div>
+    <p class="reviews__box-rating">4.5/5</p>
+    <div class="reviews__box-data">
+    <p class="reviews__box-author">Dawid Garncarz</p>
+    <p class="reviews__box-date">21.10.2024</p>
+    </div>
+  </div>
+</section>
