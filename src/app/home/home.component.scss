@@ -89,6 +89,7 @@
     height: 100%;
     border: 1px solid #dadada;
     border-radius: 5px;
+    cursor: pointer;
 
     @include respons(medium){
       max-width: 300px;

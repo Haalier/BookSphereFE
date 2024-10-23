@@ -117,7 +117,7 @@ navigateTo(page: number){
     this.scrollToTop();
   }
 
-  onBook(id: string, slug: string) {
+  onBook(id: string | undefined, slug: string | undefined) {
   this.router.navigate(['/books', id, slug], {relativeTo: this.activatedRoute});
   this.scrollToTop();
   }

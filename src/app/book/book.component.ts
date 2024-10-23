@@ -29,21 +29,20 @@ export class BookComponent implements OnInit {
 
 booksService = inject(BooksService);
 route = inject(ActivatedRoute);
-book!: Book;
+book: Book | undefined;
 isCollapsed: boolean = true;
 folded = 'closed'
 
 ngOnInit() {
 this.route.params.subscribe(params => {
   const {bookId, slug} = params;
-  this.booksService.getBook(bookId, slug).subscribe(book => {
-    this.book = book.data.book;
-    console.log(this.book)
+  this.booksService.getBook(bookId, slug).subscribe({
+    next: res => {
+      this.book = res.data.book;
+    }
   })
 })
 }
-
-
 
   onExpand() {
     this.isCollapsed = !this.isCollapsed;

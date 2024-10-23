@@ -5,7 +5,7 @@ export interface Review {
   review: string;
   rating: number;
   book: string;
-  user: string | User;
+  user: User;
   createdAt?: string;
   updatedAt?: string;
 }

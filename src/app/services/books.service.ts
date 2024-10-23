@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, finalize, Observable} from 'rxjs';
 import {Book} from '../models/book.model';
 
-export interface BooksResponse {
+interface BooksResponse {
   status: string;
   results: number;
   data: {
@@ -11,7 +11,7 @@ export interface BooksResponse {
   };
 }
 
-export interface BookResponse {
+interface BookResponse {
   status: string;
   data: {
     book: Book;

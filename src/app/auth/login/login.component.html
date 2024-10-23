@@ -1,0 +1,13 @@
+<section class="login">
+<div class="login__box">
+  <form method="POST" class="login__form" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+    <label for="email">Email: </label>
+    <input type="email" id="email" formControlName="email">
+
+    <label for="password">Password: </label>
+    <input type="password" id="password" formControlName="password">
+    <button>Login</button>
+  </form>
+  <a (click)="onPasswordForgot()">Forgot password?</a>
+</div>
+</section>
