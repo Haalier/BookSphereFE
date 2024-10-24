@@ -56,6 +56,12 @@
       }
     }
 
+    .error {
+      padding-top: 0.2em;
+      font-size: 1.4rem;
+      color: #e74c3c;
+
+    }
 
     button {
       padding: 0.8em;
@@ -67,7 +73,14 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
 
-      &:hover {
+      &:disabled {
+        background-color: #ccc;
+        color: #fff;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+
+      &:not(:disabled):hover {
         background-color: #9b59b6;
       }
     }

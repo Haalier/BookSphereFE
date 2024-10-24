@@ -14,22 +14,31 @@
 
   <div class="header__box-right" [ngClass]="{ 'is-active': isMenuOpen}">
     <ul class="header__links">
+      @if (role === 'admin'){
+        <li class="header__links-item">
+          <a routerLink="/addBook" class="link">Add Book</a>
+        </li>
+      }
       <li class="header__links-item">
-        <a class="link" routerLink="/addBook">Add Book</a>
-      </li>
-      <li class="header__links-item">
-        <a class="link" href="">Books</a>
+        <a (click)="onHomePage()" class="link" >Books</a>
       </li>
       <li class="header__links-item">
         @if(isLoggedIn){
-          <a class="link" href="">Log out</a>
+          <a (click)="onLogOut()" class="link">Log out</a>
         } @else {
-          <a class="link" routerLink="/login" href="">Log in</a>
+          <a  routerLink="/login" class="link">Log in</a>
         }
       </li>
-      <li class="header__links-item">
-        <a class="link" href="">Sign Up</a>
-      </li>
+
+        <li class="header__links-item">
+          @if(isLoggedIn){
+            <a class="link"><span class="icon material-symbols-outlined">person</span></a>
+          } @else {
+            <a class="link">Sign Up</a>
+          }
+        </li>
+
+
     </ul>
   </div>
   </nav>

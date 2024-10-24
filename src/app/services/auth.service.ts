@@ -9,6 +9,14 @@ interface loginData {
   password?: string | null | undefined;
 }
 
+interface loginResponse {
+  data: {
+    user: User
+  };
+  status: string;
+  token: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +24,10 @@ export class AuthService {
   private apiUrl = 'http://localhost:8080/api/v1/users';
   private http = inject(HttpClient);
   private router = inject(Router);
+
+  constructor() {
+  this.loadUserFromLocalStorage();
+  }
 
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
@@ -33,45 +45,48 @@ export class AuthService {
     localStorage.removeItem('token');
   }
 
+  private loadUserFromLocalStorage(): void {
+    const token = this.getToken();
+    console.log(token);
+    if (token) {
+      this.http.get<User>(`${this.apiUrl}/me`, {
+        headers: {Authorization: `Bearer ${token}`},
+      }).subscribe({
+        next: (user) => {
+          console.log('User after refresh: ', user);
+          this.currentUserSubject.next(user)
+        },
+        error: (err) => {
+          console.log('Error fetching user: ', err)
+          this.logout();
+        }
+      })
+    }
+  }
+
+
+
   logout(){
     this.removeToken();
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
-  isAuthenticated(){
-  const token = this.getToken();
-  return !!token;
-  }
-
   login(data: loginData){
     this.loadingSubject.next(true);
-    return this.http.post<{token: string; user: User}>(`${this.apiUrl}/login`, data).pipe(tap((response) => {
+    return this.http.post<loginResponse>(`${this.apiUrl}/login`, data).pipe(tap((response) => {
       this.setToken(response.token);
-      this.currentUserSubject.next(response.user);
+      this.currentUserSubject.next(response.data.user);
       this.router.navigate(['/']);
     }),
-      catchError(this.handleError),
       finalize(() => this.loadingSubject.next(false)));
   }
 
-  private handleError(error: HttpErrorResponse){
-    let errorMessage = 'An unknown error occurred!';
+  private resetToken: string | null = null;
 
-    if(error.error instanceof ErrorEvent){
-      errorMessage = `Error: ${error.error.message}`;
-    } else{
-      switch(error.status){
-        case 401:
-          errorMessage = 'Incorrect email or password.';
-          break;
-        case 500:
-          errorMessage = 'Internal server error.';
-          break;
-          default:
-            errorMessage = `Error code: ${error.status}, Message: ${error.message}`;
-      }
-    }
-    return throwError(() => new Error(errorMessage));
+  forgotPassword(email: string){
+    this.loadingSubject.next(true);
+    return this.http.post(`${this.apiUrl}/forgotPassword`, email).pipe(finalize(() => this.loadingSubject.next(false)));
   }
+
 }

@@ -1,7 +1,8 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {BooksService} from '../services/books.service';
 import {NgClass} from '@angular/common';
+import {AuthService} from '../services/auth.service';
 
 
 @Component({
@@ -14,12 +15,21 @@ import {NgClass} from '@angular/common';
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+authService = inject(AuthService);
+booksService = inject(BooksService);
+router = inject(Router);
+role: 'user' | 'admin' | undefined;
 isLoggedIn = false;
 isMenuOpen = false;
-router = inject(Router);
-booksService = inject(BooksService);
 
+
+ngOnInit() {
+ this.authService.user$.subscribe(user => {
+   this.isLoggedIn = !!user;
+   this.role = user?.role;
+ })
+}
 
   onHomePage() {
       this.booksService.getBooks(1);
@@ -31,5 +41,9 @@ booksService = inject(BooksService);
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;
+  }
+
+  onLogOut() {
+    this.authService.logout();
   }
 }
