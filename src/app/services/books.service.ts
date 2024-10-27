@@ -41,6 +41,7 @@ export class BooksService {
     ).subscribe({
       next: (res) => {
         this.bookListSubject.next(res.data.books);
+        console.log(res.data)
         this.bookResultsSubject.next(res.results);
       },
     });

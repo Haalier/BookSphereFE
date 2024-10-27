@@ -5,6 +5,7 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
 import {BooksService} from '../services/books.service';
 import {ApiService} from '../services/api.service';
+import {FormsModule} from '@angular/forms';
 
 
 @Component({
@@ -13,7 +14,8 @@ import {ApiService} from '../services/api.service';
   imports: [
     CurrencyPipe,
     RouterLink,
-    AppLoaderComponent
+    AppLoaderComponent,
+    FormsModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -24,9 +26,10 @@ booksService = inject(BooksService);
 activatedRoute = inject(ActivatedRoute);
 router = inject(Router);
 isLoading = false;
-
+isMenuOpen = false;
 
 books: Book[] = [];
+categories: string[] = [];
 results!: number;
 page: number = 1;
 limit: number = this.booksService.limit;
@@ -56,8 +59,6 @@ ngOnInit() {
   this.booksService.bookList$.subscribe(books => {
     this.books = books;
   })
-
-
 }
 
 scrollToTop() {
@@ -122,5 +123,17 @@ navigateTo(page: number){
   onBook(id: string | undefined, slug: string | undefined) {
   this.router.navigate(['/books', id, slug], {relativeTo: this.activatedRoute});
   this.scrollToTop();
+  }
+
+  applyFilters() {
+
+  }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen
+  }
+
+  closeOnBackgroundClick($event: MouseEvent) {
+  this.isMenuOpen = false;
   }
 }

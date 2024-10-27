@@ -6,12 +6,20 @@
   width: 100%;
   font-size: 1.8rem;
 
+  nav{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
 &__search-bar{
   position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin: 2rem 0;
+  margin: 2rem 0 1rem 0;
+  width: 100%;
   input{
     padding: 1rem 1.5rem;
     width: 65%;
@@ -64,6 +72,124 @@
 
     @include respons(medium){
       padding: 1rem 1.5rem;
+    }
+  }
+&__filter-btn{
+ padding: 0.4rem 1.5rem;
+  margin: 0 2rem;
+  width: 65%;
+  align-self: center;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: $white;
+  background-color: $sphere-grey;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  @include respons(medium){
+    display: none;
+  }
+  &.is-active{
+    border-bottom-right-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+  &:hover {
+    background-color: darken($sphere-main, 8%);
+  }
+
+  &:active {
+    background-color: darken($sphere-main, 10%);
+    transform: translateY(1px);
+  }
+}
+
+
+&__filter {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px;
+    padding: 0.5rem;
+    background-color: $sphere-bg;
+    justify-content: space-between;
+
+    @include respons(small) {
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    @include respons(medium) {
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+      max-width: 1000px;
+    }
+
+    &.is-active{
+    display: flex;
+    padding: 2rem 1rem;
+    max-width: 65%;
+    border-bottom-left-radius: 4px;
+    border-bottom-right-radius: 4px;
+    background-color: darken($sphere-bg, 10%);
+   }
+    select{
+      margin-bottom: 1rem;
+      width: 100%;
+      @include respons(medium){
+        max-width: 20%;
+        margin-bottom: 0;
+      }
+    }
+
+    label {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: #333;
+    }
+
+    select {
+      padding: 0.6rem 1rem;
+      font-size: 1.4rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      outline: none;
+      background-color: #fff;
+      transition: border-color 0.3s ease;
+      color: #333;
+      cursor: pointer;
+
+      &:hover {
+        border-color: #bbb;
+      }
+
+      &:focus {
+        border-color: $sphere-main;
+        box-shadow: 0 0 0 2px rgba($sphere-main, 0.2);
+      }
+    }
+
+    button {
+      padding: 0.6rem 1.5rem;
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: $white;
+      background-color: $sphere-main;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+
+      &:hover {
+        background-color: darken($sphere-main, 8%);
+      }
+
+      &:active {
+        background-color: darken($sphere-main, 10%);
+        transform: translateY(1px);
+      }
     }
   }
 
@@ -204,3 +330,6 @@
   background-color: $sphere-main;
   color: $white;
 }
+
+
+

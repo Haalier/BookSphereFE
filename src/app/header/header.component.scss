@@ -117,3 +117,15 @@
     font-weight: 500;
   }
 }
+
+
+
+a.active {
+  color: $sphere-main;
+  font-weight: bold;
+
+}
+a:hover {
+  color: $sphere-main;
+}
+

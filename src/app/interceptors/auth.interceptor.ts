@@ -13,8 +13,6 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<any>, next: 
   const router = inject(Router)
   const authToken = localStorage.getItem('token');
 
-  console.log('Interceptor token: ', authToken);
-
   let authReq = req;
   if(authToken) {
     authReq = req.clone({

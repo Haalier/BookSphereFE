@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ActivatedRoute, Router, RouterLink} from '@angular/router';
+import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from '@angular/router';
 import {BooksService} from '../services/books.service';
 import {NgClass} from '@angular/common';
 import {AuthService} from '../services/auth.service';
@@ -10,7 +10,8 @@ import {AuthService} from '../services/auth.service';
   standalone: true,
   imports: [
     RouterLink,
-    NgClass
+    NgClass,
+    RouterLinkActive
   ],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
@@ -18,6 +19,7 @@ import {AuthService} from '../services/auth.service';
 export class HeaderComponent implements OnInit {
 authService = inject(AuthService);
 booksService = inject(BooksService);
+activeRoute = inject(ActivatedRoute);
 router = inject(Router);
 role: 'user' | 'admin' | undefined;
 isLoggedIn = false;

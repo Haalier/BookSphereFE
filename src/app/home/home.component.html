@@ -1,4 +1,4 @@
-<section class="home">
+<section class="home" (click)="closeOnBackgroundClick($event)">
   <nav>
     <div class="home__search-bar">
       <input type="text" placeholder="Search...">
@@ -7,6 +7,39 @@
       </div>
       <button class="home__search-btn">Search</button>
     </div>
+
+    <button class="home__filter-btn" [class]="{'is-active': isMenuOpen}"
+            (click)="$event.stopPropagation(); toggleMenu()">Filter
+    </button>
+
+    <div class="home__filter" [class]="{'is-active': isMenuOpen}" (click)="$event.stopPropagation()">
+  <label>Category:</label>
+  <select>
+    <option value="">All Categories</option>
+    <option  value="">category</option>
+  </select>
+
+  <label>Price:</label>
+  <select>
+    <option value="">Any Price</option>
+    <option value="10">$10 or less</option>
+    <option value="20">$20 or less</option>
+    <option value="50">$50 or less</option>
+    <option value="100">$100 or less</option>
+  </select>
+
+  <label>Rating:</label>
+  <select>
+    <option value="">Any Rating</option>
+    <option value="1">1 star or higher</option>
+    <option value="2">2 stars or higher</option>
+    <option value="3">3 stars or higher</option>
+    <option value="4">4 stars or higher</option>
+    <option value="5">5 stars only</option>
+  </select>
+
+  <button (click)="applyFilters()">Apply Filters</button>
+</div>
   </nav>
 <div class="home__results">
   <p>Results: {{results}}</p>

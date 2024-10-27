@@ -1,4 +1,4 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {ChangeDetectorRef, Component, inject, OnInit, output} from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
@@ -13,12 +13,14 @@ import {ApiService} from './services/api.service';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit{
+  private cdr = inject(ChangeDetectorRef)
   apiService = inject(ApiService);
-  isLoading: any;
+  isLoading = false;
 
   ngOnInit() {
     this.apiService.loading$.subscribe(loading =>{
       this.isLoading = loading;
+      this.cdr.detectChanges();
     })
   }
 }

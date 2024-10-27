@@ -16,17 +16,17 @@
     <ul class="header__links">
       @if (role === 'admin'){
         <li class="header__links-item">
-          <a routerLink="/addBook" class="link">Add Book</a>
+          <a routerLink="/addBook" routerLinkActive="active" class="link">Add Book</a>
         </li>
       }
       <li class="header__links-item">
-        <a (click)="onHomePage()" class="link" >Books</a>
+        <a (click)="onHomePage()" routerLink="/books" routerLinkActive="active" class="link">Books</a>
       </li>
       <li class="header__links-item">
         @if(isLoggedIn){
-          <a (click)="onLogOut()" class="link">Log out</a>
+          <a (click)="onLogOut()" routerLink="/books" routerLinkActive="active" class="link">Log out</a>
         } @else {
-          <a  (click)="onLoginPage()" class="link">Log in</a>
+          <a  (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
         }
       </li>
 
