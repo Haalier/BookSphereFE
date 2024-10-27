@@ -1,4 +1,5 @@
 @import "mixins";
+@import "colors";
 
 .book {
   display: flex;
@@ -10,7 +11,7 @@
   &__item {
     display: flex;
     flex-direction: column;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
@@ -94,11 +95,11 @@
       }
 
       .book-category {
-        color: #007bff;
+        color: $sphere-cta;
       }
 
       .book-ratings {
-        color: #f39c12;
+        color: $sphere-gold;
       }
 
       .book-price {
@@ -160,11 +161,11 @@
         background: none;
         border: none;
         font-size: 1.6rem;
-        color: #007bff;
+        color: $sphere-cta;
         cursor: pointer;
 
         &:hover {
-          color: #0057b9;
+          color: $sphere-dark-blue;
         }
       }
     }

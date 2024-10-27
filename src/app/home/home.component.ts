@@ -4,6 +4,7 @@ import {CurrencyPipe} from '@angular/common';
 import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
 import {BooksService} from '../services/books.service';
+import {ApiService} from '../services/api.service';
 
 
 @Component({
@@ -18,6 +19,7 @@ import {BooksService} from '../services/books.service';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
+apiService = inject(ApiService);
 booksService = inject(BooksService);
 activatedRoute = inject(ActivatedRoute);
 router = inject(Router);
@@ -44,7 +46,7 @@ ngOnInit() {
     this.page = +pageParam;
   });
   this.fetchBooks()
-  this.booksService.loading$.subscribe(loading => {
+  this.apiService.loading$.subscribe(loading => {
     this.isLoading = loading;
   })
   this.booksService.bookResults$.subscribe(results => {

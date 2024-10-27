@@ -32,11 +32,11 @@ ngOnInit() {
 }
 
   onHomePage() {
-      this.booksService.getBooks(1);
+    this.booksService.getBooks(1);
     this.router.navigate(['/books'], {
       queryParams: {page: 1}
     })
-
+    this.isMenuOpen = false;
   }
 
   toggleMenu() {
@@ -45,5 +45,10 @@ ngOnInit() {
 
   onLogOut() {
     this.authService.logout();
+  }
+
+  onLoginPage() {
+    this.router.navigate(['/login']);
+    this.isMenuOpen = false;
   }
 }

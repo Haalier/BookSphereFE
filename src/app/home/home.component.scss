@@ -1,4 +1,5 @@
 @import "mixins";
+@import "colors";
 
 .home{
   padding: 1rem 3rem;
@@ -15,7 +16,7 @@
     padding: 1rem 1.5rem;
     width: 65%;
     max-width: 550px;
-    border: 1px solid gray;
+    border: 1px solid $sphere-grey;
     outline: none;
     border-radius: 6px;
     transition: all .2s;
@@ -46,7 +47,7 @@
       position: absolute;
       right: .5em;
       top: .5em;
-      color: #4d4d4d;
+      color: $sphere-grey;
       vertical-align: middle;
     }
   }
@@ -56,8 +57,8 @@
     transform: translateX(-10%);
     padding: .4rem .7rem;
 
-    color: white;
-    background-color: #4d4d4d;
+    color: $white;
+    background-color: $sphere-grey;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
 
@@ -192,14 +193,14 @@
   padding: 1rem;
   margin: 1rem 1rem;
   text-decoration: none;
-  color: #008080;
-  border: 1px solid #008080;
+  color: $sphere-main;
+  border: 1px solid $sphere-main;
   cursor: pointer;
 }
 
 .pagination a:hover,
 .pagination a:active,
 .pagination a.active{
-  background-color: #008080;
-  color: #fff;
+  background-color: $sphere-main;
+  color: $white;
 }

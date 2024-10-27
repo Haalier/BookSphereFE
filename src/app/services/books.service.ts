@@ -2,6 +2,7 @@ import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, finalize, Observable} from 'rxjs';
 import {Book} from '../models/book.model';
+import {ApiService} from './api.service';
 
 interface BooksResponse {
   status: string;
@@ -22,12 +23,10 @@ interface BookResponse {
   providedIn: 'root'
 })
 export class BooksService {
+  private apiService = inject(ApiService);
   private apiUrl = 'http://localhost:8080/api/v1/books';
   private http = inject(HttpClient);
   public limit = 20;
-
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable();
 
   private bookListSubject: BehaviorSubject<Book[]> = new BehaviorSubject<Book[]>([]);
   public bookList$ = this.bookListSubject.asObservable();
@@ -36,9 +35,9 @@ export class BooksService {
   public bookResults$ = this.bookResultsSubject.asObservable();
 
   getBooks(page:number): void {
-    this.loadingSubject.next(true);
+    this.apiService.loadingSubject.next(true);
     this.http.get<BooksResponse>(`${this.apiUrl}?page=${page}&limit=${this.limit}`).pipe(
-      finalize(() => this.loadingSubject.next(false))
+      finalize(() => this.apiService.loadingSubject.next(false))
     ).subscribe({
       next: (res) => {
         this.bookListSubject.next(res.data.books);
@@ -48,8 +47,8 @@ export class BooksService {
   }
 
   getBook(bookId:string, slug: string): Observable<BookResponse>{
-    this.loadingSubject.next(true);
-    return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.loadingSubject.next(false)));
+    this.apiService.loadingSubject.next(true);
+    return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
 }

@@ -3,6 +3,7 @@ import {HttpClient, HttpErrorResponse} from '@angular/common/http';
 import {BehaviorSubject, catchError, finalize, tap, throwError} from 'rxjs';
 import {User} from '../models/user.model';
 import {Router} from '@angular/router';
+import {ApiService} from './api.service';
 
 interface loginData {
   email?: string | null | undefined;
@@ -21,6 +22,7 @@ interface loginResponse {
   providedIn: 'root'
 })
 export class AuthService {
+  private apiService = inject(ApiService);
   private apiUrl = 'http://localhost:8080/api/v1/users';
   private http = inject(HttpClient);
   private router = inject(Router);
@@ -28,9 +30,6 @@ export class AuthService {
   constructor() {
   this.loadUserFromLocalStorage();
   }
-
-  private loadingSubject = new BehaviorSubject<boolean>(false);
-  public loading$ = this.loadingSubject.asObservable();
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public user$ = this.currentUserSubject.asObservable();
@@ -73,20 +72,20 @@ export class AuthService {
   }
 
   login(data: loginData){
-    this.loadingSubject.next(true);
+    this.apiService.loadingSubject.next(true);
     return this.http.post<loginResponse>(`${this.apiUrl}/login`, data).pipe(tap((response) => {
       this.setToken(response.token);
       this.currentUserSubject.next(response.data.user);
       this.router.navigate(['/']);
     }),
-      finalize(() => this.loadingSubject.next(false)));
+      finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
   private resetToken: string | null = null;
 
   forgotPassword(email: string){
-    this.loadingSubject.next(true);
-    return this.http.post(`${this.apiUrl}/forgotPassword`, email).pipe(finalize(() => this.loadingSubject.next(false)));
+    this.apiService.loadingSubject.next(true);
+    return this.http.post(`${this.apiUrl}/forgotPassword`, email).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
 }

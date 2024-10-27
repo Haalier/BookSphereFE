@@ -1,15 +1,44 @@
 @import "mixins";
+@import "colors";
 
 .login {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
   min-height: 83vh;
   background-color: #f4f4f4;
   padding: 1em;
 
+  h2{
+    position: relative;
+    margin-bottom: 1.5em;
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: color 0.3s ease;
+    &::after {
+      content: '';
+      width: 60px;
+      height: 4px;
+      background-color: $sphere-main;
+      display: block;
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    &:hover {
+      color: $sphere-main;
+
+    }
+  }
+
   &__box {
-    background-color: #fff;
+    background-color: $white;
     padding: 2em;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -46,13 +75,13 @@
       width: 100%;
 
       &.ng-touched.ng-invalid {
-        border-color: #e74c3c;
-        background-color: #fdecea;
+        border-color: $sphere-error;
+        background-color: $sphere-error-bg;
       }
 
       &.ng-touched.ng-valid{
-        border-color: #2ecc71;
-        background-color: #eafaf1;
+        border-color: $sphere-success;
+        background-color: $sphere-success-bg;
       }
     }
 
@@ -65,7 +94,7 @@
 
     button {
       padding: 0.8em;
-      background-color: #008080;
+      background-color: $sphere-main;
       color: #fff;
       font-size: 1.6rem;
       border: none;
@@ -81,7 +110,7 @@
       }
 
       &:not(:disabled):hover {
-        background-color: #9b59b6;
+        background-color: $sphere-purple;
       }
     }
   }
@@ -91,7 +120,7 @@
     margin-top: 1em;
     text-align: center;
     font-size: 1.4rem;
-    color: #007bff;
+    color: $sphere-cta;
     cursor: pointer;
 
     &:hover {

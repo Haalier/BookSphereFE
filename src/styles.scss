@@ -3,6 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 @import "mixins";
+@import "colors";
 /* Box sizing rules */
 *,
 *::before,
@@ -33,6 +34,7 @@ ol[role='list'] {
 
 html{
   font-size: 62.5%;
+  font-family: 'Montserrat', sans-serif;
 }
 
 /* Set core root defaults */
@@ -45,7 +47,6 @@ body {
   min-height: 100vh;
   text-rendering: optimizeSpeed;
   line-height: 1.5;
-  font-family: 'Montserrat', sans-serif;
   background-color: #f9f9f9;
 }
 
@@ -76,16 +77,16 @@ a:not([class]) {
   text-decoration: none;
 }
 .add-btn{
-  background-color: #28a745;
+  background-color: $sphere-second;
 }
 .add-btn:hover{
-  background-color: #32805a;
+  background-color: $sphere-main;
 }
 .buy-btn{
-  background-color: #008080;
+  background-color: $sphere-main;
 }
 .buy-btn:hover{
-  background-color: #9b59b6;
+  background-color: $sphere-purple;
 }
 
 @include respons(xlarge){

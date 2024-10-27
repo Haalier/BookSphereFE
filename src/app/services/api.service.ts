@@ -7,6 +7,6 @@ import {BehaviorSubject} from 'rxjs';
 })
 export class ApiService {
 
-  private loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
 }

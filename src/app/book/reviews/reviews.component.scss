@@ -1,10 +1,11 @@
 @import 'mixins';
+@import "colors";
 
 .reviews {
   margin: 20px auto;
   padding: 1.5rem;
   max-width: 100%;
-  background-color: #f9f9f9;
+  background-color: $sphere-bg;
   border-radius: 10px;
   box-shadow: 0 4px 8px rgba(0,0,0, .1);
 
@@ -42,7 +43,7 @@
   &__btn-add{
     align-self: flex-end;
     padding: 1rem 2rem;
-    background-color: #007bff;
+    background-color: $sphere-cta;
     color: #fff;
     border-radius: 5px;
     font-size: 1.4rem;
@@ -50,7 +51,7 @@
     transition: background-color 0.3s;
 
     &:hover{
-      background-color: #0056b3;
+      background-color: $sphere-dark-blue;
     }
 
     @include respons(large){
@@ -62,7 +63,7 @@
   &__box{
     padding: 1.5rem;
     margin-bottom: 2rem;
-    background-color: #fff;
+    background-color: $white;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0,0,0, .05);
 
@@ -83,12 +84,12 @@
 
     &-rating{
       font-weight: bold;
-      color: #f39c12;
+      color: $sphere-gold;
       font-size: 1.4rem;
     }
     &-author{
       font-weight: bold;
-      color: #007bff;
+      color: $sphere-cta;
       font-size: 1.3rem;
     }
     &-data{

@@ -26,7 +26,7 @@
         @if(isLoggedIn){
           <a (click)="onLogOut()" class="link">Log out</a>
         } @else {
-          <a  routerLink="/login" class="link">Log in</a>
+          <a  (click)="onLoginPage()" class="link">Log in</a>
         }
       </li>
 

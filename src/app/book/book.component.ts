@@ -26,7 +26,6 @@ import {ReviewsComponent} from './reviews/reviews.component';
   ],
 })
 export class BookComponent implements OnInit {
-
 booksService = inject(BooksService);
 route = inject(ActivatedRoute);
 book: Book | undefined;
