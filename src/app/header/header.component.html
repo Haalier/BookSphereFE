@@ -34,7 +34,7 @@
           @if(isLoggedIn){
             <a class="link"><span class="icon material-symbols-outlined">person</span></a>
           } @else {
-            <a class="link">Sign Up</a>
+            <a class="link" (click)="onSignupPage()" routerLink="/signup" routerLinkActive="active">Sign Up</a>
           }
         </li>
 

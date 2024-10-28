@@ -47,10 +47,16 @@ ngOnInit() {
 
   onLogOut() {
     this.authService.logout();
+    this.isMenuOpen = false;
   }
 
   onLoginPage() {
     this.router.navigate(['/login']);
+    this.isMenuOpen = false;
+  }
+
+  onSignupPage() {
+    this.router.navigate(['/signup']);
     this.isMenuOpen = false;
   }
 }

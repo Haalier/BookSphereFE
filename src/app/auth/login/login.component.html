@@ -1,5 +1,5 @@
 <section class="login">
-  <h2>Log In</h2>
+  <h2>{{ isLogin ? "Log In" : "Sign Up" }}</h2>
 <div class="login__box">
   <form method="POST" class="login__form" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
     <label for="email">Email: </label>
@@ -18,11 +18,25 @@
       @if(loginForm.controls['password'].errors?.['required']){
         <p class="error">Password is required!</p>
       } @else if (loginForm.controls['password'].errors?.['minlength']){
-        Password must be at least 7 characters long!
+        <p class="error">Password must be at least 7 characters long!</p>
       }
+    }
+    @if (!isLogin){
+    <label for="confirmPassword">Confirm password: </label>
+    <input type="password" id="confirmPassword" formControlName="confirmPassword">
+    @if (!loginForm.controls['confirmPassword'].untouched && loginForm.controls['confirmPassword'].invalid) {
+      @if(loginForm.controls['confirmPassword'].errors?.['required']){
+        <p class="error">Password confirmation is required!</p>
+
+      } @else if (loginForm.get('confirmPassword')?.errors?.['mustMatch']){
+        <p class="error">Passwords must match!</p>
+      }
+    }
     }
     <button [disabled]="loginForm.invalid">Login</button>
   </form>
+  @if (isLogin){
   <a (click)="onPasswordForgot()">Forgot password?</a>
+  }
 </div>
 </section>

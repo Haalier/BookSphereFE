@@ -47,8 +47,9 @@ ngOnInit() {
       this.onFirstPage();
     }
     this.page = +pageParam;
+    this.fetchBooks()
   });
-  this.fetchBooks()
+
   this.apiService.loading$.subscribe(loading => {
     this.isLoading = loading;
   })
