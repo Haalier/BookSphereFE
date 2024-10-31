@@ -2,7 +2,8 @@ import {Component, inject, OnInit} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {AuthService} from '../../services/auth.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {passwordMatchValidator} from '../../utils/validators/password-match-validator';
+import {ErrorService} from '../../services/error.service';
+
 
 @Component({
   selector: 'app-login',
@@ -13,17 +14,15 @@ import {passwordMatchValidator} from '../../utils/validators/password-match-vali
 })
 export class LoginComponent implements OnInit{
   authService = inject(AuthService);
-  route = inject(ActivatedRoute);
+  errorService = inject(ErrorService);
   router = inject(Router)
-  isLogin = true;
+  errMsg : string | null = null;
 
   ngOnInit() {
-    this.route.url.subscribe(url => {
-      this.isLogin = url[0].path === 'login';
-      this.updateFormControls();
+    this.errorService.error$.subscribe((err) => {
+      this.errMsg = err;
     })
   }
-
 
   loginForm = new FormGroup({
     email: new FormControl('', {
@@ -33,17 +32,6 @@ export class LoginComponent implements OnInit{
       validators: [Validators.required, Validators.minLength(7)]
 }),
   });
-
-  private updateFormControls(){
-    if(!this.isLogin){
-      (this.loginForm as FormGroup).addControl('confirmPassword', new FormControl('', Validators.required));
-      this.loginForm.setValidators(passwordMatchValidator());
-    } else{
-      (this.loginForm as FormGroup).removeControl('confirmPassword');
-      this.loginForm.setValidators(null);
-    }
-    this.loginForm.updateValueAndValidity();
-  }
 
   onPasswordForgot() {
 
@@ -56,7 +44,7 @@ export class LoginComponent implements OnInit{
         console.log(res);
       },
       error: err => {
-        console.log(err.message);
+        console.log(err);
       }
     })
   }

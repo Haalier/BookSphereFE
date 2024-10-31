@@ -8,11 +8,11 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const router = inject(Router);
   const errorService = inject(ErrorService);
 
-  return next(req).pipe(catchError((error: HttpErrorResponse) => {
+  return next(req).pipe(catchError((error) => {
     let errorMessage = '';
 
     if(error.error instanceof ErrorEvent){
-      errorMessage = error.message;
+      errorMessage = error.error.message;
     } else {
       switch(error.status){
         case 400:
@@ -35,9 +35,10 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
           errorMessage = `Error Code: ${error.status}, Message: ${error.message}`
       }
     }
-    const statusToShow = [400, 403, 404, 500];
+    const statusToShow = [400, 401, 403, 404, 500];
+
     if(statusToShow.includes(error.status)){
-    errorService.setError(errorMessage);
+    errorService.setError(error.error.message);
     }
 
     return throwError(() => new Error(errorMessage));

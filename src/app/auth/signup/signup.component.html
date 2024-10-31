@@ -1,0 +1,49 @@
+<section class="login">
+  <h2>Sign Up</h2>
+<div class="login__box">
+  <form method="POST" class="login__form" [formGroup]="signupForm" (ngSubmit)="signupSubmit()">
+    <label for="email">Email: </label>
+    <input type="email" id="email" formControlName="email">
+    @if (!signupForm.controls['email'].untouched && signupForm.controls['email'].invalid) {
+      @if(signupForm.controls['email'].errors?.['required']){
+        <p class="error">Email is required!</p>
+      } @else if (signupForm.controls['email'].errors?.['email']){
+        <p class="error">Please enter a valid email address!</p>
+      }
+    }
+
+     <label for="name">Name: </label>
+    <input type="text" id="name" formControlName="name">
+    @if (!signupForm.controls['name'].untouched && signupForm.controls['name'].invalid) {
+      @if(signupForm.controls['name'].errors?.['required']){
+        <p class="error">Name is required!</p>
+      }
+    }
+
+    <label for="password">Password: </label>
+    <input type="password" id="password" formControlName="password">
+    @if (!signupForm.controls['password'].untouched && signupForm.controls['password'].invalid) {
+      @if(signupForm.controls['password'].errors?.['required']){
+        <p class="error">Password is required!</p>
+      } @else if (signupForm.controls['password'].errors?.['minlength']){
+        <p class="error">Password must be at least 7 characters long!</p>
+      }
+    }
+
+    <label for="passwordConfirm">Confirm password: </label>
+    <input type="password" id="passwordConfirm" formControlName="passwordConfirm">
+    @if (!signupForm.controls['passwordConfirm'].untouched && signupForm.controls['passwordConfirm'].invalid) {
+      @if(signupForm.controls['passwordConfirm'].errors?.['required']){
+        <p class="error">Password confirmation is required!</p>
+      } @else if (signupForm.controls['passwordConfirm'].errors?.['mustMatch']){
+        <p class="error">Passwords have to be the same!</p>
+      }
+    }
+    @if (errMsg){
+      <p class="error">{{errMsg}}</p>
+    }
+    <button [disabled]="signupForm.invalid">Sign up</button>
+  </form>
+  <a routerLink="/login">Already have an account? Log in.</a>
+</div>
+</section>

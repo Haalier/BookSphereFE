@@ -24,7 +24,7 @@
       </li>
       <li class="header__links-item">
         @if(isLoggedIn){
-          <a (click)="onLogOut()" routerLink="/books" routerLinkActive="active" class="link">Log out</a>
+          <a (click)="onLogOut()" routerLink="/books" class="link">Log out</a>
         } @else {
           <a  (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
         }

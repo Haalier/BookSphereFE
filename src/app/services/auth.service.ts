@@ -10,6 +10,13 @@ interface loginData {
   password?: string | null | undefined;
 }
 
+interface signupData{
+  email?: string | null | undefined;
+  name?: string | null | undefined;
+  password?: string | null | undefined;
+  confirmPassword?: string | null | undefined;
+}
+
 interface loginResponse {
   data: {
     user: User
@@ -86,6 +93,14 @@ export class AuthService {
   forgotPassword(email: string){
     this.apiService.loadingSubject.next(true);
     return this.http.post(`${this.apiUrl}/forgotPassword`, email).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+  }
+
+  signup(data: signupData){
+    this.apiService.loadingSubject.next(true);
+    return this.http.post<loginResponse>(`${this.apiUrl}/signup`, data).pipe(tap((response) => {
+      this.currentUserSubject.next(response.data.user);
+      this.router.navigate(['/']);
+    }),finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
 }

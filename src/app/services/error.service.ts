@@ -12,6 +12,7 @@ export class ErrorService {
     this.errorSubject.next(message);
   }
 
+// TODO - clear error after changing pages
   clearError(){
     this.errorSubject.next(null);
   }
