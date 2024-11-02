@@ -1,10 +1,11 @@
-import {AfterViewInit, Component, ElementRef, inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, inject, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
 import {BooksService} from '../services/books.service';
 import {Book} from '../models/book.model';
 import {ActivatedRoute} from '@angular/router';
 import {CurrencyPipe, NgClass} from '@angular/common';
 import {animate, state, style, transition, trigger} from '@angular/animations';
 import {ReviewsComponent} from './reviews/reviews.component';
+import {AuthService} from '../services/auth.service';
 
 
 @Component({
@@ -27,24 +28,42 @@ import {ReviewsComponent} from './reviews/reviews.component';
 })
 export class BookComponent implements OnInit {
 booksService = inject(BooksService);
+authService = inject(AuthService);
 route = inject(ActivatedRoute);
 book: Book | undefined;
 isCollapsed: boolean = true;
 folded = 'closed'
+isLoggedIn = false;
+role: 'user' | 'admin' | undefined;
+private bookId!: string;
+private slug!: string;
 
 ngOnInit() {
 this.route.params.subscribe(params => {
-  const {bookId, slug} = params;
-  this.booksService.getBook(bookId, slug).subscribe({
-    next: res => {
-      this.book = res.data.book;
-    }
-  })
+  this.bookId = params['bookId'];
+  this.slug = params['slug'];
+  this.fetchBook(this.bookId, this.slug);
 })
+
+  this.authService.user$.subscribe(user => {
+    this.isLoggedIn = !!user;
+    this.role = user?.role;
+  })
 }
 
+  fetchBook(bookId: string, slug: string){
+  this.booksService.getBook(bookId, slug).subscribe({
+    next: res => {
+      this.book = res.data.book
+    }
+  })
+  }
   onExpand() {
     this.isCollapsed = !this.isCollapsed;
   this.folded = this.folded === 'open' ? 'closed' : 'open';
 }
+
+  onReviewAdded() {
+this.fetchBook(this.bookId, this.slug);
+  }
 }

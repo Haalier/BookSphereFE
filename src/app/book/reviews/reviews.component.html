@@ -1,10 +1,12 @@
 <section class="reviews">
-  @if(isLogged){
-    <form method="POST" class="reviews__new-review">
-     <textarea  placeholder="Your review"></textarea>
-      <button class="reviews__btn-add" type="submit">Add review</button>
+    <form method="POST" class="reviews__new-review" #reviewForm="ngForm" (ngSubmit)="onReviewCreate(reviewForm)">
+     <textarea  [placeholder]="isLoggedIn ? 'Your review' : 'You have to be logged in to add a review.'"
+                [disabled]="!isLoggedIn" name="review" required ngModel></textarea>
+      <div class="reviews__rating">
+      <app-star-rating [size]="2" [stars]="rating" (ratingChange)="rating = $event"></app-star-rating>
+      <button class="reviews__btn-add" type="submit" [disabled]="!isLoggedIn">Add review</button>
+        </div>
     </form>
-  }
   @for(review of reviews; track review._id){
     @if(book){
     <div class="reviews__box">

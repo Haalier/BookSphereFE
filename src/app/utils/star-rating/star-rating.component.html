@@ -1,0 +1,4 @@
+<div class="container">
+  <img *ngFor="let star of [1, 2, 3, 4, 5]; let i = index" [src]="getStarImage(star)" [ngStyle]="styles" alt="star"
+       (click)="setRating(star)">
+</div>

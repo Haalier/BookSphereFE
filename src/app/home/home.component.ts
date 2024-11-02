@@ -6,6 +6,7 @@ import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
 import {BooksService} from '../services/books.service';
 import {ApiService} from '../services/api.service';
 import {FormsModule} from '@angular/forms';
+import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
 
 
 @Component({
@@ -15,7 +16,8 @@ import {FormsModule} from '@angular/forms';
     CurrencyPipe,
     RouterLink,
     AppLoaderComponent,
-    FormsModule
+    FormsModule,
+    StarRatingComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'

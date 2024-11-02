@@ -10,7 +10,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(catchError((error) => {
     let errorMessage = '';
-
+    console.log(error)
     if(error.error instanceof ErrorEvent){
       errorMessage = error.error.message;
     } else {
@@ -32,7 +32,7 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
           errorMessage = 'Internal Server Error';
           break;
         default:
-          errorMessage = `Error Code: ${error.status}, Message: ${error.message}`
+          errorMessage = `Error Code: ${error.status}, Message: ${error.error.message}`
       }
     }
     const statusToShow = [400, 401, 403, 404, 500];

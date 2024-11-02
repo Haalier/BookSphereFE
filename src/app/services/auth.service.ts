@@ -98,6 +98,7 @@ export class AuthService {
   signup(data: signupData){
     this.apiService.loadingSubject.next(true);
     return this.http.post<loginResponse>(`${this.apiUrl}/signup`, data).pipe(tap((response) => {
+      this.setToken(response.token);
       this.currentUserSubject.next(response.data.user);
       this.router.navigate(['/']);
     }),finalize(() => this.apiService.loadingSubject.next(false)));

@@ -60,10 +60,7 @@
 menu_book
 </span> {{ book.category }}</p>
           <div class="product__rating-price-box">
-          <p class="product__rating"><span class="icon material-symbols-outlined">
-thumb_up
-
-</span> {{book.ratingsAverage}}/5</p>
+            <app-star-rating [stars]="book.ratingsAverage"></app-star-rating>
           <p class="product__price">
         <span class="icon material-symbols-outlined">
 payments

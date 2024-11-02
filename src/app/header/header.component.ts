@@ -19,7 +19,6 @@ import {AuthService} from '../services/auth.service';
 export class HeaderComponent implements OnInit {
 authService = inject(AuthService);
 booksService = inject(BooksService);
-activeRoute = inject(ActivatedRoute);
 router = inject(Router);
 role: 'user' | 'admin' | undefined;
 isLoggedIn = false;
