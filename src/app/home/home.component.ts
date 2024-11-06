@@ -5,8 +5,9 @@ import {ActivatedRoute, Router, RouterLink} from '@angular/router';
 import {AppLoaderComponent} from '../utils/app-loader/app-loader.component';
 import {BooksService} from '../services/books.service';
 import {ApiService} from '../services/api.service';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, NgForm} from '@angular/forms';
 import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
+import {SearchService} from '../services/search.service';
 
 
 @Component({
@@ -25,11 +26,12 @@ import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
 export class HomeComponent implements OnInit {
 apiService = inject(ApiService);
 booksService = inject(BooksService);
+searchService = inject(SearchService);
 activatedRoute = inject(ActivatedRoute);
 router = inject(Router);
+
 isLoading = false;
 isMenuOpen = false;
-
 books: Book[] = [];
 categories: string[] = [];
 results!: number;
@@ -138,5 +140,20 @@ navigateTo(page: number){
 
   closeOnBackgroundClick($event: MouseEvent) {
   this.isMenuOpen = false;
+  }
+
+  onSearch(searchForm: NgForm) {
+    const query = searchForm.value.searchQuery;
+    console.log(query);
+    this.searchService.searchFor(query).subscribe((books) => {
+      this.results = books.results
+
+      if(this.results === 0){
+        this.fetchBooks()
+      }
+      this.books = books.data
+      this.paginate();
+    });
+    searchForm.reset();
   }
 }

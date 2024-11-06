@@ -8,7 +8,6 @@
         </div>
     </form>
   @for(review of reviews; track review._id){
-    @if(book){
     <div class="reviews__box">
       <div class="reviews__box-content">
         <p>{{review.review}}</p>
@@ -19,6 +18,5 @@
         <p class="reviews__box-date">{{review.createdAt | date: 'short'}}</p>
       </div>
     </div>
-  }
   }
 </section>

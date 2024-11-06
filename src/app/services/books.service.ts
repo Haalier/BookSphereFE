@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, finalize, Observable} from 'rxjs';
+import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
 import {Book} from '../models/book.model';
 import {ApiService} from './api.service';
 
@@ -48,7 +48,8 @@ export class BooksService {
 
   getBook(bookId:string, slug: string): Observable<BookResponse>{
     this.apiService.loadingSubject.next(true);
-    return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+    return this.http.get<BookResponse>(`${this.apiUrl}/${bookId}/${slug}`).pipe(tap(() => this.apiService.loadingSubject.next(false)));
   }
 
 }
+

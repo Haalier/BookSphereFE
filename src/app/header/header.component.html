@@ -29,7 +29,11 @@
           <a  (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
         }
       </li>
-
+      @if(isLoggedIn){
+      <li class="header__links-item">
+             <a class="link"><span class="icon material-symbols-outlined">shopping_cart</span></a>
+        </li>
+      }
         <li class="header__links-item">
           @if(isLoggedIn){
             <a class="link"><span class="icon material-symbols-outlined">person</span></a>
@@ -37,8 +41,6 @@
             <a class="link" (click)="onSignupPage()" routerLink="/signup" routerLinkActive="active">Sign Up</a>
           }
         </li>
-
-
     </ul>
   </div>
   </nav>

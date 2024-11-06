@@ -4,7 +4,7 @@
 .book {
   display: flex;
   flex-direction: column;
-  padding: 1.5em 1.5em;
+  padding: 1.5em;
   width: 100%;
   font-size: 1.4rem;
 
@@ -16,7 +16,6 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     overflow: hidden;
     padding: 1.5em;
-
     width: 100%;
     max-width: 950px;
     margin: 0 auto 2em;

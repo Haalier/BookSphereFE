@@ -26,7 +26,8 @@
     max-width: 550px;
     border: 1px solid $sphere-grey;
     outline: none;
-    border-radius: 6px;
+    border-bottom-left-radius: 6px;
+    border-top-left-radius: 6px;
     transition: all .2s;
 
     @include respons(medium){
@@ -69,6 +70,15 @@
     background-color: $sphere-grey;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
+    transition: background-color .2s;
+
+    &:disabled{
+      background-color: gray;
+    }
+
+    &:not(:disabled):hover{
+      background-color: #1f1f1f;
+    }
 
     @include respons(medium){
       padding: 1rem 1.5rem;

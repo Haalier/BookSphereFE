@@ -1,12 +1,12 @@
 <section class="home" (click)="closeOnBackgroundClick($event)">
   <nav>
-    <div class="home__search-bar">
-      <input type="text" placeholder="Search...">
+    <form class="home__search-bar" #searchForm="ngForm" (ngSubmit)="onSearch(searchForm)">
+      <input type="text" placeholder="Search..." name="searchQuery" ngModel required [minlength]="2">
       <div class="icon__box">
         <span class="icon material-symbols-outlined">search</span>
       </div>
-      <button class="home__search-btn">Search</button>
-    </div>
+      <button class="home__search-btn" [disabled]="!searchForm.valid">Search</button>
+    </form>
 
     <button class="home__filter-btn" [class]="{'is-active': isMenuOpen}"
             (click)="$event.stopPropagation(); toggleMenu()">Filter

@@ -27,7 +27,6 @@ private apiService = inject(ApiService);
 private reviewsService = inject(ReviewsService);
 destroyRef = inject(DestroyRef);
 authService = inject(AuthService);
-activatedRoute = inject(ActivatedRoute);
 
 reviews: Review[] | undefined | null = [];
 isLoading = false;
@@ -71,7 +70,7 @@ rating = 0;
       rating: this.rating
     };
     this.reviewsService.createBookReview(this.book._id, review).subscribe({
-      next: result => {
+      next: () => {
         this.fetchReviews()
         this.reviewAdded.emit();
       }

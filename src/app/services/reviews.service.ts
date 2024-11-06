@@ -28,6 +28,7 @@ export class ReviewsService {
 private http = inject(HttpClient);
 
 getBookReviews(bookId: string | undefined): Observable<ReviewsResponse> {
+  console.log('Reviews Service:', bookId)
   this.apiService.loadingSubject.next(true);
   return this.http.get<ReviewsResponse>(`${this.apiUrl}/${bookId}/reviews`).pipe(
     finalize(() => this.apiService.loadingSubject.next(false))
@@ -36,7 +37,7 @@ getBookReviews(bookId: string | undefined): Observable<ReviewsResponse> {
 
 createBookReview(bookId: string | undefined, review: {review: string, rating: number}): Observable<ReviewResponse> {
   this.apiService.loadingSubject.next(true);
-  return this.http.post<ReviewResponse>(`${this.apiUrl}/${bookId}/reviews/`, review).pipe(
+  return this.http.post<ReviewResponse>(`${this.apiUrl}/${bookId}/reviews`, review).pipe(
     finalize(() => this.apiService.loadingSubject.next(false))
   );
 }

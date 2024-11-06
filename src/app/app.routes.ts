@@ -3,6 +3,7 @@ import {HomeComponent} from './home/home.component';
 import {BookComponent} from './book/book.component';
 import {LoginComponent} from './auth/login/login.component';
 import {SignupComponent} from './auth/signup/signup.component';
+import {CartComponent} from './cart/cart.component';
 
 export const routes: Routes = [
   {
@@ -25,6 +26,10 @@ export const routes: Routes = [
   {
     path: 'books/:bookId/:slug',
     component: BookComponent,
+  },
+  {
+    path: 'cart',
+    component: CartComponent,
   },
   {
     path: '**',
