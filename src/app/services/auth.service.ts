@@ -1,16 +1,16 @@
-import {inject, Injectable} from '@angular/core';
-import {HttpClient, HttpErrorResponse} from '@angular/common/http';
-import {BehaviorSubject, catchError, finalize, tap, throwError} from 'rxjs';
-import {User} from '../models/user.model';
-import {Router} from '@angular/router';
-import {ApiService} from './api.service';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, catchError, finalize, tap, throwError } from 'rxjs';
+import { User } from '../models/user.model';
+import { Router } from '@angular/router';
+import { ApiService } from './api.service';
 
 interface loginData {
   email?: string | null | undefined;
   password?: string | null | undefined;
 }
 
-interface signupData{
+interface signupData {
   email?: string | null | undefined;
   name?: string | null | undefined;
   password?: string | null | undefined;
@@ -19,14 +19,14 @@ interface signupData{
 
 interface loginResponse {
   data: {
-    user: User
+    user: User;
   };
   status: string;
   token: string;
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   private apiService = inject(ApiService);
@@ -35,7 +35,7 @@ export class AuthService {
   private router = inject(Router);
 
   constructor() {
-  this.loadUserFromLocalStorage();
+    this.loadUserFromLocalStorage();
   }
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
@@ -44,9 +44,11 @@ export class AuthService {
   private setToken(token: string): void {
     localStorage.setItem('token', token);
   }
-  public getToken(): string | null{
+
+  public getToken(): string | null {
     return localStorage.getItem('token');
   }
+
   private removeToken(): void {
     localStorage.removeItem('token');
   }
@@ -55,53 +57,59 @@ export class AuthService {
     const token = this.getToken();
     console.log(token);
     if (token) {
-      this.http.get<User>(`${this.apiUrl}/me`, {
-        headers: {Authorization: `Bearer ${token}`},
-      }).subscribe({
-        next: (user) => {
-          console.log('User after refresh: ', user);
-          this.currentUserSubject.next(user)
-        },
-        error: (err) => {
-          console.log('Error fetching user: ', err)
-          this.logout();
-        }
-      })
+      this.http
+        .get<User>(`${this.apiUrl}/me`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .subscribe({
+          next: (user) => {
+            console.log('User after refresh: ', user);
+            this.currentUserSubject.next(user);
+          },
+          error: (err) => {
+            console.log('Error fetching user: ', err);
+            this.logout();
+          },
+        });
     }
   }
 
-
-
-  logout(){
+  logout() {
     this.removeToken();
     this.currentUserSubject.next(null);
     this.router.navigate(['/login']);
   }
 
-  login(data: loginData){
+  login(data: loginData) {
     this.apiService.loadingSubject.next(true);
-    return this.http.post<loginResponse>(`${this.apiUrl}/login`, data).pipe(tap((response) => {
-      this.setToken(response.token);
-      this.currentUserSubject.next(response.data.user);
-      this.router.navigate(['/']);
-    }),
-      finalize(() => this.apiService.loadingSubject.next(false)));
+    return this.http.post<loginResponse>(`${this.apiUrl}/login`, data).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.currentUserSubject.next(response.data.user);
+        this.router.navigate(['/']);
+      }),
+      finalize(() => this.apiService.loadingSubject.next(false)),
+    );
   }
 
   private resetToken: string | null = null;
 
-  forgotPassword(email: string){
+  forgotPassword(email: string) {
     this.apiService.loadingSubject.next(true);
-    return this.http.post(`${this.apiUrl}/forgotPassword`, email).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+    return this.http
+      .post(`${this.apiUrl}/forgotPassword`, email)
+      .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
-  signup(data: signupData){
+  signup(data: signupData) {
     this.apiService.loadingSubject.next(true);
-    return this.http.post<loginResponse>(`${this.apiUrl}/signup`, data).pipe(tap((response) => {
-      this.setToken(response.token);
-      this.currentUserSubject.next(response.data.user);
-      this.router.navigate(['/']);
-    }),finalize(() => this.apiService.loadingSubject.next(false)));
+    return this.http.post<loginResponse>(`${this.apiUrl}/signup`, data).pipe(
+      tap((response) => {
+        this.setToken(response.token);
+        this.currentUserSubject.next(response.data.user);
+        this.router.navigate(['/']);
+      }),
+      finalize(() => this.apiService.loadingSubject.next(false)),
+    );
   }
-
 }
