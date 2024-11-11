@@ -16,7 +16,7 @@ interface CartPostData {
 
 interface CartPostRes {
   status: string;
-  results: number;
+  totalItems: number;
   data: {
     cart: {
       _id: string;
@@ -41,8 +41,10 @@ export class CartService {
   constructor() {}
 
   addToCart(data: CartPostData): Observable<CartPostRes> {
-    return this.http
-      .post<CartPostRes>(`${this.apiUrl}/add`, data)
-      .pipe(tap((res) => this.cartResultsSubject.next(res.results)));
+    this.apiService.loadingSubject.next(true);
+    return this.http.post<CartPostRes>(`${this.apiUrl}/add`, data).pipe(
+      tap((res) => this.cartResultsSubject.next(res.totalItems)),
+      finalize(() => this.apiService.loadingSubject.next(false)),
+    );
   }
 }

@@ -1,19 +1,18 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject} from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ErrorService {
   private errorSubject = new BehaviorSubject<string | null>(null);
   public error$ = this.errorSubject.asObservable();
 
-  setError(message: string){
+  setError(message: string) {
     this.errorSubject.next(message);
   }
 
-// TODO - clear error after changing pages
-  clearError(){
+  clearError() {
     this.errorSubject.next(null);
   }
 }

@@ -17,12 +17,21 @@ interface signupData {
   confirmPassword?: string | null | undefined;
 }
 
+interface forgotData {
+  email?: string | null | undefined;
+}
+
 interface loginResponse {
   data: {
     user: User;
   };
   status: string;
   token: string;
+}
+
+interface forgotResponse {
+  status: string;
+  message: string;
 }
 
 @Injectable({
@@ -92,12 +101,10 @@ export class AuthService {
     );
   }
 
-  private resetToken: string | null = null;
-
-  forgotPassword(email: string) {
+  forgotPassword(data: forgotData) {
     this.apiService.loadingSubject.next(true);
     return this.http
-      .post(`${this.apiUrl}/forgotPassword`, email)
+      .post<forgotResponse>(`${this.apiUrl}/forgotPassword`, data)
       .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 

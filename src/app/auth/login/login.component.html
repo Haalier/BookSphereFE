@@ -1,31 +1,31 @@
 <section class="login">
-  <h2>Log In</h2>
-<div class="login__box">
-  <form method="POST" class="login__form" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
-    <label for="email">Email: </label>
-    <input type="email" id="email" formControlName="email">
-    @if (!loginForm.controls['email'].untouched && loginForm.controls['email'].invalid) {
-      @if(loginForm.controls['email'].errors?.['required']){
-        <p class="error">Email is required!</p>
-      } @else if (loginForm.controls['email'].errors?.['email']){
-        <p class="error">Please enter a valid email address!</p>
-      }
-    }
+    <h2>Log In</h2>
+    <div class="login__box">
+        <form method="POST" class="login__form" [formGroup]="loginForm" (ngSubmit)="loginSubmit()">
+            <label for="email">Email: </label>
+            <input type="email" id="email" formControlName="email">
+            @if (!loginForm.controls['email'].untouched && loginForm.controls['email'].invalid) {
+                @if (loginForm.controls['email'].errors?.['required']) {
+                    <p class="error">Email is required!</p>
+                } @else if (loginForm.controls['email'].errors?.['email']) {
+                    <p class="error">Please enter a valid email address!</p>
+                }
+            }
 
-    <label for="password">Password: </label>
-    <input type="password" id="password" formControlName="password">
-    @if (!loginForm.controls['password'].untouched && loginForm.controls['password'].invalid) {
-      @if(loginForm.controls['password'].errors?.['required']){
-        <p class="error">Password is required!</p>
-      } @else if (loginForm.controls['password'].errors?.['minlength']){
-        <p class="error">Password must be at least 7 characters long!</p>
-      }
-    }
-     @if (errMsg){
-        <p class="error">{{errMsg}}</p>
-      }
-    <button [disabled]="loginForm.invalid">Login</button>
-  </form>
-  <a (click)="onPasswordForgot()">Forgot password?</a>
-</div>
+            <label for="password">Password: </label>
+            <input type="password" id="password" formControlName="password">
+            @if (!loginForm.controls['password'].untouched && loginForm.controls['password'].invalid) {
+                @if (loginForm.controls['password'].errors?.['required']) {
+                    <p class="error">Password is required!</p>
+                } @else if (loginForm.controls['password'].errors?.['minlength']) {
+                    <p class="error">Password must be at least 7 characters long!</p>
+                }
+            }
+            @if (errMsg) {
+                <p class="error">{{ errMsg }}</p>
+            }
+            <button [disabled]="loginForm.invalid">Login</button>
+        </form>
+        <a (click)="onPasswordForgot()">Forgot password?</a>
+    </div>
 </section>

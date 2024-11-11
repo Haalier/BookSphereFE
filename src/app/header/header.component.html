@@ -1,47 +1,51 @@
 <header class="header">
-  <nav class="header__nav wrapper">
-  <div class="header__box-left">
-    <div class="header__logo">
-      <a (click)="onHomePage()"><h1>BookSphere</h1></a>
-    </div>
-  </div>
+    <nav class="header__nav wrapper">
+        <div class="header__box-left">
+            <div class="header__logo">
+                <a (click)="onHomePage()"><h1>BookSphere</h1></a>
+            </div>
+        </div>
 
-    <div class="header__hamburger" (click)="toggleMenu()" [ngClass]="{ 'is-active': isMenuOpen}">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+        <div class="header__hamburger" (click)="toggleMenu()" [ngClass]="{ 'is-active': isMenuOpen}">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
 
-  <div class="header__box-right" [ngClass]="{ 'is-active': isMenuOpen}">
-    <ul class="header__links">
-      @if (role === 'admin'){
-        <li class="header__links-item">
-          <a routerLink="/addBook" routerLinkActive="active" class="link">Add Book</a>
-        </li>
-      }
-      <li class="header__links-item">
-        <a (click)="onHomePage()" routerLink="/books" routerLinkActive="active" class="link">Books</a>
-      </li>
-      <li class="header__links-item">
-        @if(isLoggedIn){
-          <a (click)="onLogOut()" routerLink="/books" class="link">Log out</a>
-        } @else {
-          <a  (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
-        }
-      </li>
-      @if(isLoggedIn){
-      <li class="header__links-item">
-             <a class="link"><span class="icon material-symbols-outlined">shopping_cart</span></a>
-        </li>
-      }
-        <li class="header__links-item">
-          @if(isLoggedIn){
-            <a class="link"><span class="icon material-symbols-outlined">person</span></a>
-          } @else {
-            <a class="link" (click)="onSignupPage()" routerLink="/signup" routerLinkActive="active">Sign Up</a>
-          }
-        </li>
-    </ul>
-  </div>
-  </nav>
+        <div class="header__box-right" [ngClass]="{ 'is-active': isMenuOpen}">
+            <ul class="header__links">
+                @if (role === 'admin') {
+                    <li class="header__links-item">
+                        <a routerLink="/addBook" routerLinkActive="active" class="link">Add Book</a>
+                    </li>
+                }
+                <li class="header__links-item">
+                    <a (click)="onHomePage()" routerLink="/books" routerLinkActive="active" class="link">Books</a>
+                </li>
+                <li class="header__links-item">
+                    @if (isLoggedIn) {
+                        <a (click)="onLogOut()" routerLink="/books" class="link">Log out</a>
+                    } @else {
+                        <a (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
+                    }
+                </li>
+                @if (isLoggedIn) {
+                    <li class="header__links-item">
+                        <a class="link"><span class="icon material-symbols-outlined">shopping_cart</span></a>
+                        @if (cartResults) {
+                            <span class="cart-badge">{{ cartResults }}</span>
+                        }
+                    </li>
+                }
+                <li class="header__links-item">
+                    @if (isLoggedIn) {
+                        <a class="link"><span class="icon material-symbols-outlined">person</span></a>
+                    } @else {
+                        <a class="link" (click)="onSignupPage()" routerLink="/signup" routerLinkActive="active">Sign
+                            Up</a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
 </header>

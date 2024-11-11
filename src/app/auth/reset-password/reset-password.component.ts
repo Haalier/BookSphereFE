@@ -10,17 +10,18 @@ import { Router } from '@angular/router';
 import { ErrorService } from '../../services/error.service';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-reset-password',
   standalone: true,
   imports: [ReactiveFormsModule],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss',
+  templateUrl: './reset-password.component.html',
+  styleUrl: './reset-password.component.scss',
 })
-export class LoginComponent implements OnInit {
+export class ResetPasswordComponent implements OnInit {
   authService = inject(AuthService);
   errorService = inject(ErrorService);
   router = inject(Router);
   errMsg: string | null = null;
+  successMsg: string | null = null;
 
   ngOnInit() {
     this.errorService.error$.subscribe((err) => {
@@ -28,28 +29,20 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  loginForm = new FormGroup({
-    email: new FormControl('', {
-      validators: [Validators.required, Validators.email],
-    }),
+  resetForm = new FormGroup({
     password: new FormControl('', {
+      validators: [Validators.required, Validators.minLength(7)],
+    }),
+    confirmPassword: new FormControl('', {
       validators: [Validators.required, Validators.minLength(7)],
     }),
   });
 
-  onPasswordForgot() {
-    this.router.navigate(['/forgot-password']);
+  onLogIn() {
+    this.router.navigate(['/login']);
   }
 
-  loginSubmit() {
-    console.log(this.loginForm);
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+  resetSubmit() {
+    console.log(this.resetForm);
   }
 }
