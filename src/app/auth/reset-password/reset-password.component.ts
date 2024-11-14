@@ -6,8 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { Router } from '@angular/router';
-import { ErrorService } from '../../services/error.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorData, ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,12 +20,19 @@ export class ResetPasswordComponent implements OnInit {
   authService = inject(AuthService);
   errorService = inject(ErrorService);
   router = inject(Router);
-  errMsg: string | null = null;
+  activatedRoute = inject(ActivatedRoute);
+  errMsg: ErrorData | null = null;
   successMsg: string | null = null;
+  resetToken = null;
 
   ngOnInit() {
     this.errorService.error$.subscribe((err) => {
       this.errMsg = err;
+    });
+    this.activatedRoute.params.subscribe((params) => {
+      console.log('PARAMS', params);
+      this.resetToken = params['resetToken'];
+      console.log(this.resetToken);
     });
   }
 
@@ -38,11 +45,11 @@ export class ResetPasswordComponent implements OnInit {
     }),
   });
 
-  onLogIn() {
-    this.router.navigate(['/login']);
-  }
-
   resetSubmit() {
-    console.log(this.resetForm);
+    const data = {
+      password: this.resetForm.value.password,
+      passwordConfirm: this.resetForm.value.confirmPassword,
+    };
+    this.authService.resetPassword(data, this.resetToken).subscribe();
   }
 }

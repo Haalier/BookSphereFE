@@ -22,7 +22,7 @@
                 }
             }
             @if (errMsg) {
-                <p class="error">{{ errMsg }}</p>
+                <p class="error">{{ errMsg.error.message }}</p>
             }
             <button [disabled]="loginForm.invalid">Login</button>
         </form>

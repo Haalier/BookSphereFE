@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { ErrorService } from '../../services/error.service';
+import { ErrorData, ErrorService } from '../../services/error.service';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit {
   authService = inject(AuthService);
   errorService = inject(ErrorService);
   router = inject(Router);
-  errMsg: string | null = null;
+  errMsg: ErrorData | null = null;
 
   ngOnInit() {
     this.errorService.error$.subscribe((err) => {
@@ -43,13 +43,6 @@ export class LoginComponent implements OnInit {
 
   loginSubmit() {
     console.log(this.loginForm);
-    this.authService.login(this.loginForm.value).subscribe({
-      next: (res) => {
-        console.log(res);
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    this.authService.login(this.loginForm.value).subscribe({});
   }
 }

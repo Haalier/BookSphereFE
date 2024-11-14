@@ -6,14 +6,14 @@ import {
   RouterLinkActive,
 } from '@angular/router';
 import { BooksService } from '../services/books.service';
-import { NgClass } from '@angular/common';
+import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [RouterLink, NgClass, RouterLinkActive],
+  imports: [RouterLink, NgClass, RouterLinkActive, AsyncPipe],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss',
 })
@@ -25,16 +25,11 @@ export class HeaderComponent implements OnInit {
   role: 'user' | 'admin' | undefined;
   isLoggedIn = false;
   isMenuOpen = false;
-  cartResults = 0;
 
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.isLoggedIn = !!user;
       this.role = user?.role;
-    });
-
-    this.cartService.cartResults$.subscribe((result) => {
-      this.cartResults = result;
     });
   }
 

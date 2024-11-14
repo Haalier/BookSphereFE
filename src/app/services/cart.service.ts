@@ -5,8 +5,11 @@ import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 
 interface CartBook {
   _id: string;
+  id: string;
   title: string;
+  author: string;
   price: number;
+  photoUrl: string;
 }
 
 interface CartPostData {
@@ -16,14 +19,11 @@ interface CartPostData {
 
 interface CartPostRes {
   status: string;
-  totalItems: number;
   data: {
-    cart: {
-      _id: string;
-      user: string;
-      items: [{ book: CartBook; quantity: number; _id: string }];
-      total: number;
-    };
+    user: string;
+    items: [{ book: CartBook; quantity: number; _id: string }];
+    total: number;
+    totalItems: number;
   };
 }
 
@@ -43,7 +43,15 @@ export class CartService {
   addToCart(data: CartPostData): Observable<CartPostRes> {
     this.apiService.loadingSubject.next(true);
     return this.http.post<CartPostRes>(`${this.apiUrl}/add`, data).pipe(
-      tap((res) => this.cartResultsSubject.next(res.totalItems)),
+      tap((res) => this.cartResultsSubject.next(res.data.totalItems)),
+      finalize(() => this.apiService.loadingSubject.next(false)),
+    );
+  }
+
+  getCart() {
+    this.apiService.loadingSubject.next(true);
+    return this.http.get<CartPostRes>(`${this.apiUrl}`).pipe(
+      tap((res) => this.cartResultsSubject.next(res.data.totalItems)),
       finalize(() => this.apiService.loadingSubject.next(false)),
     );
   }

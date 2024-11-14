@@ -9,38 +9,19 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
   const errorService = inject(ErrorService);
 
   return next(req).pipe(
-    catchError((error) => {
+    catchError((err) => {
       let errorMessage = '';
-      console.log(error);
-      if (error.error instanceof ErrorEvent) {
-        errorMessage = error.error.message;
-      } else {
-        switch (error.status) {
-          case 400:
-            errorMessage = 'Bad Request';
-            break;
-          case 401:
-            errorMessage = 'Unauthorized';
-            router.navigate(['/login']);
-            break;
-          case 403:
-            errorMessage = 'Forbidden';
-            break;
-          case 404:
-            errorMessage = 'Not Found';
-            break;
-          case 500:
-            errorMessage = 'Internal Server Error';
-            break;
-          default:
-            errorMessage = `Error Code: ${error.status}, Message: ${error.error.message}`;
-        }
+      const { status, error } = err;
+      const errorData = {
+        status: status,
+        error: error,
+      };
+      console.log(errorData);
+      if (err.error instanceof ErrorEvent) {
+        errorMessage = err.error.message;
       }
-      const statusToShow = [400, 401, 403, 404, 500];
 
-      if (statusToShow.includes(error.status)) {
-        errorService.setError(error.error.message);
-      }
+      errorService.setError(errorData);
 
       return throwError(() => new Error(errorMessage));
     }),

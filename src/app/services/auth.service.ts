@@ -1,6 +1,13 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { BehaviorSubject, catchError, finalize, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  finalize,
+  Observable,
+  tap,
+  throwError,
+} from 'rxjs';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
@@ -19,6 +26,11 @@ interface signupData {
 
 interface forgotData {
   email?: string | null | undefined;
+}
+
+interface resetData {
+  password: string | null | undefined;
+  passwordConfirm: string | null | undefined;
 }
 
 interface loginResponse {
@@ -64,7 +76,6 @@ export class AuthService {
 
   private loadUserFromLocalStorage(): void {
     const token = this.getToken();
-    console.log(token);
     if (token) {
       this.http
         .get<User>(`${this.apiUrl}/me`, {
@@ -108,13 +119,26 @@ export class AuthService {
       .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 
+  resetPassword(data: resetData, resetToken: string | null | undefined) {
+    this.apiService.loadingSubject.next(true);
+    return this.http
+      .patch<loginResponse>(`${this.apiUrl}/resetPassword/${resetToken}`, data)
+      .pipe(
+        tap((response) => {
+          this.setToken(response.token);
+          this.currentUserSubject.next(response.data.user);
+          this.router.navigate(['/']);
+        }),
+        finalize(() => this.apiService.loadingSubject.next(false)),
+      );
+  }
+
   signup(data: signupData) {
     this.apiService.loadingSubject.next(true);
     return this.http.post<loginResponse>(`${this.apiUrl}/signup`, data).pipe(
       tap((response) => {
         this.setToken(response.token);
         this.currentUserSubject.next(response.data.user);
-        this.router.navigate(['/']);
       }),
       finalize(() => this.apiService.loadingSubject.next(false)),
     );

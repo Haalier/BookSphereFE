@@ -32,8 +32,8 @@
                 @if (isLoggedIn) {
                     <li class="header__links-item">
                         <a class="link"><span class="icon material-symbols-outlined">shopping_cart</span></a>
-                        @if (cartResults) {
-                            <span class="cart-badge">{{ cartResults }}</span>
+                        @if (cartService.cartResults$ | async) {
+                            <span class="cart-badge">{{ cartService.cartResults$ | async }}</span>
                         }
                     </li>
                 }
