@@ -1,37 +1,239 @@
-@import "colors";
 @import "mixins";
+@import "colors";
 
 .cart {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background-color: $sphere-bg;
+
+  @include respons(large){
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+  }
+
 
   &__content {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
-    padding: 1.5em;
+    height: 100%;
     width: 100%;
-    margin: 0 auto;
-    max-width: 950px;
-    font-size: 1.4rem;
+    max-width: 760px;
 
-    h2 {
-      margin: 1em 0;
-      text-align: center;
+    h3{
+      margin: 0 auto;
+      font-size: 1.6rem;
+
+      @include respons(small){
+        font-size: 2.5rem;
+      }
+
+      @include respons(large){
+        font-size: 3rem;
+      }
     }
   }
 
-  &__item {
+  &__item, &__item--empty {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    padding: 1em;
-    min-height: 6em;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
     background-color: $white;
+    width: 100%;
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
+
+    @include respons(small){
+      padding: 2rem;
+    }
+
+    &-photo {
+      width: 80px;
+      height: auto;
+      object-fit: contain;
+      border-radius: 8px;
+
+      @include respons(small){
+        width: 100px;
+      }
+
+      @include respons(xlarge){
+        width: 120px;
+      }
+    }
   }
 
-  &__sum {
-    text-align: end;
+  &__item--empty{
+    display: flex;
+    flex-direction: column;
+    span{
+      font-size: 15rem;
+    }
+  }
+
+  &__details {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+
+    &-title {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: $sphere-grey;
+
+      @include respons(small){
+        font-size: 1.7rem;
+      }
+
+      @include respons(xlarge){
+        font-size: 2rem;
+      }
+    }
+
+    &-author {
+      font-size: 1.1rem;
+      color: $sphere-dark;
+
+      @include respons(small){
+        font-size: 1.3rem;
+      }
+
+      @include respons(xlarge){
+        font-size: 1.5rem;
+      }
+    }
+  }
+
+  &__quantity-controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+
+    .quantity {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: .5rem;
+
+      @include respons(large){
+        gap: .75rem;
+      }
+
+      .btn-quantity {
+        width: 3rem;
+        height: 2rem;
+        background-color: $sphere-main;
+        color: $white;
+        border-radius: 5px;
+        line-height: 2rem;
+        font-size: 2rem;
+        cursor: pointer;
+
+        &:hover {
+          background-color: $sphere-dark-blue;
+        }
+      }
+    }
+
+    p {
+      font-size: 1.6rem;
+      text-align: center;
+      font-weight: bold;
+      color: $sphere-grey;
+
+      @include respons(xlarge){
+        font-size: 1.8rem;
+      }
+    }
+
+    .cart__price {
+      font-size: 1.4rem;
+      color: $sphere-grey;
+      font-weight: bold;
+
+       @include respons(xlarge){
+        font-size: 1.7rem;
+      }
+    }
+  }
+
+  &__checkout {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1rem;
+    width: 100%;
+    background-color: $white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    text-align: center;
+
+    @include respons(large){
+      padding: 2rem;
+      max-width: 300px;
+      max-height: 350px;
+    }
+
+    @include respons(xlarge){
+      max-width: 400px;
+    }
+    h3{
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+
+      @include respons(small){
+        font-size: 1.8rem;
+      }
+
+    }
+    span{
+      display: none;
+
+      @include respons(large){
+        display: block;
+        font-size: 13rem;
+      }
+    }
+    &-total {
+      font-size: 1.4rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+
+      @include respons(small){
+        font-size: 1.6rem;
+      }
+    }
+
+    &-btn {
+      width: 100%;
+      max-width: 300px;
+      padding: 0.8rem 1.5rem;
+      margin-top: auto;
+      background-color: $sphere-cta;
+      color: $white;
+      border-radius: 8px;
+      font-size: 1.4rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+
+      &:hover {
+        background-color: $sphere-dark-blue;
+      }
+      &:disabled{
+        background-color: $sphere-dark;
+        cursor: not-allowed;
+      }
+    }
   }
 }
+

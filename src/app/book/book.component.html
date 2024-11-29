@@ -17,9 +17,7 @@
       <p class="book-category"><span class="icon material-symbols-outlined">
 category
 </span> {{ book.category }}</p>
-      <p class="book-ratings"><span class="icon material-symbols-outlined">
-thumb_up
-</span> {{book.ratingsAverage}} / 5</p>
+      <app-star-rating [stars]="book.ratingsAverage" [size]="2"></app-star-rating>
       <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
       <p class="book-reviews">{{book.reviews?.length}} reviews</p>
       <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>

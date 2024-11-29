@@ -23,11 +23,12 @@ import {
 import { ReviewsComponent } from './reviews/reviews.component';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
+import { StarRatingComponent } from '../utils/star-rating/star-rating.component';
 
 @Component({
   selector: 'app-book',
   standalone: true,
-  imports: [CurrencyPipe, NgClass, ReviewsComponent],
+  imports: [CurrencyPipe, NgClass, ReviewsComponent, StarRatingComponent],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
   animations: [

@@ -12,15 +12,17 @@ export const httpErrorInterceptor: HttpInterceptorFn = (req, next) => {
     catchError((err) => {
       let errorMessage = '';
       const { status, error } = err;
+
       const errorData = {
         status: status,
         error: error,
       };
-      console.log(errorData);
       if (err.error instanceof ErrorEvent) {
         errorMessage = err.error.message;
       }
-
+      if (status === 401) {
+        router.navigate(['/login']);
+      }
       errorService.setError(errorData);
 
       return throwError(() => new Error(errorMessage));

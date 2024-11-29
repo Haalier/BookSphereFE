@@ -1,10 +1,5 @@
 import { Component, inject, OnInit } from '@angular/core';
-import {
-  ActivatedRoute,
-  Router,
-  RouterLink,
-  RouterLinkActive,
-} from '@angular/router';
+import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { BooksService } from '../services/books.service';
 import { AsyncPipe, NgClass } from '@angular/common';
 import { AuthService } from '../services/auth.service';
@@ -31,6 +26,9 @@ export class HeaderComponent implements OnInit {
       this.isLoggedIn = !!user;
       this.role = user?.role;
     });
+    if (this.isLoggedIn) {
+      this.cartService.getCartCount().subscribe();
+    }
   }
 
   onHomePage() {
@@ -57,6 +55,11 @@ export class HeaderComponent implements OnInit {
 
   onSignupPage() {
     this.router.navigate(['/signup']);
+    this.isMenuOpen = false;
+  }
+
+  onCart() {
+    this.router.navigate(['/cart']);
     this.isMenuOpen = false;
   }
 }

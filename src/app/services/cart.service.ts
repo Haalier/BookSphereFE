@@ -3,13 +3,19 @@ import { ApiService } from './api.service';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, finalize, Observable, tap } from 'rxjs';
 
-interface CartBook {
+interface CartItem {
   _id: string;
   id: string;
   title: string;
   author: string;
   price: number;
   photoUrl: string;
+}
+
+export interface CartItems {
+  book: CartItem;
+  quantity: number;
+  _id: string;
 }
 
 interface CartPostData {
@@ -21,10 +27,15 @@ interface CartPostRes {
   status: string;
   data: {
     user: string;
-    items: [{ book: CartBook; quantity: number; _id: string }];
+    items: [CartItems];
     total: number;
     totalItems: number;
   };
+}
+
+interface CartCountRes {
+  status: string;
+  totalItems: number;
 }
 
 @Injectable({
@@ -54,5 +65,22 @@ export class CartService {
       tap((res) => this.cartResultsSubject.next(res.data.totalItems)),
       finalize(() => this.apiService.loadingSubject.next(false)),
     );
+  }
+
+  getCartCount() {
+    this.apiService.loadingSubject.next(true);
+    return this.http.get<CartCountRes>(`${this.apiUrl}/count`).pipe(
+      tap((res) => {
+        this.cartResultsSubject.next(res.totalItems);
+      }),
+      finalize(() => this.apiService.loadingSubject.next(false)),
+    );
+  }
+
+  removeFromCart(bookId: string) {
+    this.apiService.loadingSubject.next(true);
+    return this.http
+      .delete(`${this.apiUrl}/${bookId}`)
+      .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 }

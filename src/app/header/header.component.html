@@ -24,14 +24,16 @@
                 </li>
                 <li class="header__links-item">
                     @if (isLoggedIn) {
-                        <a (click)="onLogOut()" routerLink="/books" class="link">Log out</a>
+                        <a (click)="onLogOut()" routerLink="/login" class="link">Log out</a>
                     } @else {
                         <a (click)="onLoginPage()" routerLink="/login" routerLinkActive="active" class="link">Log in</a>
                     }
                 </li>
                 @if (isLoggedIn) {
                     <li class="header__links-item">
-                        <a class="link"><span class="icon material-symbols-outlined">shopping_cart</span></a>
+                        <a (click)="onCart()" routerLink="/cart" routerLinkActive="active" class="link" ><span
+                                class="icon material-symbols-outlined">shopping_cart
+                    </span></a>
                         @if (cartService.cartResults$ | async) {
                             <span class="cart-badge">{{ cartService.cartResults$ | async }}</span>
                         }

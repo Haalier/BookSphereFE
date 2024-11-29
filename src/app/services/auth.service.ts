@@ -1,13 +1,6 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import {
-  BehaviorSubject,
-  catchError,
-  finalize,
-  Observable,
-  tap,
-  throwError,
-} from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject, finalize, tap } from 'rxjs';
 import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
@@ -83,11 +76,9 @@ export class AuthService {
         })
         .subscribe({
           next: (user) => {
-            console.log('User after refresh: ', user);
             this.currentUserSubject.next(user);
           },
           error: (err) => {
-            console.log('Error fetching user: ', err);
             this.logout();
           },
         });
