@@ -1,0 +1,110 @@
+@import "mixins";
+@import "colors";
+
+:host {
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
+}
+
+.account {
+  display: flex;
+  justify-content: center;
+  font-size: 1.4rem;
+  flex-grow: 1;
+}
+
+.user-view,{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #E5E5E5FF;
+  padding: 1rem;
+  width: 100%;
+
+  h2 {
+    margin: 1rem 0 2rem 0;
+  }
+
+  .heading-second{
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+  hr {
+    width: 100%;
+    opacity: .2;
+  }
+
+  &__menu {
+    width: 100%;
+
+    .menu {
+      display: flex;
+      flex-direction: column;
+
+     &-item {
+        margin-bottom: 1rem;
+      }
+
+      &-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem;
+        background-color: #c9c9c9;
+        list-style: none;
+        border-radius: 7px;
+
+        &:has(button){
+          background-color: $sphere-cta;
+          width: 50%;
+          margin: 0 auto;
+
+        }
+        button{
+          width: 100%;
+          height: 100%;
+          color: white;
+          cursor: pointer;
+
+
+        }
+
+        &--left {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+        }
+
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 100%;
+        }
+
+        &.user-settings {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 2rem;
+        }
+
+        &.user-settings a {
+
+
+          p:last-of-type {
+            font-size: 1.15rem;
+            font-weight: bold;
+          }
+
+          .icon-account {
+            font-size: 4rem;
+          }
+        }
+      }
+    }
+  }
+
+
+}

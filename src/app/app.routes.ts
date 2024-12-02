@@ -6,6 +6,7 @@ import { SignupComponent } from './auth/signup/signup.component';
 import { CartComponent } from './cart/cart.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
+import { AccountComponent } from './account/account.component';
 
 export const routes: Routes = [
   {
@@ -40,6 +41,10 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: 'me',
+    component: AccountComponent,
   },
   {
     path: '**',
