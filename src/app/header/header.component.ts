@@ -62,4 +62,8 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/cart']);
     this.isMenuOpen = false;
   }
+  onAccountPage() {
+    this.router.navigate(['/account']);
+    this.isMenuOpen = false;
+  }
 }

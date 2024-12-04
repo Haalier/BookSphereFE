@@ -43,7 +43,7 @@ export const routes: Routes = [
     component: CartComponent,
   },
   {
-    path: 'me',
+    path: 'account',
     component: AccountComponent,
   },
   {

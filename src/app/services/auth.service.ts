@@ -39,6 +39,16 @@ interface forgotResponse {
   message: string;
 }
 
+interface currentUserResponse {
+  status: string;
+  user: {
+    id: string;
+    name: string;
+    email: string;
+    role: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -133,5 +143,12 @@ export class AuthService {
       }),
       finalize(() => this.apiService.loadingSubject.next(false)),
     );
+  }
+
+  getCurrentUser() {
+    this.apiService.loadingSubject.next(true);
+    return this.http
+      .get<currentUserResponse>(`${this.apiUrl}/me`)
+      .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
   }
 }

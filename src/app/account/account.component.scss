@@ -10,41 +10,128 @@
 .account {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   font-size: 1.4rem;
   flex-grow: 1;
+  background-color: #e5e5e5ff;
+
+  @include respons(small) {
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+
+  @include respons(medium) {
+    font-size: 2.4rem;
+  }
+
+  @include respons(xlarge) {
+    padding: 1rem 4rem;
+    font-size: 1.5rem;
+  }
+
+  .heading {
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    margin: 1rem 0 0 0;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
+    &::after {
+      content: "";
+      width: 60px;
+      height: 4px;
+      background-color: $sphere-main;
+      display: block;
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    @include respons(small) {
+      margin: 2.5rem 0 2rem 0;
+    }
+
+    @include respons(medium) {
+      margin: 4rem 0 3rem 0;
+    }
+
+    @include respons(xlarge) {
+      margin: 0rem 0 3rem 0;
+    }
+  }
 }
 
-.user-view,{
+.user-view {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #E5E5E5FF;
   padding: 1rem;
-  width: 100%;
 
-  h2 {
-    margin: 1rem 0 2rem 0;
+  @include respons(xlarge) {
+    flex-direction: row;
+    padding: 2rem;
+    background-color: #b0b0b0;
+    align-items: normal;
+    border-radius: 5px;
   }
 
-  .heading-second{
-        text-align: center;
-        font-size: 1.5rem;
-      }
+  .heading-second {
+    text-align: center;
+    font-size: 1.5rem;
+    margin-top: 1rem;
+
+    @include respons(small) {
+      margin-top: 2rem;
+      font-size: 1.7rem;
+    }
+
+    @include respons(medium) {
+      margin-top: 4rem;
+      font-size: 2.3rem;
+    }
+    @include respons(xlarge) {
+      margin-top: 1rem;
+      font-size: 1.6rem;
+    }
+  }
 
   hr {
     width: 100%;
-    opacity: .2;
+    opacity: 0.2;
   }
 
   &__menu {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
     width: 100%;
+
+    @include respons(xlarge) {
+      flex-grow: 0;
+      padding: 2rem;
+      width: 35%;
+      background-color: whitesmoke;
+      border-radius: 6px;
+    }
 
     .menu {
       display: flex;
       flex-direction: column;
+      align-items: center;
+      gap: 1rem;
 
-     &-item {
-        margin-bottom: 1rem;
+      @include respons(small) {
+        gap: 1.5rem;
+      }
+
+      @include respons(medium) {
+        gap: 3rem;
+      }
+
+      @include respons(xlarge) {
+        gap: 0.5rem;
       }
 
       &-item {
@@ -55,26 +142,56 @@
         background-color: #c9c9c9;
         list-style: none;
         border-radius: 7px;
+        width: 100%;
+        max-width: 500px;
 
-        &:has(button){
+        &:not(:has(button)) {
+          @include respons(small) {
+            height: 7rem;
+          }
+
+          @include respons(medium) {
+            max-width: 630px;
+            padding: 2.5rem;
+            height: 9rem;
+          }
+          @include respons(xlarge) {
+            height: 4rem;
+            padding: 1rem;
+          }
+        }
+
+        &:has(button) {
           background-color: $sphere-cta;
           width: 50%;
-          margin: 0 auto;
-
+          max-width: 250px;
         }
-        button{
+
+        button {
           width: 100%;
           height: 100%;
           color: white;
           cursor: pointer;
-
-
         }
 
         &--left {
           display: flex;
           align-items: center;
           gap: 1rem;
+
+          span {
+            @include respons(small) {
+              font-size: 3.4rem;
+            }
+
+            @include respons(medium) {
+              font-size: 5rem;
+            }
+
+            @include respons(xlarge) {
+              font-size: 3rem;
+            }
+          }
         }
 
         a {
@@ -87,24 +204,57 @@
         &.user-settings {
           font-size: 2rem;
           font-weight: bold;
-          margin-bottom: 2rem;
+          margin-bottom: 1rem;
+
+          @include respons(small) {
+            height: 9rem;
+          }
+
+          @include respons(medium) {
+            font-size: 2.7rem;
+            height: 13rem;
+          }
+
+          @include respons(xlarge) {
+            display: none;
+          }
         }
 
         &.user-settings a {
-
-
           p:last-of-type {
             font-size: 1.15rem;
             font-weight: bold;
+
+            @include respons(small) {
+              font-size: 1.4rem;
+            }
+
+            @include respons(medium) {
+              font-size: 1.8rem;
+            }
           }
 
           .icon-account {
             font-size: 4rem;
+
+            @include respons(small) {
+              font-size: 4.5rem;
+            }
+            @include respons(medium) {
+              font-size: 6rem;
+            }
           }
         }
       }
     }
   }
 
-
+  &__content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    padding: 2rem;
+    max-height: 60vh;
+    overflow: scroll;
+  }
 }

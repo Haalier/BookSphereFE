@@ -1,0 +1,49 @@
+@import "mixins";
+@import "colors";
+
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+.heading {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.menu {
+  .orders-list {
+    &__item {
+      list-style: none;
+      /* border: 1px solid #979797; */
+      background-color: snow;
+      border-radius: 6px;
+      overflow: hidden;
+
+      &-data {
+        margin: 1rem 0;
+        font-size: 1.3rem;
+        font-weight: 300;
+      }
+
+      a {
+        display: flex;
+        flex-direction: row;
+      }
+    }
+
+    &__item--left,
+    &__item--right {
+      padding: 1rem;
+    }
+
+    &__item--left {
+      background-color: #a3a3a3;
+      width: 30%;
+    }
+
+    &__item--right {
+      display: flex;
+    }
+  }
+}

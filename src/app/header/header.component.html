@@ -31,7 +31,7 @@
                 </li>
                 @if (isLoggedIn) {
                     <li class="header__links-item">
-                        <a (click)="onCart()" routerLink="/cart" routerLinkActive="active" class="link" ><span
+                        <a (click)="onCart()" routerLink="/cart" routerLinkActive="active" class="link"><span
                                 class="icon material-symbols-outlined">shopping_cart
                     </span></a>
                         @if (cartService.cartResults$ | async) {
@@ -41,7 +41,10 @@
                 }
                 <li class="header__links-item">
                     @if (isLoggedIn) {
-                        <a class="link"><span class="icon material-symbols-outlined">person</span></a>
+                        <a class="link"
+                           (click)="onAccountPage()"
+                           routerLink="/account" routerLinkActive="active"><span class="icon material-symbols-outlined">
+                            person</span></a>
                     } @else {
                         <a class="link" (click)="onSignupPage()" routerLink="/signup" routerLinkActive="active">Sign
                             Up</a>
