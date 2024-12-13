@@ -38,6 +38,20 @@ interface CartCountRes {
   totalItems: number;
 }
 
+interface CartItemsUpdate {
+  status: string;
+  item: {
+    book: {
+      _id: string;
+      title: string;
+      price: number;
+      id: string;
+    };
+    quantity: number;
+    _id: string;
+  };
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -55,7 +69,7 @@ export class CartService {
     this.apiService.loadingSubject.next(true);
     return this.http.post<CartPostRes>(`${this.apiUrl}/add`, data).pipe(
       tap((res) => this.cartResultsSubject.next(res.data.totalItems)),
-      finalize(() => this.apiService.loadingSubject.next(false)),
+      finalize(() => this.apiService.loadingSubject.next(false))
     );
   }
 
@@ -63,7 +77,7 @@ export class CartService {
     this.apiService.loadingSubject.next(true);
     return this.http.get<CartPostRes>(`${this.apiUrl}`).pipe(
       tap((res) => this.cartResultsSubject.next(res.data.totalItems)),
-      finalize(() => this.apiService.loadingSubject.next(false)),
+      finalize(() => this.apiService.loadingSubject.next(false))
     );
   }
 
@@ -73,8 +87,13 @@ export class CartService {
       tap((res) => {
         this.cartResultsSubject.next(res.totalItems);
       }),
-      finalize(() => this.apiService.loadingSubject.next(false)),
+      finalize(() => this.apiService.loadingSubject.next(false))
     );
+  }
+
+  updateCartItems(bookId: string, updates: Partial<CartItems>) {
+    // this.apiService.loadingSubject.next(true);
+    return this.http.patch<CartItemsUpdate>(`${this.apiUrl}/${bookId}`, updates);
   }
 
   removeFromCart(bookId: string) {
