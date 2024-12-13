@@ -13,10 +13,13 @@
 
 .menu {
   .orders-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     &__item {
       list-style: none;
       /* border: 1px solid #979797; */
-      background-color: snow;
+      background-color: $white;
       border-radius: 6px;
       overflow: hidden;
 

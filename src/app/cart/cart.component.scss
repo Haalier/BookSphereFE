@@ -1,20 +1,25 @@
 @import "mixins";
 @import "colors";
 
+:host {
+  display: flex;
+  flex-grow: 1;
+}
+
 .cart {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   padding: 1.5rem;
+  width: 100%;
   background-color: $sphere-bg;
 
-  @include respons(large){
+  @include respons(large) {
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
   }
-
 
   &__content {
     display: flex;
@@ -25,21 +30,22 @@
     width: 100%;
     max-width: 760px;
 
-    h3{
+    h3 {
       margin: 0 auto;
       font-size: 1.6rem;
 
-      @include respons(small){
+      @include respons(small) {
         font-size: 2.5rem;
       }
 
-      @include respons(large){
+      @include respons(large) {
         font-size: 3rem;
       }
     }
   }
 
-  &__item, &__item--empty {
+  &__item,
+  &__item--empty {
     display: flex;
     align-items: center;
     gap: 1rem;
@@ -49,7 +55,7 @@
     width: 100%;
     box-shadow: 0 3px 5px rgba(0, 0, 0, 0.1);
 
-    @include respons(small){
+    @include respons(small) {
       padding: 2rem;
     }
 
@@ -59,20 +65,20 @@
       object-fit: contain;
       border-radius: 8px;
 
-      @include respons(small){
+      @include respons(small) {
         width: 100px;
       }
 
-      @include respons(xlarge){
+      @include respons(xlarge) {
         width: 120px;
       }
     }
   }
 
-  &__item--empty{
+  &__item--empty {
     display: flex;
     flex-direction: column;
-    span{
+    span {
       font-size: 15rem;
     }
   }
@@ -89,11 +95,11 @@
       font-weight: bold;
       color: $sphere-grey;
 
-      @include respons(small){
+      @include respons(small) {
         font-size: 1.7rem;
       }
 
-      @include respons(xlarge){
+      @include respons(xlarge) {
         font-size: 2rem;
       }
     }
@@ -102,11 +108,11 @@
       font-size: 1.1rem;
       color: $sphere-dark;
 
-      @include respons(small){
+      @include respons(small) {
         font-size: 1.3rem;
       }
 
-      @include respons(xlarge){
+      @include respons(xlarge) {
         font-size: 1.5rem;
       }
     }
@@ -122,10 +128,10 @@
       display: flex;
       flex-direction: row;
       align-items: center;
-      gap: .5rem;
+      gap: 0.5rem;
 
-      @include respons(large){
-        gap: .75rem;
+      @include respons(large) {
+        gap: 0.75rem;
       }
 
       .btn-quantity {
@@ -150,7 +156,7 @@
       font-weight: bold;
       color: $sphere-grey;
 
-      @include respons(xlarge){
+      @include respons(xlarge) {
         font-size: 1.8rem;
       }
     }
@@ -160,7 +166,7 @@
       color: $sphere-grey;
       font-weight: bold;
 
-       @include respons(xlarge){
+      @include respons(xlarge) {
         font-size: 1.7rem;
       }
     }
@@ -177,28 +183,27 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
     text-align: center;
 
-    @include respons(large){
+    @include respons(large) {
       padding: 2rem;
       max-width: 300px;
       max-height: 350px;
     }
 
-    @include respons(xlarge){
+    @include respons(xlarge) {
       max-width: 400px;
     }
-    h3{
+    h3 {
       font-size: 1.5rem;
       margin-bottom: 2rem;
 
-      @include respons(small){
+      @include respons(small) {
         font-size: 1.8rem;
       }
-
     }
-    span{
+    span {
       display: none;
 
-      @include respons(large){
+      @include respons(large) {
         display: block;
         font-size: 13rem;
       }
@@ -208,7 +213,7 @@
       font-weight: bold;
       margin-bottom: 1rem;
 
-      @include respons(small){
+      @include respons(small) {
         font-size: 1.6rem;
       }
     }
@@ -229,11 +234,10 @@
       &:hover {
         background-color: $sphere-dark-blue;
       }
-      &:disabled{
+      &:disabled {
         background-color: $sphere-dark;
         cursor: not-allowed;
       }
     }
   }
 }
-

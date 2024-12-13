@@ -7,6 +7,7 @@ import { CartComponent } from './cart/cart.component';
 import { ForgotPasswordComponent } from './auth/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './auth/reset-password/reset-password.component';
 import { AccountComponent } from './account/account.component';
+import { OrdersComponent } from './account/orders/orders.component';
 
 export const routes: Routes = [
   {
@@ -45,6 +46,9 @@ export const routes: Routes = [
   {
     path: 'account',
     component: AccountComponent,
+    children: [
+      { path: 'orders', component: OrdersComponent, pathMatch: 'full' },
+    ],
   },
   {
     path: '**',

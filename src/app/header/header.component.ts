@@ -20,7 +20,7 @@ export class HeaderComponent implements OnInit {
   role: 'user' | 'admin' | undefined;
   isLoggedIn = false;
   isMenuOpen = false;
-
+  isMobile = false;
   ngOnInit() {
     this.authService.user$.subscribe((user) => {
       this.isLoggedIn = !!user;
@@ -28,6 +28,12 @@ export class HeaderComponent implements OnInit {
     });
     if (this.isLoggedIn) {
       this.cartService.getCartCount().subscribe();
+    }
+
+    if (innerWidth <= 950) {
+      this.isMobile = true;
+    } else {
+      this.isMobile = false;
     }
   }
 
@@ -63,7 +69,11 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = false;
   }
   onAccountPage() {
-    this.router.navigate(['/account']);
+    if (this.isMobile) {
+      this.router.navigate(['/account']);
+    } else {
+      this.router.navigate(['/account/orders']);
+    }
     this.isMenuOpen = false;
   }
 }

@@ -49,6 +49,13 @@ interface currentUserResponse {
   };
 }
 
+export interface userResponseData {
+  id: string;
+  name: string;
+  email: string;
+  role: string;
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -109,7 +116,7 @@ export class AuthService {
         this.currentUserSubject.next(response.data.user);
         this.router.navigate(['/']);
       }),
-      finalize(() => this.apiService.loadingSubject.next(false)),
+      finalize(() => this.apiService.loadingSubject.next(false))
     );
   }
 
@@ -130,7 +137,7 @@ export class AuthService {
           this.currentUserSubject.next(response.data.user);
           this.router.navigate(['/']);
         }),
-        finalize(() => this.apiService.loadingSubject.next(false)),
+        finalize(() => this.apiService.loadingSubject.next(false))
       );
   }
 
@@ -141,7 +148,7 @@ export class AuthService {
         this.setToken(response.token);
         this.currentUserSubject.next(response.data.user);
       }),
-      finalize(() => this.apiService.loadingSubject.next(false)),
+      finalize(() => this.apiService.loadingSubject.next(false))
     );
   }
 
