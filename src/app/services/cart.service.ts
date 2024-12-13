@@ -93,7 +93,10 @@ export class CartService {
 
   updateCartItems(bookId: string, updates: Partial<CartItems>) {
     // this.apiService.loadingSubject.next(true);
-    return this.http.patch<CartItemsUpdate>(`${this.apiUrl}/${bookId}`, updates);
+    return this.http.patch<CartItemsUpdate>(
+      `${this.apiUrl}/${bookId}`,
+      updates
+    );
   }
 
   removeFromCart(bookId: string) {

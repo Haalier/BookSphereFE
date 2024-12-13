@@ -17,8 +17,6 @@ import { finalize } from 'rxjs';
   styleUrl: './cart.component.scss',
 })
 export class CartComponent implements OnInit {
-  @ViewChild('itemQuantity') quantity!: ElementRef;
-
   cartService = inject(CartService);
   cartItems: CartItems[] = [];
   totalPrice = 0;
@@ -36,24 +34,21 @@ export class CartComponent implements OnInit {
 
   updateQuantity(item: any, isIncrease: boolean) {
     const bookId = item.book.id;
-    let itemQuantity = +this.quantity.nativeElement.textContent;
-
+    let itemQuantity = item.quantity;
     const updatedQuantity = isIncrease ? ++itemQuantity : --itemQuantity;
+    console.log(updatedQuantity);
 
     if (updatedQuantity <= 0) {
       if (confirm('Are you sure you want to delete this book?')) {
         return this.deleteFromCart(bookId);
       }
+      return;
     }
 
     this.cartService
       .updateCartItems(bookId, { quantity: updatedQuantity })
       .subscribe((res) => {
-        const newQuantity = res.item.quantity;
-        this.quantity.nativeElement.textContent = newQuantity;
-
-        const priceChange = res.item.book.price * (isIncrease ? 1 : -1);
-        this.totalPrice += priceChange;
+        this.loadCart();
       });
   }
 

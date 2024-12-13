@@ -1,36 +1,33 @@
 <section class="cart">
     <div class="cart__content">
         @if (cartItems.length === 0) {
-            <div class="cart__item--empty">
-                <h3>Your cart seems to be empty.</h3>
-                <span class="icon material-symbols-outlined">shopping_basket</span>
-            </div>
+        <div class="cart__item--empty">
+            <h3>Your cart seems to be empty.</h3>
+            <span class="icon material-symbols-outlined">shopping_basket</span>
+        </div>
         } @else {
-            @for (item of cartItems; track item._id) {
-                <div class="cart__item">
-                    <div>
-                        <img [src]="item.book.photoUrl" alt="Photo of {{item.book.title}} book"
-                             class="cart__item-photo">
-                    </div>
-                    <div class="cart__details">
-                        <p class="cart__details-title"><b>{{ item.book.title }}</b></p>
-                        <p class="cart__details-author"><i>{{ item.book.author }}</i></p>
-                    </div>
-                    <div class="cart__quantity-controls">
-                        <div class="quantity">
-                            <button class="btn-quantity" (click)="decreaseQuantity(item)">-</button>
-                            <p #itemQuantity>{{ item.quantity }}</p>
-                            <button class="btn-quantity" (click)="increaseQuantity(item)">+</button>
-                            <button
-                                    (click)="deleteFromCart(item.book._id)"><span
-                                    class="icon material-symbols-outlined">delete
-                    </span></button>
-                        </div>
-                        <p class="cart__price">Price:
-                            {{ item.book.price * item.quantity | currency: 'USD': 'symbol' }}</p>
-                    </div>
+        @for (item of cartItems; track item._id) {
+        <div class="cart__item">
+            <div>
+                <img [src]="item.book.photoUrl" alt="Photo of {{item.book.title}} book" class="cart__item-photo">
+            </div>
+            <div class="cart__details">
+                <p class="cart__details-title"><b>{{ item.book.title }}</b></p>
+                <p class="cart__details-author"><i>{{ item.book.author }}</i></p>
+            </div>
+            <div class="cart__quantity-controls">
+                <div class="quantity">
+                    <button class="btn-quantity" (click)="decreaseQuantity(item)">-</button>
+                    <p>{{ item.quantity }}</p>
+                    <button class="btn-quantity" (click)="increaseQuantity(item)">+</button>
+                    <button (click)="deleteFromCart(item.book._id)"><span class="icon material-symbols-outlined">delete
+                        </span></button>
                 </div>
-            }
+                <p class="cart__price">Price:
+                    {{ item.book.price * item.quantity | currency: 'USD': 'symbol' }}</p>
+            </div>
+        </div>
+        }
         }
 
     </div>
