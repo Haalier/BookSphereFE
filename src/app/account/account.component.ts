@@ -1,35 +1,44 @@
-import { Component, HostListener, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { AuthService, userResponseData } from '../services/auth.service';
-import { OrdersComponent } from './orders/orders.component';
-import { Router, RouterOutlet } from '@angular/router';
-import { DesktopAccountComponent } from './desktop-account/desktop-account.component';
-import { MobileAccountComponent } from './mobile-account/mobile-account.component';
+import {
+  ActivatedRoute,
+  Router,
+  RouterOutlet,
+  RouterLink,
+  RouterLinkActive,
+} from '@angular/router';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [
-    OrdersComponent,
-    RouterOutlet,
-    DesktopAccountComponent,
-    MobileAccountComponent,
-  ],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   templateUrl: './account.component.html',
-  styleUrl: './account.component.scss',
+  styleUrls: ['./account.component.scss'],
 })
 export class AccountComponent implements OnInit {
   authService = inject(AuthService);
   userData!: userResponseData | null;
-  isMobile = false;
+  isMobile!: boolean;
+  router = inject(Router);
+  activatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.authService.getCurrentUser().subscribe((currentUserData) => {
       this.userData = currentUserData.user;
     });
+  }
 
-    if (window.innerWidth <= 950) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
+  onSettings() {
+    this.router.navigate(['/settings']);
+  }
+
+  onReviews() {
+    this.router.navigate(['/reviews']);
+  }
+  onReturns() {
+    this.router.navigate(['/returns']);
+  }
+
+  onLogOut() {
+    this.authService.logout();
   }
 }

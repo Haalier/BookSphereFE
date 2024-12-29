@@ -1,25 +1,16 @@
 import {
+  AfterViewChecked,
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
-  DestroyRef,
   ElementRef,
   inject,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import { BooksService } from '../services/books.service';
 import { Book } from '../models/book.model';
 import { ActivatedRoute } from '@angular/router';
 import { CurrencyPipe, NgClass } from '@angular/common';
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from '@angular/animations';
 import { ReviewsComponent } from './reviews/reviews.component';
 import { AuthService } from '../services/auth.service';
 import { CartService } from '../services/cart.service';
@@ -31,26 +22,23 @@ import { StarRatingComponent } from '../utils/star-rating/star-rating.component'
   imports: [CurrencyPipe, NgClass, ReviewsComponent, StarRatingComponent],
   templateUrl: './book.component.html',
   styleUrl: './book.component.scss',
-  animations: [
-    trigger('panelState', [
-      state('closed', style({ height: '50px' })),
-      state('open', style({ height: '*' })),
-      transition('closed <=> open', animate('300ms ease-in-out')),
-    ]),
-  ],
 })
-export class BookComponent implements AfterViewInit {
+export class BookComponent implements AfterViewInit, AfterViewChecked {
+  @ViewChild('descriptionDiv', { static: false }) descriptionDiv!: ElementRef;
+
   booksService = inject(BooksService);
   authService = inject(AuthService);
   cartService = inject(CartService);
   route = inject(ActivatedRoute);
   book: Book | undefined;
-  isCollapsed: boolean = true;
+  isOverflowing = false;
+  expanded = false;
   folded = 'closed';
   isLoggedIn = false;
   role: 'user' | 'admin' | undefined;
   public bookId!: string;
   private slug!: string;
+  private cdr = inject(ChangeDetectorRef);
 
   ngAfterViewInit() {
     this.route.params.subscribe((params) => {
@@ -65,16 +53,47 @@ export class BookComponent implements AfterViewInit {
     });
   }
 
+  ngAfterViewChecked(): void {
+    if (this.descriptionDiv) {
+      console.log(this.descriptionDiv.nativeElement);
+      this.checkOverflow();
+    }
+    this.cdr.detectChanges();
+  }
+
+  checkOverflow(): void {
+    const element = this.descriptionDiv.nativeElement;
+
+    if (!this.expanded) {
+      this.isOverflowing = element.scrollHeight > element.clientHeight;
+    } else {
+      this.isOverflowing = true;
+    }
+
+    console.log('CLIENT ', element.clientHeight);
+    console.log('SCROLL ', element.scrollHeight);
+  }
+
+  toggleExpand(): void {
+    this.expanded = !this.expanded;
+
+    const element = this.descriptionDiv.nativeElement;
+
+    if (this.expanded) {
+      element.style.maxHeight = `${element.scrollHeight}px`;
+    } else {
+      element.style.maxHeight = '5em';
+    }
+
+    setTimeout(() => this.checkOverflow(), 15);
+  }
+
   fetchBook(bookId: string, slug: string) {
-    const subscribe = this.booksService.getBook(bookId, slug).subscribe({
+    this.booksService.getBook(bookId, slug).subscribe({
       next: (res) => {
         this.book = res.data.book;
       },
     });
-  }
-  onExpand() {
-    this.isCollapsed = !this.isCollapsed;
-    this.folded = this.folded === 'open' ? 'closed' : 'open';
   }
 
   onReviewAdded() {

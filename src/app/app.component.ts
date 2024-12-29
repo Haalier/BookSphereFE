@@ -18,6 +18,7 @@ export class AppComponent implements OnInit {
   apiService = inject(ApiService);
   errorService = inject(ErrorService);
   isLoading = false;
+  
   router = inject(Router);
 
   ngOnInit() {

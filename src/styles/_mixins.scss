@@ -9,31 +9,45 @@ $xxlarge: 1320px;
 $desk: 1550px;
 $xdesk: 1650px;
 
-
 @mixin respons($breakpoint) {
   @if $breakpoint == xsmall {
-    @media (min-width: $xsmall) { @content; }
+    @media (min-width: $xsmall) {
+      @content;
+    }
   }
   @if $breakpoint == small {
-    @media (min-width: $small) { @content; }
+    @media (min-width: $small) {
+      @content;
+    }
   }
   @if $breakpoint == medium {
-    @media (min-width: $medium) { @content; }
+    @media (min-width: $medium) {
+      @content;
+    }
   }
   @if $breakpoint == large {
-    @media (min-width: $large) { @content; }
+    @media (min-width: $large) {
+      @content;
+    }
   }
   @if $breakpoint == xlarge {
-    @media (min-width: $xlarge) { @content; }
+    @media (min-width: $xlarge) {
+      @content;
+    }
   }
   @if $breakpoint == xxlarge {
-    @media (min-width: $xxlarge) { @content; }
+    @media (min-width: $xxlarge) {
+      @content;
+    }
   }
   @if $breakpoint == desk {
-    @media (min-width: $desk) { @content; }
+    @media (min-width: $desk) {
+      @content;
+    }
   }
   @if $breakpoint == xdesk {
-    @media (min-width: $xdesk) { @content; }
+    @media (min-width: $xdesk) {
+      @content;
+    }
   }
-
 }

@@ -38,8 +38,134 @@
 <!--    </div>-->
 
 <!--</section>-->
-@if (isMobile) {
-<app-mobile-account [userData]="userData"></app-mobile-account>
-} @else {
-<app-desktop-account [userData]="userData"></app-desktop-account>
-}
+
+<section class="account">
+    <h2 class="heading">My account</h2>
+    <div class="user-view">
+        <nav class="user-view__menu">
+            <ul class="menu">
+                <li class="menu-item user-settings">
+                    <a (click)="onSettings()" routerLink="/settings" routerLinkActive="active">
+                        <div class="menu-item--left">
+                            <span class="icon icon-account material-symbols-outlined">account_circle</span>
+                            <div>
+                                <p>{{ userData?.name }}</p>
+                                <p>Account data & settings</p>
+                            </div>
+                        </div>
+                        <span class="icon material-symbols-outlined">chevron_right</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a routerLink="/account/orders" routerLinkActive="active">
+                        <div class="menu-item--left">
+                            <span class="icon material-symbols-outlined">orders</span>
+                            <p>My orders</p>
+                        </div>
+                        <span class="icon material-symbols-outlined">chevron_right</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a (click)="onReviews()" routerLink="/reviews" routerLinkActive="active">
+                        <div class="menu-item--left">
+                            <span class="icon material-symbols-outlined">reviews</span>
+                            <p>My reviews</p>
+                        </div>
+                        <span class="icon material-symbols-outlined">chevron_right</span>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a (click)="onReturns()" routerLink="/returns" routerLinkActive="active">
+                        <div class="menu-item--left">
+                            <span class="icon material-symbols-outlined">assignment_return</span>
+                            <p>Complains & returns</p>
+                        </div>
+                        <span class="icon material-symbols-outlined">chevron_right</span>
+                    </a>
+                </li>
+                @if(!isMobile){
+                <li class="menu-item">
+                    <a (click)="onSettings()" routerLink="/settings" routerLinkActive="active">
+                        <div class="menu-item--left">
+                            <span class="icon icon-account material-symbols-outlined">account_circle</span>
+                            <p>Account settings</p>
+                        </div>
+                        <span class="icon material-symbols-outlined">chevron_right</span>
+                    </a>
+                </li>
+                }
+            </ul>
+            @if (userData?.role === 'user') {
+            <div class="admin-nav">
+                <h5 class="heading-second">Admin settings</h5>
+                <ul class="menu">
+                    <hr />
+                    <li class="menu-item">
+                        <a href="" routerLink="/admin/books" routerLinkActive="active">
+                            <div class="menu-item--left">
+                                <span class="icon material-symbols-outlined">menu_book</span>
+                                <p>Manage books</p>
+                            </div>
+                            <span class="icon material-symbols-outlined">chevron_right</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="" routerLink="/admin/users" routerLinkActive="active">
+                            <div class="menu-item--left">
+                                <span class="icon material-symbols-outlined">group</span>
+                                <p>Manage users</p>
+                            </div>
+                            <span class="icon material-symbols-outlined">chevron_right</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="" routerLink="/admin/reviews" routerLinkActive="active">
+                            <div class="menu-item--left">
+                                <span class="icon material-symbols-outlined">reviews</span>
+                                <p>Manage reviews</p>
+                            </div>
+                            <span class="icon material-symbols-outlined">chevron_right</span>
+                        </a>
+                    </li>
+                    <hr />
+                </ul>
+            </div>
+            }
+            <ul class="menu">
+                <li class="menu-item">
+                    <button (click)="onLogOut()">Log out</button>
+                </li>
+            </ul>
+        </nav>
+        <div class="user-view__content">
+            @if(router.url === '/account'){
+            <div class="user-view__content-default">
+                <h2>Hello {{userData?.name}}!</h2>
+                <p>Here are your latest orders:</p>
+                <ul class="orders-list">
+                    <li class="orders-list__item">
+                        <a href="">
+                            <div class="orders-list__item--left">
+                                <p class="status">Pending</p>
+                                <div class="orders-list__item-data">
+                                    <p>1 grudnia 2023</p>
+                                    <p>nr 70005435</p>
+                                </div>
+                                <p class="price">$155.4</p>
+                            </div>
+                            <div class="orders-list__item--right">
+                                <img alt="An image of book" />
+                                <div class="book-data">
+                                    <p class="title">Descent</p>
+                                    <p class="author">Tom ddsad</p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            }
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</section>

@@ -47,7 +47,11 @@ export const routes: Routes = [
     path: 'account',
     component: AccountComponent,
     children: [
-      { path: 'orders', component: OrdersComponent, pathMatch: 'full' },
+      {
+        path: 'orders',
+        component: OrdersComponent,
+        pathMatch: 'full',
+      },
     ],
   },
   {

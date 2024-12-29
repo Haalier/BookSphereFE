@@ -1,19 +1,19 @@
 @import "mixins";
 @import "colors";
-.header{
+.header {
   position: sticky;
   top: -1px;
   left: 0;
   display: flex;
   flex-direction: column;
-  padding: .5rem;
+  padding: 0.5rem;
   width: 100%;
   font-size: 2rem;
   color: $sphere-grey;
   background-color: #cbcbcb;
   z-index: 1000;
 
-  &__nav{
+  &__nav {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -22,99 +22,98 @@
     height: 100%;
   }
 
-  &__logo{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 100%;
-  font-family: "Lobster", sans-serif;
-  font-size: 2.5rem;
-  text-shadow: 5px 7px 8px $sphere-dark;
+  &__logo {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+    font-family: "Lobster", sans-serif;
+    font-size: 2.5rem;
+    text-shadow: 5px 7px 8px $sphere-dark;
     cursor: pointer;
 
-    @include respons(medium){
+    @include respons(medium) {
       font-size: 3rem;
     }
   }
 
-  &__hamburger{
+  &__hamburger {
     display: flex;
     flex-direction: column;
     padding: 5px 5px;
     cursor: pointer;
 
-    @include respons(xlarge){
+    @include respons(xlarge) {
       display: none;
     }
 
-    span{
+    span {
       margin: 4px 0;
       width: 25px;
       height: 3px;
       background-color: $white;
-      transition: .4s;
+      transition: 0.4s;
     }
-    &.is-active span:nth-child(1){
-        transform: rotate(-45deg) translate(-25%,9px);
+    &.is-active span:nth-child(1) {
+      transform: rotate(-45deg) translate(-25%, 9px);
     }
-    &.is-active span:nth-child(2){
-        opacity: 0;
+    &.is-active span:nth-child(2) {
+      opacity: 0;
     }
-    &.is-active span:nth-child(3){
-        transform: rotate(45deg) translate(-25%, -9px);
+    &.is-active span:nth-child(3) {
+      transform: rotate(45deg) translate(-25%, -9px);
     }
   }
 
-  &__box-right{
-      display: none;
+  &__box-right {
+    display: none;
 
-    @include respons(xlarge){
+    @include respons(xlarge) {
       display: flex;
     }
   }
-  &__box-right.is-active{
-      display: block;
-      position: absolute;
-      top: 4em;
-      left: 0;
-      right: 0;
-      background-color: $sphere-dark;
-      z-index: 1000;
+  &__box-right.is-active {
+    display: block;
+    position: absolute;
+    top: 4em;
+    left: 0;
+    right: 0;
+    background-color: $sphere-dark;
+    z-index: 1000;
 
-    @include respons(xlarge){
+    @include respons(xlarge) {
       display: none;
     }
 
-    ul{
-        flex-direction: column;
+    ul {
+      flex-direction: column;
 
-      @include respons(xlarge){
+      @include respons(xlarge) {
         flex-direction: row;
       }
 
-      .header__links-item{
-          text-align: center;
-          margin: 10px 0;
+      .header__links-item {
+        text-align: center;
+        margin: 10px 0;
 
-        @include respons(xlarge){
+        @include respons(xlarge) {
           margin: 0;
         }
       }
     }
   }
 
-  &__links{
+  &__links {
     display: flex;
     list-style: none;
-
   }
 
-  &__links-item{
+  &__links-item {
     position: relative;
     margin: 0 2rem;
     font-weight: 500;
 
-    .cart-badge{
+    .cart-badge {
       position: absolute;
       display: flex;
       align-items: center;
@@ -131,14 +130,10 @@
   }
 }
 
-
-
 a.active {
   color: $sphere-main;
   font-weight: bold;
-
 }
 a:hover {
   color: $sphere-main;
 }
-

@@ -1,53 +1,50 @@
 <section class="book">
   @if(book){
-<div class="book__item">
+  <div class="book__item">
     <div class="book__item-title">
       <h3>{{book.title}}</h3>
       <p class="book-author">by <i>{{ book.author }}</i></p>
     </div>
-  <div class="book__item-box">
-    <div class="book__item-box--one">
-    <div class="book__item-img">
-      <img [src]="book.photoUrl" [alt]="'The book: '+ book.title">
-    </div>
-    </div>
-    <div class="book__item-box--two">
-    <div class="book__item-info">
-
-      <p class="book-category"><span class="icon material-symbols-outlined">
-category
-</span> {{ book.category }}</p>
-      <app-star-rating [stars]="book.ratingsAverage" [size]="2"></app-star-rating>
-      <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
-      <p class="book-reviews">{{book.reviews?.length}} reviews</p>
-      <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>
-      @if(role === 'admin'){
-      <div class="book__item-add-to">
-        <button class="add-btn">Edit product</button>
+    <div class="book__item-box">
+      <div class="book__item-box--one">
+        <div class="book__item-img">
+          <img [src]="book.photoUrl" [alt]="'The book: '+ book.title">
+        </div>
       </div>
-      } @else {
-         <div class="book__item-add-to">
-        <button class="add-btn" (click)="onAddToCart()">Add to cart</button>
-        <button class="buy-btn">Buy now</button>
+      <div class="book__item-box--two">
+        <div class="book__item-info">
+
+          <p class="book-category"><span class="icon material-symbols-outlined">
+              category
+            </span> {{ book.category }}</p>
+          <app-star-rating [stars]="book.ratingsAverage" [size]="2"></app-star-rating>
+          <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
+          <p class="book-reviews">{{book.reviews?.length}} reviews</p>
+          <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>
+          @if(role === 'admin'){
+          <div class="book__item-add-to">
+            <button class="add-btn">Edit product</button>
+          </div>
+          } @else {
+          <div class="book__item-add-to">
+            <button class="add-btn" (click)="onAddToCart()">Add to cart</button>
+            <button class="buy-btn">Buy now</button>
+          </div>
+          }
+        </div>
+
       </div>
-      }
     </div>
 
+    <div class="book__item-description" #descriptionDiv>
+      {{ book.description }}
     </div>
+    <button class='expand-btn' [class.hidden]="!isOverflowing" (click)="toggleExpand()">
+      {{ expanded ? 'Collapse Description' : 'Expand Description' }}
+      <span class="icon material-symbols-outlined">{{expanded ? "arrow_drop_up" : "arrow_drop_down"}}</span>
+    </button>
+
   </div>
-
-  <div class="book__item-description desc" >
-      <p class="desc" [@panelState]="folded" [ngClass]="{'collapsed': isCollapsed}">{{book.description}}</p>
-      <button class="expand-btn"
-              (click)="onExpand()">{{isCollapsed ? 'Expand description' : 'Collapse description'}}
-        <span
-        class="icon material-symbols-outlined">
-
-          {{isCollapsed ? "arrow_drop_down" : "arrow_drop_up"}}
-</span></button>
-
-    </div>
-</div>
   }
 </section>
 @if(book){

@@ -9,17 +9,12 @@ import { FormsModule, NgForm } from '@angular/forms';
 import { StarRatingComponent } from '../utils/star-rating/star-rating.component';
 import { SearchService } from '../services/search.service';
 import { CartService } from '../services/cart.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [
-    CurrencyPipe,
-    RouterLink,
-    AppLoaderComponent,
-    FormsModule,
-    StarRatingComponent,
-  ],
+  imports: [CurrencyPipe, FormsModule, StarRatingComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -30,7 +25,9 @@ export class HomeComponent implements OnInit {
   cartService = inject(CartService);
   activatedRoute = inject(ActivatedRoute);
   router = inject(Router);
+  authService = inject(AuthService);
 
+  isLoggedIn = false;
   isLoading = false;
   isMenuOpen = false;
   books: Book[] = [];
@@ -52,6 +49,14 @@ export class HomeComponent implements OnInit {
       }
       this.page = +pageParam;
       this.fetchBooks();
+    });
+
+    this.authService.user$.subscribe((user) => {
+      this.isLoggedIn = !!user;
+
+      if (this.isLoggedIn) {
+        this.cartService.getCartCount().subscribe();
+      }
     });
 
     this.apiService.loading$.subscribe((loading) => {

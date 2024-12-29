@@ -29,12 +29,6 @@ export class HeaderComponent implements OnInit {
     if (this.isLoggedIn) {
       this.cartService.getCartCount().subscribe();
     }
-
-    if (innerWidth <= 950) {
-      this.isMobile = true;
-    } else {
-      this.isMobile = false;
-    }
   }
 
   onHomePage() {
@@ -69,11 +63,7 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = false;
   }
   onAccountPage() {
-    if (this.isMobile) {
-      this.router.navigate(['/account']);
-    } else {
-      this.router.navigate(['/account/orders']);
-    }
+    this.router.navigate(['/account']);
     this.isMenuOpen = false;
   }
 }
