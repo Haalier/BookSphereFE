@@ -8,46 +8,50 @@
       <button class="home__search-btn" [disabled]="!searchForm.valid">Search</button>
     </form>
 
-    <button class="home__filter-btn" [class]="{'is-active': isMenuOpen}"
-            (click)="$event.stopPropagation(); toggleMenu()">Filter
+    <button class="home__filter-btn" [class]="{'is-active': isMenuOpen}" (click)="$event.stopPropagation(); toggleMenu()">Filter
     </button>
 
     <div class="home__filter" [class]="{'is-active': isMenuOpen}" (click)="$event.stopPropagation()">
-  <label>Category:</label>
-  <select>
-    <option value="">All Categories</option>
-    <option  value="">category</option>
-  </select>
+      <div class="filter-group">
+        <label>Category:</label>
+        <select>
+          <option value="">All Categories</option>
+          <option value="">category</option>
+        </select>
+      </div>
 
-  <label>Price:</label>
-  <select>
-    <option value="">Any Price</option>
-    <option value="10">$10 or less</option>
-    <option value="20">$20 or less</option>
-    <option value="50">$50 or less</option>
-    <option value="100">$100 or less</option>
-  </select>
+      <div class="filter-group custom-slider">
+        <div class="slider-info">
+          <span>Min price: {{rangeValues[0]}}</span>
+          <span>Max price: {{rangeValues[1]}}</span>
+        </div>
+        <div>
+          <p-slider [(ngModel)]="rangeValues" [range]="true" [min]="0" [max]="40" />
+        </div>
+      </div>
 
-  <label>Rating:</label>
-  <select>
-    <option value="">Any Rating</option>
-    <option value="1">1 star or higher</option>
-    <option value="2">2 stars or higher</option>
-    <option value="3">3 stars or higher</option>
-    <option value="4">4 stars or higher</option>
-    <option value="5">5 stars only</option>
-  </select>
+      <div class="filter-group">
+        <label>Rating:</label>
+        <select>
+          <option value="">Any Rating</option>
+          <option value="1">1 star or higher</option>
+          <option value="2">2 stars or higher</option>
+          <option value="3">3 stars or higher</option>
+          <option value="4">4 stars or higher</option>
+          <option value="5">5 stars only</option>
+        </select>
+      </div>
 
-  <button (click)="applyFilters()">Apply Filters</button>
-</div>
+      <button (click)="applyFilters()">Apply Filters</button>
+    </div>
   </nav>
-<div class="home__results">
-  <p>Results: {{results}}</p>
-</div>
+  <div class="home__results">
+    <p>Results: {{results}}</p>
+  </div>
 
 
-<div class="products wrapper">
-  @for (book of books; track book._id){
+  <div class="products wrapper">
+    @for (book of books; track book._id){
     <div class="product" (click)="onBook(book._id, book.slug)">
       <div class="product__image">
         <img [src]="book.photoUrl" alt="Here should be an image of book">
@@ -56,17 +60,18 @@
         <h4 class="product__title">{{book.title}}</h4>
         <p class="product__author">by <i>{{book.author}}</i></p>
         <div class="product__info-bottom">
-        <p class="product__category"><span class="icon material-symbols-outlined">
-menu_book
-</span> {{ book.category }}</p>
+          <p class="product__category"><span class="icon material-symbols-outlined">
+              menu_book
+            </span> {{ book.category }}</p>
           <div class="product__rating-price-box">
             <app-star-rating [stars]="book.ratingsAverage"></app-star-rating>
-          <p class="product__price">
-        <span class="icon material-symbols-outlined">
-payments
-</span> {{book.price | currency:'USD':'symbol' }}</p>
+            <p class="product__price">
+              <span class="icon material-symbols-outlined">
+                payments
+              </span> {{book.price | currency:'USD':'symbol' }}
+            </p>
           </div>
-      </div>
+        </div>
 
         <div class="product__add-to-cart">
           <a class="add-btn" (click)="onAddToCart(book._id, $event)">Add to cart</a>
@@ -74,25 +79,25 @@ payments
         </div>
       </div>
     </div>
-  }
-</div>
+    }
+  </div>
 
 </section>
 @if (!isLoading){
 <section class="pagination">
   @if (page !== 1 && previousPage !== 1){
   <a (click)="onFirstPage()">1</a>
-    <span>...</span>
+  <span>...</span>
   }
   @if(hasPreviousPage){
-    <a (click)="onPreviousPage()">{{previousPage}}</a>
+  <a (click)="onPreviousPage()">{{previousPage}}</a>
   }
   <a class="active">{{page}}</a>
   @if (hasNextPage){
   <a (click)="onNextPage()">{{nextPage}}</a>
   }
   @if (lastPage !== page && nextPage !== lastPage){
-    <span>...</span>
+  <span>...</span>
   <a (click)="onLastPage()">{{lastPage}}</a>
   }
 </section>

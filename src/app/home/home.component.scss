@@ -1,124 +1,185 @@
 @import "mixins";
 @import "colors";
 
-.home{
+::ng-deep {
+  .p-slider {
+    margin: 1rem 0;
+
+    .p-slider-track {
+      height: 6px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+
+      @include respons(medium) {
+        height: 8px;
+        border-radius: 4px;
+      }
+
+      @include respons(xlarge) {
+        height: 10px;
+        border-radius: 5px;
+      }
+    }
+    .p-slider-range {
+      background-color: $sphere-main;
+      height: 6px;
+      border-radius: 3px;
+      transition: background-color 0.2s ease;
+
+      @include respons(medium) {
+        height: 8px;
+        border-radius: 4px;
+      }
+
+      @include respons(xlarge) {
+        height: 10px;
+        border-radius: 5px;
+      }
+    }
+    .p-slider-handle {
+      width: 18px;
+      height: 18px;
+      margin-top: -6px;
+      background-color: $sphere-main;
+      border: none;
+      border-radius: 50%;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      cursor: pointer;
+      transition: background-color 0.2s ease, transform 0.2s ease;
+
+      @include respons(medium) {
+        width: 20px;
+        height: 20px;
+        margin-top: -7px;
+      }
+
+      @include respons(xlarge) {
+        width: 24px;
+        height: 24px;
+        margin-top: -9px;
+      }
+    }
+  }
+}
+
+.home {
   padding: 1rem 3rem;
   width: 100%;
   font-size: 1.8rem;
 
-  nav{
+  nav {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
   }
 
-&__search-bar{
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin: 2rem 0 1rem 0;
-  width: 100%;
-  input{
-    padding: 1rem 1.5rem;
-    width: 65%;
-    max-width: 550px;
-    border: 1px solid $sphere-grey;
-    outline: none;
-    border-bottom-left-radius: 6px;
-    border-top-left-radius: 6px;
-    transition: all .2s;
-
-    @include respons(medium){
-      width: 55%;
-    }
-
-
-  }
-  input:focus{
-    width: 75%;
-    max-width: 700px;
-
-    @include respons(medium){
-      width: 65%;
-    }
-  }
-  input::placeholder{
-    color: rgba(0, 0, 0, 0.5);
-  }
-
-  .icon__box{
+  &__search-bar {
     position: relative;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 2rem 0 1rem 0;
+    width: 100%;
+    input {
+      padding: 1rem 1.5rem;
+      width: 65%;
+      max-width: 550px;
+      border: 1px solid $sphere-grey;
+      outline: none;
+      border-bottom-left-radius: 6px;
+      border-top-left-radius: 6px;
+      transition: all 0.2s;
 
-    span.icon{
-      position: absolute;
-      right: .5em;
-      top: .5em;
-      color: $sphere-grey;
-      vertical-align: middle;
+      @include respons(medium) {
+        width: 55%;
+      }
+    }
+    input:focus {
+      width: 75%;
+      max-width: 700px;
+
+      @include respons(medium) {
+        width: 65%;
+      }
+    }
+    input::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    .icon__box {
+      position: relative;
+      text-align: center;
+
+      span.icon {
+        position: absolute;
+        right: 0.5em;
+        top: 0.5em;
+        color: $sphere-grey;
+        vertical-align: middle;
+      }
     }
   }
-}
 
-  &__search-btn{
+  &__search-btn {
     transform: translateX(-10%);
-    padding: .4rem .7rem;
+    padding: 0.4rem 0.7rem;
 
     color: $white;
     background-color: $sphere-grey;
     border-top-right-radius: 6px;
     border-bottom-right-radius: 6px;
-    transition: background-color .2s;
+    transition: background-color 0.2s;
 
-    &:disabled{
+    &:disabled {
       background-color: gray;
     }
 
-    &:not(:disabled):hover{
+    &:not(:disabled):hover {
       background-color: #1f1f1f;
     }
 
-    @include respons(medium){
+    @include respons(medium) {
       padding: 1rem 1.5rem;
     }
   }
-&__filter-btn{
- padding: 0.4rem 1.5rem;
-  margin: 0 2rem;
-  width: 65%;
-  align-self: center;
-  font-size: 1.4rem;
-  font-weight: 500;
-  color: $white;
-  background-color: $sphere-grey;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: background-color 0.2s ease, transform 0.2s ease;
+  &__filter-btn {
+    padding: 0.4rem 1.5rem;
+    margin: 0 2rem;
+    width: 65%;
+    align-self: center;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: $white;
+    background-color: $sphere-grey;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
 
-  @include respons(medium){
-    display: none;
-  }
-  &.is-active{
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  &:hover {
-    background-color: darken($sphere-main, 8%);
+    @include respons(medium) {
+      display: none;
+    }
+    &.is-active {
+      border-bottom-right-radius: 0;
+      border-bottom-left-radius: 0;
+    }
+    &:hover {
+      background-color: darken($sphere-main, 8%);
+    }
+
+    &:active {
+      background-color: darken($sphere-main, 10%);
+      transform: translateY(1px);
+    }
   }
 
-  &:active {
-    background-color: darken($sphere-main, 10%);
-    transform: translateY(1px);
-  }
-}
-
-
-&__filter {
+  &__filter {
     display: none;
     flex-direction: column;
     align-items: center;
+    gap: 1rem;
+    text-align: center;
+    min-height: 7rem;
     width: 100%;
     max-width: 800px;
     padding: 0.5rem;
@@ -133,24 +194,40 @@
     @include respons(medium) {
       display: flex;
       flex-direction: row;
-      gap: 1rem;
+      justify-content: space-around;
+      gap: 2rem;
       max-width: 1000px;
     }
 
-    &.is-active{
-    display: flex;
-    padding: 2rem 1rem;
-    max-width: 65%;
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
-    background-color: darken($sphere-bg, 10%);
-   }
-    select{
-      margin-bottom: 1rem;
-      width: 100%;
-      @include respons(medium){
-        max-width: 20%;
-        margin-bottom: 0;
+    &.is-active {
+      display: flex;
+      padding: 2rem 1rem;
+      max-width: 65%;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      background-color: darken($sphere-bg, 10%);
+    }
+
+    &__filter-group {
+      display: flex;
+      flex-direction: row;
+      flex: 1;
+      width: 20%;
+    }
+
+    .custom-slider {
+      width: 50%;
+
+      @include respons(medium) {
+        width: 20%;
+      }
+      .slider-info {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 5px;
+      }
+      span {
+        font-size: 1.4rem;
       }
     }
 
@@ -158,6 +235,10 @@
       font-size: 1.4rem;
       font-weight: 500;
       color: #333;
+
+      @include respons(medium) {
+        margin-right: 1rem;
+      }
     }
 
     select {
@@ -203,125 +284,122 @@
     }
   }
 
-  &__results{
+  &__results {
     max-width: 1600px;
     padding-left: 20px;
     margin: 2em auto 0 auto;
-
   }
 
-.products{
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  grid-auto-rows: minmax(100px, auto);
-  gap: 5rem;
-  justify-items: center;
+  .products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-auto-rows: minmax(100px, auto);
+    gap: 5rem;
+    justify-items: center;
 
-  .product{
-    display: flex;
-    flex-direction: column;
-    padding: 1rem;
-    max-width: 320px;
-    width: 100%;
-    height: 100%;
-    border: 1px solid #dadada;
-    border-radius: 5px;
-    cursor: pointer;
-
-    @include respons(medium){
-      max-width: 300px;
-    }
-
-    .icon{
-      font-size: 2rem;
-    }
-
-    &__image{
-      height: 350px;
-      img{
-        width: 100%;
-        height: 100%;
-      }
-    }
-    &__info{
+    .product {
       display: flex;
       flex-direction: column;
-      flex-grow: 1;
-      padding: 1rem 2rem;
+      padding: 1rem;
+      max-width: 320px;
       width: 100%;
-    }
+      height: 100%;
+      border: 1px solid #dadada;
+      border-radius: 5px;
+      cursor: pointer;
 
-
-    &__title{
-      text-align: center;
-    }
-
-    &__author{
-      margin-bottom: 1em;
-      font-size: 1.3rem;
-    }
-
-    &__info-bottom{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      margin-top: auto;
-    }
-    &__rating{
-      display: flex;
-      align-items: center;
-    }
-    &__rating-price-box{
-      display: flex;
-      justify-content: space-between;
-    }
-
-
-    &__add-to-cart{
-      display: flex;
-      margin-top: 1rem;
-      justify-content: space-between;
-      align-items: flex-end;
-      font-size: 1.5rem;
-
-      @include respons(xsmall){
-        font-size: 1.6rem;
+      @include respons(medium) {
+        max-width: 300px;
       }
 
-      @include respons(small){
-        font-size: 1.8rem;
+      .icon {
+        font-size: 2rem;
       }
 
-      @include respons(medium){
-        font-size: 1.6rem;
+      &__image {
+        height: 350px;
+        img {
+          width: 100%;
+          height: 100%;
+        }
       }
-      @include respons(large){
-        font-size: 1.8rem;
+      &__info {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        padding: 1rem 2rem;
+        width: 100%;
       }
-      @include respons(xlarge){
-        font-size: 1.6rem;
+
+      &__title {
+        text-align: center;
       }
-      @include respons(xxlarge){
-        font-size: 1.8rem;
+
+      &__author {
+        margin-bottom: 1em;
+        font-size: 1.3rem;
       }
-      @include respons(desk){
-        font-size: 1.6rem;
+
+      &__info-bottom {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        margin-top: auto;
       }
-      @include respons(xdesk){
-        font-size: 1.8rem;
+      &__rating {
+        display: flex;
+        align-items: center;
+      }
+      &__rating-price-box {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      &__add-to-cart {
+        display: flex;
+        margin-top: 1rem;
+        justify-content: space-between;
+        align-items: flex-end;
+        font-size: 1.5rem;
+
+        @include respons(xsmall) {
+          font-size: 1.6rem;
+        }
+
+        @include respons(small) {
+          font-size: 1.8rem;
+        }
+
+        @include respons(medium) {
+          font-size: 1.6rem;
+        }
+        @include respons(large) {
+          font-size: 1.8rem;
+        }
+        @include respons(xlarge) {
+          font-size: 1.6rem;
+        }
+        @include respons(xxlarge) {
+          font-size: 1.8rem;
+        }
+        @include respons(desk) {
+          font-size: 1.6rem;
+        }
+        @include respons(xdesk) {
+          font-size: 1.8rem;
+        }
       }
     }
   }
 }
-}
 
-.pagination{
+.pagination {
   margin: 3rem 0;
   text-align: center;
   font-size: 1.6rem;
 }
 
-.pagination a{
+.pagination a {
   padding: 1rem;
   margin: 1rem 1rem;
   text-decoration: none;
@@ -332,10 +410,7 @@
 
 .pagination a:hover,
 .pagination a:active,
-.pagination a.active{
+.pagination a.active {
   background-color: $sphere-main;
   color: $white;
 }
-
-
-

@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { BehaviorSubject, finalize, Observable } from 'rxjs';
 import { Book } from '../models/book.model';
 import { ApiService } from './api.service';
@@ -37,10 +37,19 @@ export class BooksService {
     new BehaviorSubject<number>(0);
   public bookResults$ = this.bookResultsSubject.asObservable();
 
-  getBooks(page: number): void {
+  getBooks(page: number, queryParams?: {}): void {
     this.apiService.loadingSubject.next(true);
+
+    let params = new HttpParams().set('page', page).set('limit', this.limit);
+
+    if (queryParams) {
+      Object.entries(queryParams).forEach(([key, val]) => {
+        params = params.set(key, String(val));
+      });
+    }
+
     this.http
-      .get<BooksResponse>(`${this.apiUrl}?page=${page}&limit=${this.limit}`)
+      .get<BooksResponse>(this.apiUrl, { params })
       .pipe(finalize(() => this.apiService.loadingSubject.next(false)))
       .subscribe({
         next: (res) => {

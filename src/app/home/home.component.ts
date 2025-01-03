@@ -10,11 +10,12 @@ import { StarRatingComponent } from '../utils/star-rating/star-rating.component'
 import { SearchService } from '../services/search.service';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
+import { SliderModule } from 'primeng/slider';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CurrencyPipe, FormsModule, StarRatingComponent],
+  imports: [CurrencyPipe, FormsModule, StarRatingComponent, SliderModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
 })
@@ -40,6 +41,7 @@ export class HomeComponent implements OnInit {
   nextPage!: number;
   previousPage!: number;
   lastPage!: number;
+  rangeValues: number[] = [0, 40];
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((params) => {
@@ -135,7 +137,14 @@ export class HomeComponent implements OnInit {
     this.scrollToTop();
   }
 
-  applyFilters() {}
+  applyFilters() {
+    const query = {
+      'price[gte]': this.rangeValues[0],
+      'price[lte]': this.rangeValues[1],
+    };
+
+    this.booksService.getBooks(this.page, query);
+  }
 
   toggleMenu() {
     this.isMenuOpen = !this.isMenuOpen;

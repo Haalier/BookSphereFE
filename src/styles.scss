@@ -1,7 +1,7 @@
 /* reset.css */
 // font styles
-@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import "mixins";
 @import "colors";
 /* Box sizing rules */
@@ -13,28 +13,45 @@
 
 /* Remove default margin */
 body,
-h1, h2, h3, h4, h5, h6,
-p, figure, blockquote, dl, dd,
-ul, ol, li,
-form, fieldset, legend,
-table, th, td {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+figure,
+blockquote,
+dl,
+dd,
+ul,
+ol,
+li,
+form,
+fieldset,
+legend,
+table,
+th,
+td {
   margin: 0;
 }
 
 /* Remove default padding */
-ul, ol {
+ul,
+ol {
   padding: 0;
 }
 
 /* Remove list styles on ul, ol elements with a list role */
-ul[role='list'],
-ol[role='list'] {
+ul[role="list"],
+ol[role="list"] {
   list-style: none;
 }
 
-html{
+html {
   font-size: 62.5%;
-  font-family: 'Montserrat', sans-serif;
+  font-family: "Montserrat", sans-serif;
+  color: #000;
 }
 
 /* Set core root defaults */
@@ -57,41 +74,40 @@ a:not([class]) {
 }
 
 // GLOBAL STYLES
-.link{
+.link {
   color: #000;
   text-decoration: none;
 }
 
-.link:hover{
+.link:hover {
   color: white;
   transform: translateY(5px);
 }
 
-
-.add-btn, .buy-btn{
+.add-btn,
+.buy-btn {
   padding: 5px 6px;
   border-radius: 6px;
   color: white;
   cursor: pointer;
-  transition: background-color .2s ease;
+  transition: background-color 0.2s ease;
   text-decoration: none;
 }
-.add-btn{
+.add-btn {
   background-color: $sphere-second;
 }
-.add-btn:hover{
+.add-btn:hover {
   background-color: $sphere-main;
 }
-.buy-btn{
+.buy-btn {
   background-color: $sphere-main;
 }
-.buy-btn:hover{
+.buy-btn:hover {
   background-color: $sphere-purple;
 }
 
-@include respons(xlarge){
-
-  .link::after{
+@include respons(xlarge) {
+  .link::after {
     content: "";
     position: absolute;
     bottom: -10%;
@@ -100,15 +116,14 @@ a:not([class]) {
     height: 2px;
     background-color: $sphere-main;
     z-index: 1000;
-    transition: transform .2s;
+    transition: transform 0.2s;
     transform-origin: center;
     transform: scaleX(0);
   }
-  .link:hover::after{
+  .link:hover::after {
     transform: scaleX(1);
   }
 }
-
 
 /* Make images easier to work with */
 img,
@@ -123,6 +138,7 @@ button,
 textarea,
 select {
   font: inherit;
+  background-color: transparent;
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */
@@ -154,8 +170,8 @@ textarea {
 }
 
 /* Remove default appearance for inputs of type number */
-input[type='number']::-webkit-inner-spin-button,
-input[type='number']::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
@@ -166,6 +182,6 @@ input[type='number']::-webkit-outer-spin-button {
   padding: 20px;
 }
 
-.icon{
+.icon {
   vertical-align: middle;
 }
