@@ -1,5 +1,6 @@
 @import "mixins";
 @import "colors";
+
 .header {
   position: sticky;
   top: -1px;
@@ -54,12 +55,15 @@
       background-color: $white;
       transition: 0.4s;
     }
+
     &.is-active span:nth-child(1) {
       transform: rotate(-45deg) translate(-25%, 9px);
     }
+
     &.is-active span:nth-child(2) {
       opacity: 0;
     }
+
     &.is-active span:nth-child(3) {
       transform: rotate(45deg) translate(-25%, -9px);
     }
@@ -72,6 +76,7 @@
       display: flex;
     }
   }
+
   &__box-right.is-active {
     display: block;
     position: absolute;
@@ -118,14 +123,22 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      top: -5px;
-      right: -5px;
+      top: -25%;
+      right: 45%;
       width: 1.8rem;
       height: 1.8rem;
       background-color: red;
       color: white;
       font-size: 1.2rem;
       border-radius: 50%;
+
+      @include respons(medium) {
+        right: 47%;
+      }
+
+      @include respons(xlarge) {
+        right: -30%;
+      }
     }
   }
 }
@@ -134,6 +147,7 @@ a.active {
   color: $sphere-main;
   font-weight: bold;
 }
+
 a:hover {
   color: $sphere-main;
 }

@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { AuthService, userResponseData } from '../services/auth.service';
 import {
-  ActivatedRoute,
   Router,
   RouterOutlet,
   RouterLink,
@@ -17,9 +16,7 @@ import {
 export class AccountComponent implements OnInit {
   authService = inject(AuthService);
   userData!: userResponseData | null;
-  isMobile!: boolean;
   router = inject(Router);
-  activatedRoute = inject(ActivatedRoute);
 
   ngOnInit() {
     this.authService.getCurrentUser().subscribe((currentUserData) => {

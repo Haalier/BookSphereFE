@@ -1,44 +1,3 @@
-<!--        <div class="user-view__content">-->
-<!--            <div class="user-view__form-container">-->
-<!--                <h2 class="heading-secondary">Your account settings</h2>-->
-<!--                <form method="post" class="form form-user-data">-->
-<!--                    <div class="form__group">-->
-<!--                        <label class="form__label" for="name">Name</label>-->
-<!--                        <input class="form__input" id="name" type="text" value="Dawid Garncarz" required>-->
-<!--                    </div>-->
-<!--                    <div class="form__group">-->
-<!--                        <label class="form__label" for="email">Name</label>-->
-<!--                        <input class="form__input" id="email" type="email" value="dawidg@booksphere.io" required>-->
-<!--                    </div>-->
-<!--                    <div class="form__group right">-->
-<!--                        <button type="submit">Save settings</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--            <div class="line">&nbsp;</div>-->
-<!--            <div class="user-view__form-container">-->
-<!--                <h2 class="heading-secondary">Password change</h2>-->
-<!--                <form method="post" class="form form-user-settings">-->
-<!--                    <div class="form-group">-->
-<!--                        <label class="form__label" for="password-current">Current password</label>-->
-<!--                        <input id="password-current" class="form__input" type="password" placeholder="*******"-->
-<!--                               required minlength="7">-->
-<!--                    </div>-->
-<!--                    <div class="form-group">-->
-<!--                        <label class="form__label" for="password-confirm">Confirm password</label>-->
-<!--                        <input id="password-confirm" class="form__input" type="password" placeholder="*******"-->
-<!--                               required minlength="7">-->
-<!--                    </div>-->
-<!--                    <div class="form__group right">-->
-<!--                        <button class="btn">Save password</button>-->
-<!--                    </div>-->
-<!--                </form>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-
-<!--</section>-->
-
 <section class="account">
     <h2 class="heading">My account</h2>
     <div class="user-view">
@@ -83,8 +42,7 @@
                         <span class="icon material-symbols-outlined">chevron_right</span>
                     </a>
                 </li>
-                @if(!isMobile){
-                <li class="menu-item">
+                <li class="menu-item menu-item__desktop">
                     <a (click)="onSettings()" routerLink="/settings" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon icon-account material-symbols-outlined">account_circle</span>
@@ -93,43 +51,42 @@
                         <span class="icon material-symbols-outlined">chevron_right</span>
                     </a>
                 </li>
-                }
             </ul>
             @if (userData?.role === 'user') {
-            <div class="admin-nav">
-                <h5 class="heading-second">Admin settings</h5>
-                <ul class="menu">
-                    <hr />
-                    <li class="menu-item">
-                        <a href="" routerLink="/admin/books" routerLinkActive="active">
-                            <div class="menu-item--left">
-                                <span class="icon material-symbols-outlined">menu_book</span>
-                                <p>Manage books</p>
-                            </div>
-                            <span class="icon material-symbols-outlined">chevron_right</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="" routerLink="/admin/users" routerLinkActive="active">
-                            <div class="menu-item--left">
-                                <span class="icon material-symbols-outlined">group</span>
-                                <p>Manage users</p>
-                            </div>
-                            <span class="icon material-symbols-outlined">chevron_right</span>
-                        </a>
-                    </li>
-                    <li class="menu-item">
-                        <a href="" routerLink="/admin/reviews" routerLinkActive="active">
-                            <div class="menu-item--left">
-                                <span class="icon material-symbols-outlined">reviews</span>
-                                <p>Manage reviews</p>
-                            </div>
-                            <span class="icon material-symbols-outlined">chevron_right</span>
-                        </a>
-                    </li>
-                    <hr />
-                </ul>
-            </div>
+                <div class="admin-nav">
+                    <h5 class="heading-second">Admin settings</h5>
+                    <ul class="menu">
+                        <hr/>
+                        <li class="menu-item">
+                            <a href="" routerLink="/admin/books" routerLinkActive="active">
+                                <div class="menu-item--left">
+                                    <span class="icon material-symbols-outlined">menu_book</span>
+                                    <p>Manage books</p>
+                                </div>
+                                <span class="icon material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="" routerLink="/admin/users" routerLinkActive="active">
+                                <div class="menu-item--left">
+                                    <span class="icon material-symbols-outlined">group</span>
+                                    <p>Manage users</p>
+                                </div>
+                                <span class="icon material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </li>
+                        <li class="menu-item">
+                            <a href="" routerLink="/admin/reviews" routerLinkActive="active">
+                                <div class="menu-item--left">
+                                    <span class="icon material-symbols-outlined">reviews</span>
+                                    <p>Manage reviews</p>
+                                </div>
+                                <span class="icon material-symbols-outlined">chevron_right</span>
+                            </a>
+                        </li>
+                        <hr/>
+                    </ul>
+                </div>
             }
             <ul class="menu">
                 <li class="menu-item">
@@ -138,32 +95,32 @@
             </ul>
         </nav>
         <div class="user-view__content">
-            @if(router.url === '/account'){
-            <div class="user-view__content-default">
-                <h2>Hello {{userData?.name}}!</h2>
-                <p>Here are your latest orders:</p>
-                <ul class="orders-list">
-                    <li class="orders-list__item">
-                        <a href="">
-                            <div class="orders-list__item--left">
-                                <p class="status">Pending</p>
-                                <div class="orders-list__item-data">
-                                    <p>1 grudnia 2023</p>
-                                    <p>nr 70005435</p>
+            @if (router.url === '/account') {
+                <div class="user-view__content-default">
+                    <h2>Hello {{ userData?.name }}!</h2>
+                    <p>Here are your latest orders:</p>
+                    <ul class="orders-list">
+                        <li class="orders-list__item">
+                            <a href="">
+                                <div class="orders-list__item--left">
+                                    <p class="status">Pending</p>
+                                    <div class="orders-list__item-data">
+                                        <p>1 grudnia 2023</p>
+                                        <p>nr 70005435</p>
+                                    </div>
+                                    <p class="price">$155.4</p>
                                 </div>
-                                <p class="price">$155.4</p>
-                            </div>
-                            <div class="orders-list__item--right">
-                                <img alt="An image of book" />
-                                <div class="book-data">
-                                    <p class="title">Descent</p>
-                                    <p class="author">Tom ddsad</p>
+                                <div class="orders-list__item--right">
+                                    <img alt="An image of book"/>
+                                    <div class="book-data">
+                                        <p class="title">Descent</p>
+                                        <p class="author">Tom ddsad</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             }
             <router-outlet></router-outlet>
         </div>

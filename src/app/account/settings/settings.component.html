@@ -1,0 +1,27 @@
+<h3 class="heading">Account settings</h3>
+<p>Account data</p>
+<div class="settings__box">
+    <form method="POST" class="settings__form" [formGroup]="accountForm" (ngSubmit)="settingsChangeSubmit()">
+        <label for="name">Name: </label>
+        <input type="text" id="name" formControlName="name">
+        @if (!accountForm.controls['name'].untouched && accountForm.controls['name'].invalid) {
+            @if (accountForm.controls['name'].errors?.['required']) {
+                <p class="error">Name is required!</p>
+            }
+        }
+        <label for="email">Email: </label>
+        <input type="email" id="email" formControlName="email">
+        @if (!accountForm.controls['email'].untouched && accountForm.controls['email'].invalid) {
+            @if (accountForm.controls['email'].errors?.['required']) {
+                <p class="error">Email is required!</p>
+            } @else if (accountForm.controls['email'].errors?.['email']) {
+                <p class="error">Please enter a valid email address!</p>
+            }
+        }
+
+
+        <label for="password">Password: </label>
+        <input type="password" id="password" disabled placeholder="••••••••">
+        <button [disabled]="accountForm.invalid">Save Settings</button>
+    </form>
+</div>

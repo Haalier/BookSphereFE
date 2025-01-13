@@ -1,0 +1,7 @@
+@import 'mixins';
+@import 'colors';
+
+:host {
+  display: flex;
+  flex-direction: column;
+}

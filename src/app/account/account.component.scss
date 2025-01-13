@@ -147,6 +147,14 @@
         max-width: 500px;
         cursor: pointer;
 
+        &__desktop{
+          display: none;
+
+          @include respons(xlarge) {
+            display: flex;
+          }
+        }
+
         a.active {
           color: $sphere-main;
           font-weight: bold;
