@@ -181,6 +181,7 @@ export class HomeComponent implements OnInit {
 
         this.cartService.addToCart(data).subscribe(() => {
             this.showModal = true;
+            document.body.style.overflow = 'hidden';
         });
 
         this.booksService.getBook(bookId, slug).subscribe((book) => {
@@ -191,5 +192,6 @@ export class HomeComponent implements OnInit {
 
     onModalClose() {
         this.showModal = false;
+        document.body.style.overflow = 'auto';
     }
 }

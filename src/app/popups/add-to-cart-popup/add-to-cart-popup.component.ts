@@ -40,6 +40,7 @@ export class AddToCartPopupComponent implements OnInit {
     }
 
     toCart() {
+        this.close.emit();
         this.router.navigate(['/cart']);
     }
 }
