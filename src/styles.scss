@@ -139,6 +139,7 @@ textarea,
 select {
   font: inherit;
   background-color: transparent;
+  color: black;
 }
 
 /* Remove all animations and transitions for people that prefer not to see them */
@@ -184,4 +185,5 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .icon {
   vertical-align: middle;
+  color: black;
 }
