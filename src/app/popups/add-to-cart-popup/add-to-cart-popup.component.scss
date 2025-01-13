@@ -1,0 +1,83 @@
+@import "mixins";
+@import "colors";
+
+::ng-deep {
+    .p-inputnumber {
+      margin-bottom: 2rem;
+      background-color: transparent;
+
+      .p-inputnumber-input {
+        color: black;
+        background-color: transparent;
+        text-align: center;
+
+        &:focus {
+          border-color: $sphere-dark !important;
+        }
+      }
+
+
+
+    }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+
+  .modal-content {
+    background-color: #fff;
+    padding: 30px;
+    margin: 3rem 5rem;
+    border-radius: 10px;
+    text-align: center;
+    max-width: 500px;
+    width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+
+    h2 {
+      font-size: 2rem;
+    }
+
+    .buttons {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 1rem 2rem;
+      border: none;
+      background-color: grey;
+    }
+
+    .book-data {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 2rem 0;
+
+      img {
+        height: 20rem;
+        margin-bottom: 1rem;
+      }
+
+      p:has(b) {
+        font-size: 1.6rem;
+      }
+
+      p {
+        font-size: 1.4rem;
+      }
+
+    }
+  }
+}

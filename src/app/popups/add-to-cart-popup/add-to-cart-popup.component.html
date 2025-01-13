@@ -1,0 +1,16 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <h2>Book has been added to your cart!</h2>
+        <div class="book-data">
+            <img [src]='product()?.photoUrl' [alt]='product()?.title'>
+            <p><b>{{ product()?.title }}</b></p>
+            <p>by <i>{{ product()?.author }}</i></p>
+            <p><b>${{ product()?.price }}</b></p>
+            <p>Total price in the shopping cart: <b>${{ totalPrice }}</b></p>
+        </div>
+        <div class="buttons">
+            <button (click)="closeModal()">Continue shopping</button>
+            <button (click)="toCart()">Go to cart</button>
+        </div>
+    </div>
+</div>
