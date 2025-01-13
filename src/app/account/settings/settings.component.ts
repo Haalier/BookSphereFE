@@ -37,6 +37,7 @@ export class SettingsComponent implements OnInit {
         })
 
         this.authService.user$.subscribe((user) => {
+            console.log(user);
             this.userData = user;
            if(this.userData){
         this.accountForm.patchValue({
