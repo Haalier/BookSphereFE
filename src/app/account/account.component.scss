@@ -268,6 +268,7 @@
     }
   }
 
+
   &__content {
     display: none;
 
@@ -322,4 +323,8 @@
       }
     }
   }
+}
+
+.show-content{
+  display: flex;
 }

@@ -1,22 +1,27 @@
 <section class="reviews">
     <form method="POST" class="reviews__new-review" #reviewForm="ngForm" (ngSubmit)="onReviewCreate(reviewForm)">
-     <textarea  [placeholder]="isLoggedIn ? 'Your review' : 'You have to be logged in to add a review.'"
-                [disabled]="!isLoggedIn" name="review" required ngModel></textarea>
-      <div class="reviews__rating">
-      <app-star-rating [size]="2" [stars]="rating" (ratingChange)="rating = $event"></app-star-rating>
-      <button class="reviews__btn-add" type="submit" [disabled]="!isLoggedIn">Add review</button>
+     <textarea [placeholder]="isLoggedIn ? 'Your review' : 'You have to be logged in to add or edit a review.'"
+               [disabled]="!isLoggedIn" name="review" required ngModel></textarea>
+        <div class="reviews__rating">
+            <app-star-rating [size]="2" [stars]="rating" (ratingChange)="rating = $event"></app-star-rating>
+            <button class="reviews__btn-add" type="submit" [disabled]="!isLoggedIn">Add review</button>
         </div>
     </form>
-  @for(review of reviews; track review._id){
-    <div class="reviews__box">
-      <div class="reviews__box-content">
-        <p>{{review.review}}</p>
-      </div>
-      <p class="reviews__box-rating">{{review.rating}} / 5</p>
-      <div class="reviews__box-data">
-        <p class="reviews__box-author">{{review.user.name}}</p>
-        <p class="reviews__box-date">{{review.createdAt | date: 'short'}}</p>
-      </div>
-    </div>
-  }
+    @for (review of reviews; track review._id) {
+        <div class="reviews__box">
+            <div class="reviews__box-content">
+                <button class="editBtn" (click)="onReviewEdit(review)" [disabled]="!isLoggedIn">
+                    <span class="material-symbols-outlined">edit_square</span>
+                </button>
+                <p class="review-text">{{ review.review }}</p>
+            </div>
+            <div class="reviews__box-data">
+                <div>
+                    <p class="reviews__box-rating">{{ review.rating }} / 5</p>
+                    <p class="reviews__box-author">{{ review.user.name }}</p>
+                </div>
+                <p class="reviews__box-date">{{ review.updatedAt | date: 'short' }}</p>
+            </div>
+        </div>
+    }
 </section>

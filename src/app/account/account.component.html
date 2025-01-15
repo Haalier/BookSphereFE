@@ -94,7 +94,7 @@
                 </li>
             </ul>
         </nav>
-        <div class="user-view__content">
+        <div class="user-view__content" [class.show-content]="isContentLoaded">
             @if (router.url === '/account') {
                 <div class="user-view__content-default">
                     <h2>Hello {{ userData?.name }}!</h2>

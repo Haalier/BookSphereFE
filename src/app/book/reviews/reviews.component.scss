@@ -82,6 +82,11 @@
   }
 
   &__box{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+    height: 100%;
     padding: 1.5rem;
     margin-bottom: 2rem;
     background-color: $white;
@@ -93,10 +98,30 @@
     }
 
     &-content{
-      margin-bottom: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      //justify-content: space-between;
       font-size: 1.4rem;
       line-height: 1.6;
+      max-width: 100%;
+      overflow-wrap: break-word;
       color: #333;
+
+      .editBtn{
+        display: block;
+        margin-left: auto;
+         &:disabled {
+
+        color: #ddd;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+      }
+
+
+     .review-text{
+       margin-bottom: 1.5rem;
+     }
 
       @include respons(large){
         font-size: 1.6rem;
@@ -122,6 +147,7 @@
       text-align: right;
       font-size: 1.2rem;
       color: #777;
+      align-self: flex-end;
 
       @include respons(large){
         font-size: 1.4rem;

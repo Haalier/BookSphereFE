@@ -21,15 +21,17 @@ export class StarRatingComponent {
     };
   }
 
-  getStarImage(current: number): string {
+  // @ts-ignore
+  getStarImage(current: number) {
     const previousHalf = current - 0.5;
-    const imageName =
+      const imageName =
       this.stars >= current
         ? 'star-full'
         : this.stars >= previousHalf
         ? 'star-half'
         : 'star-empty';
     return `/assets/stars/${imageName}.svg`;
+
   }
 
   setRating(rating: number) {

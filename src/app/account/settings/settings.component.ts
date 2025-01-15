@@ -22,7 +22,7 @@ export class SettingsComponent implements OnInit {
     userData: User | null = null;
     errMsg?: string;
 
-       accountForm: FormGroup = new FormGroup({
+    accountForm: FormGroup = new FormGroup({
         name: new FormControl(this.userData?.name, {
             validators: [Validators.required],
         }),
@@ -37,20 +37,18 @@ export class SettingsComponent implements OnInit {
         })
 
         this.authService.user$.subscribe((user) => {
-            console.log(user);
             this.userData = user;
-           if(this.userData){
-        this.accountForm.patchValue({
-            name: this.userData?.name,
-            email: this.userData?.email,
-        })
+            if (this.userData) {
+                this.accountForm.patchValue({
+                    name: this.userData?.name,
+                    email: this.userData?.email,
+                })
 
-        }
+            }
         })
 
 
     }
-
 
 
     settingsChangeSubmit() {

@@ -48,5 +48,11 @@
   }
 </section>
 @if(book){
-<app-reviews [book]=book (reviewAdded)="onReviewAdded()"></app-reviews>
+<app-reviews #reviewsComponent [book]=book (reviewAdded)="onReviewAdded()"
+             (openEditModal)="onEditModalOpen($event)"></app-reviews>
+}
+
+@if(showEditModal){
+    <app-edit-review [review]="reviewForEdit" [bookId]="bookId" (close)="onEditModalClose()"
+                     (update)="onReviewsUpdate()"></app-edit-review>
 }

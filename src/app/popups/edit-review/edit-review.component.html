@@ -1,0 +1,14 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <button (click)="closeModal()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+    <form method="POST" class="edit-review" [formGroup]="editReviewForm" (ngSubmit)="onReviewEdit()">
+     <textarea name="review" required formControlName="reviewText"></textarea>
+        <div class="rating">
+            <app-star-rating [size]="2" [stars]="rating" (ratingChange)="rating = $event"></app-star-rating>
+        </div>
+            <button class="btn-edit" type="submit">Edit Review</button>
+    </form>
+        </div>
+</div>
