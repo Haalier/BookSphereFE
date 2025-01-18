@@ -1,8 +1,10 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ErrorService} from '../../services/error.service';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/user.model';
+import {Router} from '@angular/router';
+import {EventService} from '../../services/event.service';
 
 // interface UserData {
 //     status: string;
@@ -17,17 +19,20 @@ import {User} from '../../models/user.model';
     styleUrl: './settings.component.scss'
 })
 export class SettingsComponent implements OnInit {
+    eventService = inject(EventService);
     errorService = inject(ErrorService);
     authService = inject(AuthService);
+    router = inject(Router);
     userData: User | null = null;
     errMsg?: string;
 
     accountForm: FormGroup = new FormGroup({
-        name: new FormControl(this.userData?.name, {
-            validators: [Validators.required],
-        }),
+        name: new FormControl(this.userData?.name),
         email: new FormControl('', {
-            validators: [Validators.required, Validators.email],
+            validators: [Validators.email],
+        }),
+        password: new FormControl('', {
+            validators: [Validators.minLength(7)]
         }),
     });
 
@@ -50,8 +55,26 @@ export class SettingsComponent implements OnInit {
 
     }
 
-
     settingsChangeSubmit() {
+        let dataToChange: {
+            name?: string,
+            email?: string,
+            password?: string
+        } = {}
+
+        for (let [key, value] of Object.entries(this.accountForm.value)) {
+            if (value) {
+                if (typeof value === "string") {
+                    dataToChange[key as keyof typeof dataToChange] = value;
+                }
+            }
+        }
+
+
+        this.authService.updateCurrentUser(dataToChange).subscribe((res) => {
+            this.eventService.emitEvent();
+            this.router.navigate(['/account']);
+        });
 
     }
 }

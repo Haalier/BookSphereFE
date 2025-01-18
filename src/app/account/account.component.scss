@@ -104,17 +104,22 @@
   }
 
   &__menu {
-    display: flex;
+    display: none;
     flex-direction: column;
     flex-grow: 1;
     width: 100%;
 
     @include respons(xlarge) {
+      display: flex;
       flex-grow: 0;
       padding: 2rem;
-      width: 35%;
+      width: 45%;
       background-color: whitesmoke;
       border-radius: 6px;
+    }
+
+    @include respons(desk) {
+      width: 30%
     }
 
     .menu {
@@ -132,7 +137,7 @@
       }
 
       @include respons(xlarge) {
-        gap: 0.5rem;
+        gap: 1.5rem;
       }
 
       &-item {
@@ -147,7 +152,7 @@
         max-width: 500px;
         cursor: pointer;
 
-        &__desktop{
+        &__desktop {
           display: none;
 
           @include respons(xlarge) {
@@ -155,13 +160,18 @@
           }
         }
 
-        a.active {
+        .link.active {
           color: $sphere-main;
           font-weight: bold;
           text-decoration: none;
         }
-        a:hover {
+
+        .link:hover {
           color: $sphere-main;
+        }
+
+        .link::after {
+          content: none;
         }
 
         &:not(:has(button)) {
@@ -175,7 +185,11 @@
             height: 9rem;
           }
           @include respons(xlarge) {
-            height: 4rem;
+            height: 5rem;
+            padding: 1rem;
+          }
+           @include respons(xdesk) {
+            height: 7rem;
             padding: 1rem;
           }
         }
@@ -271,60 +285,41 @@
 
   &__content {
     display: none;
+    height: 100%;
+    width: 100%;
 
+    &-default{
+      p:first-of-type {
+        margin-bottom: 1.5rem;
+      }
+       h2 {
+         text-align: center;
+      margin-bottom: 2rem;
+    }
+    }
     @include respons(xlarge) {
       display: flex;
       flex-direction: column;
       flex-grow: 1;
       padding: 2rem;
       max-height: 60vh;
-      overflow: scroll;
+      overflow-y: scroll;
     }
 
-    h2 {
-      margin-bottom: 2rem;
-    }
+
 
     .orders-list {
       display: flex;
       flex-direction: column;
       gap: 1rem;
-      &__item {
-        list-style: none;
-        /* border: 1px solid #979797; */
-        background-color: $white;
-        border-radius: 6px;
-        overflow: hidden;
-
-        &-data {
-          margin: 1rem 0;
-          font-size: 1.3rem;
-          font-weight: 300;
-        }
-
-        a {
-          display: flex;
-          flex-direction: row;
-        }
-      }
-
-      &__item--left,
-      &__item--right {
-        padding: 1rem;
-      }
-
-      &__item--left {
-        background-color: #a3a3a3;
-        width: 30%;
-      }
-
-      &__item--right {
-        display: flex;
-      }
     }
   }
 }
 
-.show-content{
+.show-content {
   display: flex;
+}
+
+.hide-content{
+  display: none;
 }

@@ -1,10 +1,10 @@
 <section class="account">
     <h2 class="heading">My account</h2>
     <div class="user-view">
-        <nav class="user-view__menu">
+        <nav class="user-view__menu" [class.show-content]="router.url === '/account'">
             <ul class="menu">
                 <li class="menu-item user-settings">
-                    <a (click)="onSettings()" routerLink="/settings" routerLinkActive="active">
+                    <a (click)="onSettings()" class="link" routerLink="/settings" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon icon-account material-symbols-outlined">account_circle</span>
                             <div>
@@ -16,7 +16,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a routerLink="/account/orders" routerLinkActive="active">
+                    <a class="link" (click)="onOrders()" routerLink="orders" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon material-symbols-outlined">orders</span>
                             <p>My orders</p>
@@ -25,7 +25,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a (click)="onReviews()" routerLink="/reviews" routerLinkActive="active">
+                    <a (click)="onReviews()" class="link" routerLink="account/reviews" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon material-symbols-outlined">reviews</span>
                             <p>My reviews</p>
@@ -34,7 +34,7 @@
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a (click)="onReturns()" routerLink="/returns" routerLinkActive="active">
+                    <a (click)="onReturns()" class="link" routerLink="/returns" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon material-symbols-outlined">assignment_return</span>
                             <p>Complains & returns</p>
@@ -43,7 +43,7 @@
                     </a>
                 </li>
                 <li class="menu-item menu-item__desktop">
-                    <a (click)="onSettings()" routerLink="/settings" routerLinkActive="active">
+                    <a (click)="onSettings()" class="link" routerLink="settings" routerLinkActive="active">
                         <div class="menu-item--left">
                             <span class="icon icon-account material-symbols-outlined">account_circle</span>
                             <p>Account settings</p>
@@ -58,7 +58,7 @@
                     <ul class="menu">
                         <hr/>
                         <li class="menu-item">
-                            <a href="" routerLink="/admin/books" routerLinkActive="active">
+                            <a href="" class="link" routerLink="/admin/books" routerLinkActive="active">
                                 <div class="menu-item--left">
                                     <span class="icon material-symbols-outlined">menu_book</span>
                                     <p>Manage books</p>
@@ -67,7 +67,7 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="" routerLink="/admin/users" routerLinkActive="active">
+                            <a href="" class="link" routerLink="/admin/users" routerLinkActive="active">
                                 <div class="menu-item--left">
                                     <span class="icon material-symbols-outlined">group</span>
                                     <p>Manage users</p>
@@ -76,7 +76,7 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="" routerLink="/admin/reviews" routerLinkActive="active">
+                            <a href="" class="link" routerLink="/admin/reviews" routerLinkActive="active">
                                 <div class="menu-item--left">
                                     <span class="icon material-symbols-outlined">reviews</span>
                                     <p>Manage reviews</p>
@@ -100,29 +100,14 @@
                     <h2>Hello {{ userData?.name }}!</h2>
                     <p>Here are your latest orders:</p>
                     <ul class="orders-list">
-                        <li class="orders-list__item">
-                            <a href="">
-                                <div class="orders-list__item--left">
-                                    <p class="status">Pending</p>
-                                    <div class="orders-list__item-data">
-                                        <p>1 grudnia 2023</p>
-                                        <p>nr 70005435</p>
-                                    </div>
-                                    <p class="price">$155.4</p>
-                                </div>
-                                <div class="orders-list__item--right">
-                                    <img alt="An image of book"/>
-                                    <div class="book-data">
-                                        <p class="title">Descent</p>
-                                        <p class="author">Tom ddsad</p>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
+                        @for (order of lastTwoOrders; track order._id) {
+                            <app-order [order]="order"></app-order>
+                        }
                     </ul>
                 </div>
+            } @else {
+                <router-outlet></router-outlet>
             }
-            <router-outlet></router-outlet>
         </div>
     </div>
 </section>

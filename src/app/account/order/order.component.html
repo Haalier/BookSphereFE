@@ -1,0 +1,26 @@
+<li class="orders-list__item">
+    <div class="orders-list__item--left">
+        <p class="status">{{ order().status | uppercase }}</p>
+        <div class="orders-list__item-data">
+            <p>{{ order().createdAt | date }}</p>
+            <p>id: {{ order()._id }}</p>
+        </div>
+        <p class="price">Total: {{ order().total | currency }}</p>
+    </div>
+    <div class="orders-list__item--right" #itemContainer>
+        @for (item of orderItems; track item._id) {
+            <div class="item-data">
+                <div [style]="{'background-image': 'url(' + item.photoUrl + ')'}" class="img"></div>
+                <!--                    <img [src]="item.photoUrl" [alt]="item.title"/>-->
+                <div class="book-data">
+                    <p class="title" [pTooltip]="item.title" tooltipPosition="top">{{ item.title | slice:0:12 }}{{
+                            item.title.length > 10 ?
+                                '...' :
+                                ''
+                        }}</p>
+                    <p class="author">{{ item.author }}</p>
+                </div>
+            </div>
+        }
+    </div>
+</li>

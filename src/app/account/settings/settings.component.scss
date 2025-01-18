@@ -4,4 +4,66 @@
 :host {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
 }
+
+h3 {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.settings__box {
+  padding: 1.5em;
+  margin: 0 auto 2em;
+  width: 100%;
+  background-color: $white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+
+  .settings__form {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+
+    &-input {
+      display: flex;
+      flex-direction: column;
+
+      input {
+      position: relative;
+      padding: 0.8em;
+      font-size: 1.4rem;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 100%;
+
+      &.ng-touched.ng-invalid {
+        border-color: $sphere-error;
+        background-color: $sphere-error-bg;
+      }
+
+      &.ng-touched.ng-valid{
+        border-color: $sphere-success;
+        background-color: $sphere-success-bg;
+      }
+    }
+
+
+    }
+
+    button{
+      font-size: 1.4rem;
+      font-weight: 500;
+      letter-spacing: 1px;
+    }
+  }
+}
+
+.error {
+      padding-top: 0.2em;
+      font-size: 1.5rem;
+      color: #e74c3c;
+
+    }
