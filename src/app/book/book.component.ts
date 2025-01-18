@@ -10,13 +10,12 @@ import {
 import {BooksService} from '../services/books.service';
 import {Book} from '../models/book.model';
 import {ActivatedRoute} from '@angular/router';
-import {AsyncPipe, CurrencyPipe, NgClass} from '@angular/common';
+import {AsyncPipe, CurrencyPipe} from '@angular/common';
 import {ReviewsComponent} from './reviews/reviews.component';
 import {AuthService} from '../services/auth.service';
 import {CartService} from '../services/cart.service';
 import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
 import {EditReviewComponent} from '../popups/edit-review/edit-review.component';
-import {ErrorService} from '../services/error.service';
 import {Review} from '../models/review.model';
 
 @Component({
@@ -33,7 +32,6 @@ export class BookComponent implements AfterViewInit, AfterViewChecked {
     booksService = inject(BooksService);
     authService = inject(AuthService);
     cartService = inject(CartService);
-    errorService = inject(ErrorService);
     update = output<void>()
     route = inject(ActivatedRoute);
     book: Book | undefined;
