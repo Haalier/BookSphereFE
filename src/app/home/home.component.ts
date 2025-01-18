@@ -180,8 +180,8 @@ export class HomeComponent implements OnInit {
         };
 
         this.cartService.addToCart(data).subscribe(() => {
-            this.showModal = true;
             document.body.style.overflow = 'hidden';
+            this.showModal = true;
         });
 
         this.booksService.getBook(bookId, slug).subscribe((book) => {
