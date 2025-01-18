@@ -7,7 +7,7 @@ $large: 768px;
 $xlarge: 950px;
 $xxlarge: 1320px;
 $desk: 1550px;
-$xdesk: 1650px;
+$xdesk: 2000px;
 
 @mixin respons($breakpoint) {
   @if $breakpoint == xsmall {
