@@ -144,8 +144,11 @@
 }
 
 a.active {
-  color: $sphere-main;
+  color: $sphere-main !important;
   font-weight: bold;
+  .icon{
+   color: inherit !important;
+  }
 }
 
 a:hover {
