@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {ErrorService} from '../services/error.service';
+import {ErrorData, ErrorService} from '../services/error.service';
 
 @Component({
   selector: 'app-error',
@@ -10,7 +10,7 @@ import {ErrorService} from '../services/error.service';
 })
 export class ErrorComponent implements OnInit{
 errorService = inject(ErrorService);
-errorMessage: string | null = null;
+errorMessage: ErrorData;
 
 ngOnInit() {
   this.errorService.error$.subscribe((message) => {
