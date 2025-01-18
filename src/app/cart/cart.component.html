@@ -36,7 +36,8 @@
         <span class="icon material-symbols-outlined">shopping_bag</span>
         <div>
             <p class="cart__checkout-total">Total Price: {{ totalPrice | currency: 'USD': 'symbol' }}</p>
-            <button class="cart__checkout-btn" [disabled]="cartItems.length === 0">Checkout</button>
+            <button class="cart__checkout-btn" [disabled]="cartItems.length === 0" (click)="onCheckout()">Checkout
+            </button>
         </div>
     </div>
 
