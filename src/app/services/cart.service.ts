@@ -29,13 +29,13 @@ interface CartPostRes {
     user: string;
     items: [CartItems];
     total: number;
-    totalItems: number;
+    totalItems: number | undefined;
   };
 }
 
 interface CartCountRes {
   status: string;
-  totalItems: number;
+  totalItems: number | undefined;
 }
 
 interface CartItemsUpdate {
@@ -60,7 +60,7 @@ export class CartService {
   private apiUrl = 'http://localhost:8080/api/v1/cart';
   private http = inject(HttpClient);
 
-  private cartResultsSubject = new BehaviorSubject<number>(0);
+  private cartResultsSubject = new BehaviorSubject<number | undefined>(0);
   public cartResults$ = this.cartResultsSubject.asObservable();
 
   constructor() {}

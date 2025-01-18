@@ -1,6 +1,6 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {BehaviorSubject, finalize, tap} from 'rxjs';
+import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
 import {User} from '../models/user.model';
 import {Router} from '@angular/router';
 import {ApiService} from './api.service';
@@ -34,6 +34,17 @@ interface loginResponse {
     token: string;
 }
 
+interface updateMeResponse {
+    status: string;
+    user: {
+        _id: string;
+        email: string;
+        name: string;
+        role: 'user' | 'admin';
+    }
+
+}
+
 interface forgotResponse {
     status: string;
     message: string;
@@ -45,7 +56,7 @@ interface currentUserResponse {
         id: string;
         name: string;
         email: string;
-        role: string;
+        role: 'user' | 'admin';
     };
 }
 
@@ -53,7 +64,7 @@ export interface userResponseData {
     id: string;
     name: string;
     email: string;
-    role: string;
+    role: 'user' | 'admin';
 }
 
 @Injectable({
@@ -156,6 +167,15 @@ export class AuthService {
         this.apiService.loadingSubject.next(true);
         return this.http
             .get<currentUserResponse>(`${this.apiUrl}/me`)
-            .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+            .pipe(
+                tap(res => {
+                    this.currentUserSubject.next(res.user);
+                }),
+                finalize(() => this.apiService.loadingSubject.next(false)));
+    }
+
+    updateCurrentUser(userData: { name?: string; email?: string; password?: string }): Observable<updateMeResponse> {
+        this.apiService.loadingSubject.next(true);
+        return this.http.patch<updateMeResponse>(`${this.apiUrl}/updateMe`, userData).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
     }
 }
