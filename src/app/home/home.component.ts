@@ -1,6 +1,6 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, ViewChild} from '@angular/core';
 import {Book} from '../models/book.model';
-import {CurrencyPipe} from '@angular/common';
+import {CurrencyPipe, NgIf, NgStyle} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
 import {BooksService} from '../services/books.service';
 import {ApiService} from '../services/api.service';
@@ -11,15 +11,22 @@ import {CartService} from '../services/cart.service';
 import {AuthService} from '../services/auth.service';
 import {SliderModule} from 'primeng/slider';
 import {AddToCartPopupComponent} from '../popups/add-to-cart-popup/add-to-cart-popup.component';
+import {MultiSelect, MultiSelectModule, MultiSelectSelectAllChangeEvent} from 'primeng/multiselect';
+import {BOOK_CATEGORIES} from '../utils/book-categories';
+import {RATING_OPTIONS} from '../utils/rating-options';
+import {EventService} from '../services/event.service';
 
 @Component({
     selector: 'app-home',
     standalone: true,
-    imports: [CurrencyPipe, FormsModule, StarRatingComponent, SliderModule, AddToCartPopupComponent],
+    imports: [CurrencyPipe, FormsModule, StarRatingComponent, SliderModule, AddToCartPopupComponent, MultiSelectModule, NgStyle, NgIf],
     templateUrl: './home.component.html',
     styleUrl: './home.component.scss',
 })
 export class HomeComponent implements OnInit {
+    @ViewChild('ms') ms: MultiSelect
+
+    eventService = inject(EventService);
     apiService = inject(ApiService);
     booksService = inject(BooksService);
     searchService = inject(SearchService);
@@ -27,7 +34,7 @@ export class HomeComponent implements OnInit {
     activatedRoute = inject(ActivatedRoute);
     router = inject(Router);
     authService = inject(AuthService);
-
+    categories: string[] = []
     isLoggedIn = false;
     isLoading = false;
     isMenuOpen = false;
@@ -43,6 +50,12 @@ export class HomeComponent implements OnInit {
     rangeValues: number[] = [0, 40];
     book: Book | undefined = undefined;
     showModal = false;
+    items: any[];
+    selectAll: boolean = false;
+    selectedItems!: any[];
+    query = {};
+    options: any[];
+    rating: number | string = '';
 
     ngOnInit() {
         this.activatedRoute.queryParams.subscribe((params) => {
@@ -51,7 +64,7 @@ export class HomeComponent implements OnInit {
                 this.onFirstPage();
             }
             this.page = +pageParam;
-            this.fetchBooks();
+            this.fetchBooks(this.query);
         });
 
         this.authService.user$.subscribe((user) => {
@@ -72,6 +85,22 @@ export class HomeComponent implements OnInit {
         this.booksService.bookList$.subscribe((books) => {
             this.books = books;
         });
+
+        this.eventService.clearFilters$.subscribe(() => {
+            this.rangeValues = [0, 40];
+            this.selectedItems = [];
+            this.selectAll = false;
+            this.rating = '';
+            this.query = {};
+        })
+
+        this.categories = BOOK_CATEGORIES;
+        this.items = BOOK_CATEGORIES.map((category, index) => ({
+            label: category,
+            value: index,
+        }));
+
+        this.options = RATING_OPTIONS;
     }
 
     scrollToTop() {
@@ -80,8 +109,8 @@ export class HomeComponent implements OnInit {
         });
     }
 
-    fetchBooks() {
-        this.booksService.getBooks(this.page);
+    fetchBooks(query: any) {
+        this.booksService.getBooks(this.page, query);
     }
 
     paginate() {
@@ -104,7 +133,7 @@ export class HomeComponent implements OnInit {
     onFirstPage() {
         this.page = 1;
         this.navigateTo(this.page);
-        this.fetchBooks();
+        this.fetchBooks(this.query);
         this.scrollToTop();
     }
 
@@ -112,7 +141,7 @@ export class HomeComponent implements OnInit {
         if (this.hasPreviousPage) {
             this.page = this.previousPage;
             this.navigateTo(this.page);
-            this.fetchBooks();
+            this.fetchBooks(this.query);
             this.scrollToTop();
         }
     }
@@ -121,7 +150,8 @@ export class HomeComponent implements OnInit {
         if (this.hasNextPage) {
             this.page = this.nextPage;
             this.navigateTo(this.page);
-            this.fetchBooks();
+            console.log(this.query);
+            this.fetchBooks(this.query);
             this.scrollToTop();
         }
     }
@@ -129,7 +159,7 @@ export class HomeComponent implements OnInit {
     onLastPage() {
         this.page = this.lastPage;
         this.navigateTo(this.page);
-        this.fetchBooks();
+        this.fetchBooks(this.query);
         this.scrollToTop();
     }
 
@@ -141,12 +171,33 @@ export class HomeComponent implements OnInit {
     }
 
     applyFilters() {
-        const query = {
-            'price[gte]': this.rangeValues[0],
-            'price[lte]': this.rangeValues[1],
-        };
+        let categoryQuery;
+        if (this.selectedItems) {
+            categoryQuery = this.selectedItems.map(item => {
+                return item.label
+            })
+        }
 
-        this.booksService.getBooks(this.page, query);
+        console.log(this.rating);
+
+
+        if (categoryQuery && categoryQuery.length > 0) {
+            categoryQuery = categoryQuery.toString()
+        }
+
+        if (this.query && this.page !== 1) {
+            this.onFirstPage();
+        }
+
+        if (this.rangeValues || this.selectedItems || this.rating) {
+            this.query = {
+                'price[gte]': this.rangeValues[0],
+                'price[lte]': this.rangeValues[1],
+                'category': this.selectedItems ? categoryQuery : '',
+                'ratingsAverage[gte]': this.rating ? this.rating : 1,
+            };
+        }
+        this.fetchBooks(this.query);
     }
 
     toggleMenu() {
@@ -164,7 +215,7 @@ export class HomeComponent implements OnInit {
             this.results = books.results;
 
             if (this.results === 0) {
-                this.fetchBooks();
+                this.fetchBooks(this.query);
             }
             this.books = books.data;
             this.paginate();
@@ -193,5 +244,10 @@ export class HomeComponent implements OnInit {
     onModalClose() {
         this.showModal = false;
         document.body.style.overflow = 'auto';
+    }
+
+    onSelectAllChange(event: MultiSelectSelectAllChangeEvent) {
+        this.selectedItems = event.checked ? [...this.ms.visibleOptions()] : [];
+        this.selectAll = event.checked
     }
 }

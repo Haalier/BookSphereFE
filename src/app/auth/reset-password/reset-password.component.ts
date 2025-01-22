@@ -23,7 +23,7 @@ export class ResetPasswordComponent implements OnInit {
   activatedRoute = inject(ActivatedRoute);
   errMsg: ErrorData | null = null;
   successMsg: string | null = null;
-  resetToken = null;
+  resetToken: string = null;
 
   ngOnInit() {
     this.errorService.error$.subscribe((err) => {

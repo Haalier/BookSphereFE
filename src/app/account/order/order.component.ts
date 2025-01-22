@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ElementRef, input, OnInit, ViewChild} from '@
 import {CurrencyPipe, DatePipe, SlicePipe, UpperCasePipe} from '@angular/common';
 import {Order, OrderItem} from '../../models/order.model';
 import {TooltipModule} from 'primeng/tooltip';
+import {RouterLink} from '@angular/router';
 
 
 @Component({
@@ -12,7 +13,8 @@ import {TooltipModule} from 'primeng/tooltip';
         DatePipe,
         SlicePipe,
         TooltipModule,
-        UpperCasePipe
+        UpperCasePipe,
+        RouterLink
     ],
     templateUrl: './order.component.html',
     styleUrl: './order.component.scss'
@@ -27,7 +29,10 @@ export class OrderComponent implements OnInit, AfterViewInit {
     ngOnInit() {
         this.order().items.forEach(item => {
             this.orderItems.push(item);
+            console.log(item)
         })
+
+
     }
 
     ngAfterViewInit() {

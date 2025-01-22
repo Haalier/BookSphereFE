@@ -12,13 +12,19 @@
                 (click)="$event.stopPropagation(); toggleMenu()">Filter
         </button>
 
+
         <div class="home__filter" [class]="{'is-active': isMenuOpen}" (click)="$event.stopPropagation()">
             <div class="filter-group">
-                <label>Category:</label>
-                <select>
-                    <option value="">All Categories</option>
-                    <option value="">category</option>
-                </select>
+                <p-multiselect [options]="items" [showToggleAll]="true" [selectAll]="selectAll"
+                               [(ngModel)]="selectedItems" optionLabel="label" [virtualScroll]="true"
+                               [virtualScrollItemSize]="43" class="multiselect-custom-virtual-scroll"
+                               placeholder="Select Category" (onSelectAllChange)="onSelectAllChange($event)"
+                               [maxSelectedLabels]="3" styleClass="w-full md:w-80" #ms>
+                    <ng-template #headercheckboxicon let-allSelected let-partialSelected="partialSelected">
+                        <i class="pi pi-check" *ngIf="allSelected"></i>
+                        <i class="pi pi-minus" *ngIf="partialSelected" [ngStyle]="{ color: 'var(--text-color)' }"></i>
+                    </ng-template>
+                </p-multiselect>
             </div>
 
             <div class="filter-group custom-slider">
@@ -33,13 +39,10 @@
 
             <div class="filter-group">
                 <label>Rating:</label>
-                <select>
-                    <option value="">Any Rating</option>
-                    <option value="1">1 star or higher</option>
-                    <option value="2">2 stars or higher</option>
-                    <option value="3">3 stars or higher</option>
-                    <option value="4">4 stars or higher</option>
-                    <option value="5">5 stars only</option>
+                <select [(ngModel)]="rating">
+                    @for (option of options; track $index){
+                        <option [value]="option.value">{{option.label}}</option>
+                    }
                 </select>
             </div>
 
@@ -97,8 +100,10 @@
         @if (hasNextPage) {
             <a (click)="onNextPage()">{{ nextPage }}</a>
         }
-        @if (lastPage !== page && nextPage !== lastPage) {
+        @if (lastPage !== page && nextPage !== lastPage && nextPage !== page && lastPage) {
+            @if (lastPage - 1 !== nextPage) {
             <span>...</span>
+            }
             <a (click)="onLastPage()">{{ lastPage }}</a>
         }
     </section>

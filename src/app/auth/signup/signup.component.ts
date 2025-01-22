@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -22,6 +22,7 @@ export class SignupComponent implements OnInit {
   router = inject(Router);
   errorService = inject(ErrorService);
   errMsg: ErrorData | null = null;
+  destroyRef = inject(DestroyRef);
 
   ngOnInit() {
     this.errorService.error$.subscribe((err) => {
@@ -58,6 +59,7 @@ export class SignupComponent implements OnInit {
     this.authService.signup(this.signupForm.value).subscribe({
       next: (res) => {
         console.log(res);
+        this.router.navigate(['/home']);
       },
       error: (err) => {
         console.log(err);

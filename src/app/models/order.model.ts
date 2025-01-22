@@ -6,6 +6,7 @@ author?: string;
 photoUrl?: string;
 price?: number;
 _id?: string;
+slug?: string;
 }
 
 export interface Order {

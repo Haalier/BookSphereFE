@@ -72,7 +72,7 @@ export class SettingsComponent implements OnInit {
 
 
         this.authService.updateCurrentUser(dataToChange).subscribe((res) => {
-            this.eventService.emitEvent();
+            this.eventService.emitRefreshEvent();
             this.router.navigate(['/account']);
         });
 
