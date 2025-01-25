@@ -1,7 +1,7 @@
 <section class="account">
     <h2 class="heading">My account</h2>
     <div class="user-view">
-        <nav class="user-view__menu" [class.show-content]="router.url === '/account'">
+        <nav class="user-view__menu" [class.hide-content]="router.url !== '/account'">
             <ul class="menu">
                 <li class="menu-item user-settings">
                     <a (click)="onSettings()" class="link" routerLink="/settings" routerLinkActive="active">
@@ -52,7 +52,7 @@
                     </a>
                 </li>
             </ul>
-            @if (userData?.role === 'user') {
+            @if (userData?.role === 'admin') {
                 <div class="admin-nav">
                     <h5 class="heading-second">Admin settings</h5>
                     <ul class="menu">
@@ -88,11 +88,10 @@
                     </ul>
                 </div>
             }
-            <ul class="menu">
-                <li class="menu-item">
-                    <button (click)="onLogOut()">Log out</button>
-                </li>
-            </ul>
+            <div class="logout-btn">
+                <button (click)="onLogOut()">Log out</button>
+
+            </div>
         </nav>
         <div class="user-view__content" [class.show-content]="isContentLoaded">
             @if (router.url === '/account') {
@@ -102,6 +101,12 @@
                     <ul class="orders-list">
                         @for (order of lastTwoOrders; track order._id) {
                             <app-order [order]="order"></app-order>
+                        }
+                        @if (!orders) {
+                            <div class="empty">
+                                <h3>No order found</h3>
+                                <span class="icon material-symbols-outlined">package_2</span>
+                            </div>
                         }
                     </ul>
                 </div>
