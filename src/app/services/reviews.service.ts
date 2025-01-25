@@ -7,9 +7,7 @@ import {ApiService} from './api.service';
 interface ReviewsResponse {
     status: string;
     results: number;
-    data: {
-        reviews: Review[];
-    };
+    reviews: Review[];
 }
 
 interface ReviewEditResponse {
@@ -42,6 +40,7 @@ interface ReviewResponse {
 export class ReviewsService {
     private apiService = inject(ApiService);
     private apiUrl = 'http://localhost:8080/api/v1/books';
+    private apiUrlReviews = 'http://localhost:8080/api/v1/reviews'
     private http = inject(HttpClient);
 
     getBookReviews(bookId: string | undefined): Observable<ReviewsResponse> {
@@ -68,5 +67,13 @@ export class ReviewsService {
         this.apiService.loadingSubject.next(true);
         return this.http.patch<ReviewEditResponse>(`${this.apiUrl}/${bookId}/reviews/${reviewId}`, review)
             .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+    }
+
+    deleteReview(reviewId: string) {
+        this.apiService.loadingSubject.next(true);
+        return this.http.delete<{
+            status: string,
+            data: null
+        }>(`${this.apiUrlReviews}/${reviewId}`).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
     }
 }

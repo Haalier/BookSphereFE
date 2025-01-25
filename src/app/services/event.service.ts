@@ -11,6 +11,9 @@ export class EventService {
   private clearFiltersSubject = new Subject<void>();
   clearFilters$ = this.clearFiltersSubject.asObservable();
 
+  private refreshRatingSubject = new Subject<void>();
+  refreshRating$ = this.refreshRatingSubject.asObservable();
+
 
   emitRefreshEvent(){
     this.refreshSubject.next();
@@ -18,5 +21,9 @@ export class EventService {
 
   emitClearFiltersEvent(){
     this.clearFiltersSubject.next();
+  }
+
+  emitRefreshRating(){
+    this.refreshRatingSubject.next();
   }
 }

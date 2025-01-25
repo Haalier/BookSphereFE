@@ -8,20 +8,8 @@
         </div>
     </form>
     @for (review of reviews; track review._id) {
-        <div class="reviews__box">
-            <div class="reviews__box-content">
-                <button class="editBtn" (click)="onReviewEdit(review)" [disabled]="!isLoggedIn">
-                    <span class="material-symbols-outlined">edit_square</span>
-                </button>
-                <p class="review-text">{{ review.review }}</p>
-            </div>
-            <div class="reviews__box-data">
-                <div>
-                    <p class="reviews__box-rating">{{ review.rating }} / 5</p>
-                    <p class="reviews__box-author">{{ review.user.name }}</p>
-                </div>
-                <p class="reviews__box-date">{{ review.updatedAt | date: 'short' }}</p>
-            </div>
-        </div>
+       <app-review [isLoggedIn]=isLoggedIn [review]="review"
+                   (openModal)="onReviewEdit($event)"
+                    (deleteModal)="onReviewDelete($event)"></app-review>
     }
 </section>

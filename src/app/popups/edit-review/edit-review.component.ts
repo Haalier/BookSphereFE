@@ -10,6 +10,7 @@ import {
 import {StarRatingComponent} from '../../utils/star-rating/star-rating.component';
 import {Review} from '../../models/review.model';
 import {ReviewsService} from '../../services/reviews.service';
+import {EventService} from '../../services/event.service';
 
 @Component({
     selector: 'app-edit-review',
@@ -24,6 +25,7 @@ import {ReviewsService} from '../../services/reviews.service';
 })
 export class EditReviewComponent implements OnInit {
     reviewsService = inject(ReviewsService);
+    eventService = inject(EventService)
     review = input<Review>();
     bookId = input<string>()
     close = output<void>()
@@ -58,6 +60,7 @@ export class EditReviewComponent implements OnInit {
         this.reviewsService.editReview(bookId, reviewId, review).subscribe(() => {
             this.close.emit();
             this.update.emit();
+            this.eventService.emitRefreshRating();
         })
     }
 }

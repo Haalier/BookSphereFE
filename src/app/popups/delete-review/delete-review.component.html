@@ -1,0 +1,13 @@
+<div class="modal-overlay" (click)="closeModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close" (click)="closeModal()">
+            <span class="material-symbols-outlined">close</span>
+        </button>
+        <p class="text">Do you really want to delete this review?</p>
+
+    <div class="btns">
+        <button class="delete" (click)="deleteReview()">Delete</button>
+        <button (click)="closeModal()">No</button>
+    </div>
+        </div>
+</div>

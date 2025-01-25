@@ -78,12 +78,8 @@ export class CartComponent implements OnInit {
     protected readonly Object = Object;
 
     onCheckout() {
-    //     const checkoutData = {
-    //         user: this.user$._id,
-    //         items: this.cartItems,
-    //         total: this.totalPrice,
-    //     }
-    //     this.ordersService.checkout(checkoutData).subscribe(res => {
-    //     })
+        this.ordersService.checkout().subscribe(() => {
+            this.loadCart();
+        });
     }
 }

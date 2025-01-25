@@ -7,12 +7,13 @@ import {GetOrders, Order, OrderItem} from '../models/order.model';
 import {CurrencyPipe, DatePipe} from '@angular/common';
 import {OrderComponent} from './order/order.component';
 import {EventService} from '../services/event.service';
+import {ReversePipe} from '../pipes/reverse.pipe';
 
 
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, DatePipe, CurrencyPipe, OrderComponent],
+    imports: [RouterOutlet, RouterLink, RouterLinkActive, DatePipe, CurrencyPipe, OrderComponent, ReversePipe],
     templateUrl: './account.component.html',
     styleUrls: ['./account.component.scss'],
 })

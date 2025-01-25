@@ -14,7 +14,7 @@ import {RouterLink} from '@angular/router';
         SlicePipe,
         TooltipModule,
         UpperCasePipe,
-        RouterLink
+        RouterLink,
     ],
     templateUrl: './order.component.html',
     styleUrl: './order.component.scss'

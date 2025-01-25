@@ -1,0 +1,82 @@
+@import 'mixins';
+@import "colors";
+
+.reviews__box {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  height: 100%;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  background-color: $white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, .05);
+
+  @include respons(medium) {
+    padding: 2rem;
+  }
+
+  &-content {
+    display: flex;
+    flex-direction: column;
+    //justify-content: space-between;
+    font-size: 1.4rem;
+    line-height: 1.6;
+    max-width: 100%;
+    overflow-wrap: break-word;
+    color: #333;
+
+    .review-text {
+      margin-bottom: 1.5rem;
+    }
+
+    @include respons(large) {
+      font-size: 1.6rem;
+    }
+  }
+
+  &-btn{
+      display: flex;
+      justify-content: flex-end;
+      .editBtn, .deleteBtn {
+      &:disabled {
+        color: #ddd;
+        cursor: not-allowed;
+        opacity: 0.6;
+      }
+    }
+    .deleteBtn span{
+      color: red !important;
+    }
+    }
+
+  &-rating {
+    font-weight: bold;
+    color: $sphere-gold;
+    font-size: 1.4rem;
+  }
+
+  &-author {
+    font-weight: bold;
+    color: $sphere-cta;
+    font-size: 1.3rem;
+  }
+
+  &-data {
+    display: flex;
+    justify-content: space-between;
+
+  }
+
+  &-date {
+    text-align: right;
+    font-size: 1.2rem;
+    color: #777;
+    align-self: flex-end;
+
+    @include respons(large) {
+      font-size: 1.4rem;
+    }
+  }
+}

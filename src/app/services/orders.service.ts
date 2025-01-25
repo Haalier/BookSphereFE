@@ -42,9 +42,11 @@ export class OrdersService {
             }))
     }
 
-    checkout(data: CheckoutData): Observable<Checkout> {
+    checkout(): Observable<Checkout> {
         this.apiService.loadingSubject.next(true);
-        return this.http.post<Checkout>(`${this.http}/checkout`, data).pipe(finalize(() => {
+        return this.http.post<Checkout>(`${this.apiUrl}/checkout`, {}).pipe(tap((data) => {
+            console.log('CHECKOUT', data);
+        }),finalize(() => {
             this.apiService.loadingSubject.next(false);
         }))
     }

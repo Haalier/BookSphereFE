@@ -2,12 +2,14 @@ import {Component, inject, OnInit} from '@angular/core';
 import {Order} from '../../models/order.model';
 import {OrdersService} from '../../services/orders.service';
 import {OrderComponent} from '../order/order.component';
+import {ReversePipe} from '../../pipes/reverse.pipe';
 
 @Component({
     selector: 'app-orders',
     standalone: true,
     imports: [
-        OrderComponent
+        OrderComponent,
+        ReversePipe
     ],
     templateUrl: './orders.component.html',
     styleUrl: './orders.component.scss'

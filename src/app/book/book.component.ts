@@ -4,7 +4,7 @@ import {
     ChangeDetectorRef,
     Component,
     ElementRef,
-    inject, output,
+    inject, OnInit, output,
     ViewChild,
 } from '@angular/core';
 import {BooksService} from '../services/books.service';
@@ -17,21 +17,24 @@ import {CartService} from '../services/cart.service';
 import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
 import {EditReviewComponent} from '../popups/edit-review/edit-review.component';
 import {Review} from '../models/review.model';
+import {DeleteReviewComponent} from '../popups/delete-review/delete-review.component';
+import {EventService} from '../services/event.service';
 
 @Component({
     selector: 'app-book',
     standalone: true,
-    imports: [CurrencyPipe, ReviewsComponent, StarRatingComponent, EditReviewComponent, AsyncPipe],
+    imports: [CurrencyPipe, ReviewsComponent, StarRatingComponent, EditReviewComponent, AsyncPipe, DeleteReviewComponent],
     templateUrl: './book.component.html',
     styleUrl: './book.component.scss',
 })
-export class BookComponent implements AfterViewInit, AfterViewChecked {
+export class BookComponent implements AfterViewInit, AfterViewChecked, OnInit {
     @ViewChild('descriptionDiv', {static: false}) descriptionDiv!: ElementRef;
     @ViewChild('reviewsComponent') reviewsComponent!: ReviewsComponent;
 
     booksService = inject(BooksService);
     authService = inject(AuthService);
     cartService = inject(CartService);
+    eventService = inject(EventService);
     update = output<void>()
     route = inject(ActivatedRoute);
     book: Book | undefined;
@@ -39,12 +42,19 @@ export class BookComponent implements AfterViewInit, AfterViewChecked {
     expanded = false;
     isLoggedIn = false;
     role: 'user' | 'admin' | undefined;
-    reviewForEdit: Review | undefined;
+    reviewForModal: Review | undefined;
     public bookId!: string;
     private slug!: string;
     private cdr = inject(ChangeDetectorRef);
 
     showEditModal: boolean = false;
+    showDeleteModal: boolean = false;
+
+    ngOnInit() {
+        this.eventService.refreshRating$.subscribe(() => {
+            this.onReviewAdded();
+        })
+    }
 
     ngAfterViewInit() {
         this.route.params.subscribe((params) => {
@@ -57,6 +67,8 @@ export class BookComponent implements AfterViewInit, AfterViewChecked {
             this.isLoggedIn = !!user;
             this.role = user?.role;
         });
+
+
     }
 
     ngAfterViewChecked(): void {
@@ -119,10 +131,25 @@ export class BookComponent implements AfterViewInit, AfterViewChecked {
     onEditModalOpen(review: Review | undefined) {
         this.showEditModal = true;
         document.body.style.overflow = 'hidden';
-        this.reviewForEdit = review;
+        this.reviewForModal = review;
+    }
+
+    onDeleteModalOpen(review: Review | undefined) {
+        this.showDeleteModal = true;
+        document.body.style.overflow = 'hidden';
+        this.reviewForModal = review;
     }
 
     onReviewsUpdate() {
-        this.reviewsComponent.fetchReviews()
+        this.reviewsComponent.fetchReviews();
+    }
+
+    onDeleteReview() {
+        this.reviewsComponent.fetchReviews();
+    }
+
+    onDeleteModalClose() {
+        this.showDeleteModal = false;
+        document.body.style.overflow = 'auto';
     }
 }

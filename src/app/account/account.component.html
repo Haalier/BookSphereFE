@@ -99,7 +99,7 @@
                     <h2>Hello {{ userData?.name }}!</h2>
                     <p>Here are your latest orders:</p>
                     <ul class="orders-list">
-                        @for (order of lastTwoOrders; track order._id) {
+                        @for (order of lastTwoOrders | reverse; track order._id) {
                             <app-order [order]="order"></app-order>
                         }
                         @if (!orders) {
@@ -111,7 +111,9 @@
                     </ul>
                 </div>
             } @else {
+                <div class="outlet">
                 <router-outlet></router-outlet>
+                </div>
             }
         </div>
     </div>

@@ -2,19 +2,19 @@ import {Component, DestroyRef, EventEmitter, inject, Input, OnInit, output, Outp
 import {Book} from '../../models/book.model';
 import {ReviewsService} from '../../services/reviews.service';
 import {Review} from '../../models/review.model';
-import {DatePipe} from '@angular/common';
 import {AuthService} from '../../services/auth.service';
 import {FormsModule, NgForm} from '@angular/forms';
 import {ApiService} from '../../services/api.service';
 import {StarRatingComponent} from '../../utils/star-rating/star-rating.component';
+import {ReviewComponent} from '../../review/review.component';
 
 @Component({
   selector: 'app-reviews',
   standalone: true,
   imports: [
-    DatePipe,
     FormsModule,
-    StarRatingComponent
+    StarRatingComponent,
+    ReviewComponent
   ],
   templateUrl: './reviews.component.html',
   styleUrl: './reviews.component.scss'
@@ -22,7 +22,8 @@ import {StarRatingComponent} from '../../utils/star-rating/star-rating.component
 export class ReviewsComponent implements OnInit {
 @Input() book!: Book;
 @Output() reviewAdded = new EventEmitter<void>();
-openEditModal = output<Review | undefined>();
+openEditModal = output<Review>();
+openDeleteModal = output<Review>();
 private apiService = inject(ApiService);
 private reviewsService = inject(ReviewsService);
 destroyRef = inject(DestroyRef);
@@ -46,7 +47,7 @@ rating = 0;
  fetchReviews(){
    const subscription = this.reviewsService.getBookReviews(this.book._id).subscribe({
      next: result => {
-       this.reviews = result.data.reviews;
+       this.reviews = result.reviews;
        this.destroyRef.onDestroy(() =>{
          subscription.unsubscribe();
        })
@@ -70,10 +71,16 @@ rating = 0;
         this.reviewAdded.emit();
       }
     });
+    this.rating = 0;
+    reviewForm.reset();
 
   }
 
     onReviewEdit(review: Review) {
      this.openEditModal.emit(review);
     }
+
+  onReviewDelete(review: Review) {
+   this.openDeleteModal.emit(review);
+  }
 }
