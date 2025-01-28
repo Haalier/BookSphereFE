@@ -1,6 +1,6 @@
 import {Component, input, output} from '@angular/core';
 import {DatePipe} from '@angular/common';
-import {Review} from '../models/review.model';
+import {MyReview, Review} from '../models/review.model';
 
 @Component({
     selector: 'app-review',
@@ -15,9 +15,9 @@ export class ReviewComponent {
     myReview = input<boolean>();
     isLoggedIn = input<boolean>();
     userId = input<string>();
-    review = input<Review>();
-    openModal = output<Review>();
-    deleteModal = output<Review>();
+    review = input<Review | MyReview>();
+    openModal = output<Review | MyReview>();
+    deleteModal = output<Review | MyReview>();
 
     get isMyReview(): boolean {
         return this.review().user._id === this.userId()

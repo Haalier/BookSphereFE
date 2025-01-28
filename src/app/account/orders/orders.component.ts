@@ -3,6 +3,7 @@ import {Order} from '../../models/order.model';
 import {OrdersService} from '../../services/orders.service';
 import {OrderComponent} from '../order/order.component';
 import {Subscription} from 'rxjs';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-orders',
@@ -19,18 +20,13 @@ export class OrdersComponent implements OnInit {
     ordersResult: number;
 
     ngOnInit() {
-        const subscriptions: Subscription[] = [this.ordersService.getOrders().subscribe(ordersData => {
+        this.ordersService.getOrders().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(ordersData => {
             this.orders = ordersData.orders;
             this.orders = this.orders.reverse();
-        }),
-            this.ordersService.orderResults$.subscribe(ordersResult => {
-                this.ordersResult = ordersResult;
-            })]
+        });
+        this.ordersService.orderResults$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(ordersResult => {
+            this.ordersResult = ordersResult;
+        });
 
-        this.destroyRef.onDestroy(() => {
-            subscriptions.forEach(subscription => {
-                subscription.unsubscribe();
-            })
-        })
     }
 }

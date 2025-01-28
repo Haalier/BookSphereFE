@@ -35,7 +35,6 @@ export class OrdersService {
         this.apiService.loadingSubject.next(true);
         return this.http.get<GetOrders>(this.apiUrl).pipe(tap((data => {
                 this.orderResultsSubject.next(data.results);
-                console.log('SERV: ', data)
             })),
             finalize(() => {
                 this.apiService.loadingSubject.next(false);

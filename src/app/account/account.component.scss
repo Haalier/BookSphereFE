@@ -10,6 +10,8 @@
 .account {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   font-size: 1.4rem;
   flex-grow: 1;
   background-color: $sphere-bg;
@@ -21,11 +23,13 @@
 
   @include respons(medium) {
     font-size: 2.4rem;
+
   }
 
   @include respons(xlarge) {
     padding: 1rem 4rem;
     font-size: 1.5rem;
+        justify-content: center;
   }
 
   .heading {
@@ -58,7 +62,7 @@
     }
 
     @include respons(xlarge) {
-      margin: 0rem 0 3rem 0;
+      margin: 2rem 0 3rem 0;
     }
   }
 }
@@ -68,6 +72,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex: 1;
   padding: 1rem;
 
   @include respons(xlarge) {
@@ -76,6 +81,8 @@
     background-color: #ddd;
     align-items: normal;
     border-radius: 5px;
+    width: 100%;
+    max-width: 80vw;
     box-shadow: 4px 5px 7px rgba(0, 0, 0, 0.2);
   }
 
@@ -108,7 +115,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    flex-grow: 1;
     width: 100%;
 
     @include respons(xlarge) {
@@ -290,10 +296,12 @@
   &__content {
     display: none;
     justify-content: center;
+    flex: 1;
     height: 100%;
     width: 100%;
 
     &-default {
+      overflow: auto;
       p:first-of-type {
         margin-bottom: 1.5rem;
       }
@@ -309,7 +317,7 @@
       flex-grow: 1;
       padding: 2rem;
       max-height: 60vh;
-      //overflow-y: scroll;
+      overflow-y: auto;
     }
 
 
@@ -352,7 +360,9 @@
 }
 .outlet{
   display: flex;
+  justify-content: center;
   height: 100%;
-  flex: 1;
+  max-width: inherit;
+  flex-shrink: 1;
   overflow-y: auto;
 }

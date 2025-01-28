@@ -16,7 +16,7 @@ import {AuthService} from '../services/auth.service';
 import {CartService} from '../services/cart.service';
 import {StarRatingComponent} from '../utils/star-rating/star-rating.component';
 import {EditReviewComponent} from '../popups/edit-review/edit-review.component';
-import {Review} from '../models/review.model';
+import {MyReview, Review} from '../models/review.model';
 import {DeleteReviewComponent} from '../popups/delete-review/delete-review.component';
 import {EventService} from '../services/event.service';
 
@@ -42,7 +42,7 @@ export class BookComponent implements AfterViewInit, AfterViewChecked, OnInit {
     expanded = false;
     isLoggedIn = false;
     role: 'user' | 'admin' | undefined;
-    reviewForModal: Review | undefined;
+    reviewForModal: Review | MyReview;
     public bookId!: string;
     private slug!: string;
     private cdr = inject(ChangeDetectorRef);
@@ -128,13 +128,13 @@ export class BookComponent implements AfterViewInit, AfterViewChecked, OnInit {
         document.body.style.overflow = 'auto';
     }
 
-    onEditModalOpen(review: Review | undefined) {
+    onEditModalOpen(review: Review | MyReview) {
         this.showEditModal = true;
         document.body.style.overflow = 'hidden';
         this.reviewForModal = review;
     }
 
-    onDeleteModalOpen(review: Review | undefined) {
+    onDeleteModalOpen(review: Review | MyReview) {
         this.showDeleteModal = true;
         document.body.style.overflow = 'hidden';
         this.reviewForModal = review;
@@ -142,10 +142,12 @@ export class BookComponent implements AfterViewInit, AfterViewChecked, OnInit {
 
     onReviewsUpdate() {
         this.reviewsComponent.fetchReviews();
+        document.body.style.overflow = 'auto';
     }
 
     onDeleteReview() {
         this.reviewsComponent.fetchReviews();
+        document.body.style.overflow = 'auto';
     }
 
     onDeleteModalClose() {

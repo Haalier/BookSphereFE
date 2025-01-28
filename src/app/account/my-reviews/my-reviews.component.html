@@ -1,0 +1,32 @@
+<section class="my-reviews">
+    <h3>Your reviews:</h3>
+    @for (review of reviews; track review._id) {
+        <div class="my-reviews__box">
+            <div class="book-info">
+                <p class="title"><b>{{ review.book.title }}</b></p>
+                <p class="author"><i>{{ review.book.author }}</i></p>
+            </div>
+            <app-review [isLoggedIn]=isLoggedIn [review]="review"
+                        (openModal)="onReviewEdit($event)"
+                        (deleteModal)="onReviewDelete($event)" [userId]="userId"></app-review>
+        </div>
+    }
+
+    @if (!reviews) {
+        <div class="empty">
+            <p class="empty__text">It seems that you have not given any review yet.</p>
+            <span class="icon material-symbols-outlined">reviews</span>
+        </div>
+    }
+
+    @if (showEditModal) {
+        <app-edit-review [review]="reviewForModal" (close)="onEditModalClose()"
+                         (update)="onReviewsUpdate()"></app-edit-review>
+    }
+
+    @if (showDeleteModal) {
+        <app-delete-review [reviewId]="reviewForModal._id" (close)="onDeleteModalClose()"
+                           (delete)="onDeleteReview()"></app-delete-review>
+    }
+</section>
+

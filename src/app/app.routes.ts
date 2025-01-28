@@ -9,6 +9,7 @@ import {ResetPasswordComponent} from './auth/reset-password/reset-password.compo
 import {AccountComponent} from './account/account.component';
 import {OrdersComponent} from './account/orders/orders.component';
 import {SettingsComponent} from './account/settings/settings.component';
+import {MyReviewsComponent} from './account/my-reviews/my-reviews.component';
 
 export const routes: Routes = [
     {
@@ -56,6 +57,11 @@ export const routes: Routes = [
             {
                 path: 'settings',
                 component: SettingsComponent,
+                pathMatch: 'full',
+            },
+            {
+                path: 'reviews',
+                component: MyReviewsComponent,
                 pathMatch: 'full',
             }
         ],

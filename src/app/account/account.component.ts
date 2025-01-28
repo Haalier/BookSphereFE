@@ -32,12 +32,12 @@ export class AccountComponent implements OnInit {
     ngOnInit() {
         const subscriptions: Subscription[] = [this.getUserData(),
             this.router.events.pipe(filter(event => event instanceof NavigationStart || event instanceof NavigationEnd),
-                map((event: NavigationStart | NavigationEnd) =>{
-                  if(event instanceof NavigationEnd){
-                      return event.url !== '/account';
-                  }
-                  return true
-                } )).subscribe(isLoaded => {
+                map((event: NavigationStart | NavigationEnd) => {
+                    if (event instanceof NavigationEnd) {
+                        return event.url !== '/account';
+                    }
+                    return true
+                })).subscribe(isLoaded => {
                 this.isContentLoaded = isLoaded;
             }),
 
@@ -74,11 +74,11 @@ export class AccountComponent implements OnInit {
     }
 
     onReviews() {
-        this.router.navigate(['/reviews']);
+        this.router.navigate(['reviews'], {relativeTo: this.ActivatedRoute});
     }
 
     onReturns() {
-        this.router.navigate(['/returns']);
+        this.router.navigate(['returns']);
     }
 
     onLogOut() {

@@ -8,7 +8,7 @@ import {
     Validators
 } from '@angular/forms';
 import {StarRatingComponent} from '../../utils/star-rating/star-rating.component';
-import {Review} from '../../models/review.model';
+import {MyReview, Review} from '../../models/review.model';
 import {ReviewsService} from '../../services/reviews.service';
 import {EventService} from '../../services/event.service';
 
@@ -26,7 +26,7 @@ import {EventService} from '../../services/event.service';
 export class EditReviewComponent implements OnInit {
     reviewsService = inject(ReviewsService);
     eventService = inject(EventService)
-    review = input<Review>();
+    review = input<Review | MyReview>();
     bookId = input<string>()
     close = output<void>()
     update = output<void>()

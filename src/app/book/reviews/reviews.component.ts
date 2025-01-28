@@ -1,7 +1,7 @@
 import {Component, DestroyRef, EventEmitter, inject, Input, OnInit, output, Output, ViewChild} from '@angular/core';
 import {Book} from '../../models/book.model';
 import {ReviewsService} from '../../services/reviews.service';
-import {Review} from '../../models/review.model';
+import {MyReview, Review} from '../../models/review.model';
 import {AuthService} from '../../services/auth.service';
 import {FormsModule, NgForm} from '@angular/forms';
 import {ApiService} from '../../services/api.service';
@@ -25,8 +25,8 @@ export class ReviewsComponent implements OnInit {
     @Input() book!: Book;
     @Output() reviewAdded = new EventEmitter<void>();
     @ViewChild('reviewForm') reviewForm: NgForm;
-    openEditModal = output<Review>();
-    openDeleteModal = output<Review>();
+    openEditModal = output<Review | MyReview>();
+    openDeleteModal = output<Review | MyReview>();
     private errorService = inject(ErrorService);
     private apiService = inject(ApiService);
     private reviewsService = inject(ReviewsService);
@@ -99,11 +99,11 @@ export class ReviewsComponent implements OnInit {
         reviewForm.reset();
     }
 
-    onReviewEdit(review: Review) {
+    onReviewEdit(review: Review | MyReview) {
         this.openEditModal.emit(review);
     }
 
-    onReviewDelete(review: Review) {
+    onReviewDelete(review: Review | MyReview) {
         this.openDeleteModal.emit(review);
     }
 }
