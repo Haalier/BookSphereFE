@@ -1,15 +1,6 @@
 import {Routes} from '@angular/router';
 import {HomeComponent} from './home/home.component';
-import {BookComponent} from './book/book.component';
-import {LoginComponent} from './auth/login/login.component';
-import {SignupComponent} from './auth/signup/signup.component';
-import {CartComponent} from './cart/cart.component';
-import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
-import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 import {AccountComponent} from './account/account.component';
-import {OrdersComponent} from './account/orders/orders.component';
-import {SettingsComponent} from './account/settings/settings.component';
-import {MyReviewsComponent} from './account/my-reviews/my-reviews.component';
 
 export const routes: Routes = [
     {
@@ -19,19 +10,24 @@ export const routes: Routes = [
     },
     {
         path: 'login',
-        component: LoginComponent,
+        loadComponent: () =>
+            import('./auth/login/login.component').then(mod => mod.LoginComponent),
     },
     {
         path: 'signup',
-        component: SignupComponent,
+        loadComponent: () =>
+            import('./auth/signup/signup.component').then(mod => mod.SignupComponent),
     },
     {
         path: 'forgot-password',
-        component: ForgotPasswordComponent,
+        loadComponent: () =>
+            import('./auth/forgot-password/forgot-password.component').then(mod => mod.ForgotPasswordComponent)
     },
     {
         path: 'reset-password/:resetToken',
-        component: ResetPasswordComponent,
+        loadComponent: () =>
+            import('./auth/reset-password/reset-password.component').then(mod => mod.ResetPasswordComponent),
+
     },
     {
         path: 'books',
@@ -39,35 +35,22 @@ export const routes: Routes = [
     },
     {
         path: 'books/:bookId/:slug',
-        component: BookComponent,
+        loadComponent: () =>
+            import('./book/book.component').then(mod => mod.BookComponent),
     },
     {
         path: 'cart',
-        component: CartComponent,
+        loadComponent: () =>
+            import('./cart/cart.component').then(mod => mod.CartComponent),
     },
     {
         path: 'account',
         component: AccountComponent,
-        children: [
-            {
-                path: 'orders',
-                component: OrdersComponent,
-                pathMatch: 'full',
-            },
-            {
-                path: 'settings',
-                component: SettingsComponent,
-                pathMatch: 'full',
-            },
-            {
-                path: 'reviews',
-                component: MyReviewsComponent,
-                pathMatch: 'full',
-            }
-        ],
+        loadChildren: () =>
+            import('./account/account-settings.routes').then(mod => mod.routes)
     },
     {
         path: '**',
-        redirectTo: '/books?page=1',
+        redirectTo: '/account',
     },
 ];
