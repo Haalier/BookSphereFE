@@ -24,6 +24,13 @@
     gap: 1rem;
     margin-bottom: 2rem;
 
+    .error{
+      padding: 1.5rem;
+      background-color: $sphere-error-bg;
+      color: $sphere-error;
+      font-weight: bold;
+    }
+
     textarea {
       padding: 1rem;
       width: 100%;

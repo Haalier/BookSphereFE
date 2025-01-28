@@ -3,7 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 
 export interface ErrorData {
   status: number;
-  error: {
+  error?: {
     message: string;
     status: string;
   };

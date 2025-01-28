@@ -1,12 +1,14 @@
 <div class="reviews__box">
     <div class="reviews__box-content">
-        <div class="reviews__box-btn">
-            <button class="editBtn" (click)="onReviewEdit()" [disabled]="!isLoggedIn">
-                <span class="icon material-symbols-outlined">edit_square</span>
-            </button>
-            <button class="deleteBtn"
-                    (click)="onReviewDelete()"><span class="icon material-symbols-outlined">close</span></button>
-        </div>
+        @if (isMyReview) {
+            <div class="reviews__box-btn">
+                <button class="editBtn" (click)="onReviewEdit()" [disabled]="!isLoggedIn">
+                    <span class="icon material-symbols-outlined">edit_square</span>
+                </button>
+                <button class="deleteBtn"
+                        (click)="onReviewDelete()"><span class="icon material-symbols-outlined">close</span></button>
+            </div>
+        }
         <p class="review-text">{{ review().review }}</p>
     </div>
     <div class="reviews__box-data">

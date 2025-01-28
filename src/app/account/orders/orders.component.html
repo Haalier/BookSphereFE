@@ -1,7 +1,7 @@
 <h3 class="heading">Orders</h3>
 <nav class="menu">
     <ul class="orders-list">
-        @for (order of orders | reverse; track order._id) {
+        @for (order of orders; track order._id) {
             <app-order [order]="order"></app-order>
         }
     </ul>

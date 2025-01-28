@@ -300,7 +300,6 @@
 
       h2 {
         text-align: center;
-        margin-bottom: 2rem;
       }
     }
 
@@ -310,7 +309,7 @@
       flex-grow: 1;
       padding: 2rem;
       max-height: 60vh;
-      overflow-y: scroll;
+      //overflow-y: scroll;
     }
 
 
@@ -342,11 +341,6 @@
 
 .show-content {
   display: flex;
-  //flex-direction: column;
-
-  @include respons(xlarge) {
-    //display: block;
-  }
 }
 
 .hide-content {
@@ -360,5 +354,5 @@
   display: flex;
   height: 100%;
   flex: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }

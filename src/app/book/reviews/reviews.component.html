@@ -2,6 +2,9 @@
     <form method="POST" class="reviews__new-review" #reviewForm="ngForm" (ngSubmit)="onReviewCreate(reviewForm)">
      <textarea [placeholder]="isLoggedIn ? 'Your review' : 'You have to be logged in to add or edit a review.'"
                [disabled]="!isLoggedIn" name="review" required ngModel></textarea>
+        @if(errorMsg){
+        <p class="error">{{errorMsg}}</p>
+        }
         <div class="reviews__rating">
             <app-star-rating [size]="2" [stars]="rating" (ratingChange)="rating = $event"></app-star-rating>
             <button class="reviews__btn-add" type="submit" [disabled]="!isLoggedIn">Add review</button>
@@ -10,6 +13,6 @@
     @for (review of reviews; track review._id) {
        <app-review [isLoggedIn]=isLoggedIn [review]="review"
                    (openModal)="onReviewEdit($event)"
-                    (deleteModal)="onReviewDelete($event)"></app-review>
+                    (deleteModal)="onReviewDelete($event)" [userId]="userId"></app-review>
     }
 </section>

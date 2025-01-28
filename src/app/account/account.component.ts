@@ -4,16 +4,14 @@ import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet, Activ
 import {filter, map, Subscription} from 'rxjs';
 import {OrdersService} from '../services/orders.service';
 import {GetOrders, Order, OrderItem} from '../models/order.model';
-import {CurrencyPipe, DatePipe} from '@angular/common';
 import {OrderComponent} from './order/order.component';
 import {EventService} from '../services/event.service';
-import {ReversePipe} from '../pipes/reverse.pipe';
 
 
 @Component({
     selector: 'app-account',
     standalone: true,
-    imports: [RouterOutlet, RouterLink, RouterLinkActive, DatePipe, CurrencyPipe, OrderComponent, ReversePipe],
+    imports: [RouterOutlet, RouterLink, RouterLinkActive, OrderComponent],
     templateUrl: './account.component.html',
     styleUrls: ['./account.component.scss'],
 })
@@ -52,10 +50,10 @@ export class AccountComponent implements OnInit {
                 this.orders = this.ordersData.orders;
                 this.orderItems = this.ordersData.orders?.flatMap((order) => order.items || []);
                 this.lastTwoOrders = ordersData.orders?.slice(-2);
+                this.lastTwoOrders = this.lastTwoOrders.reverse();
 
             })
         ]
-
         const currentUrl = this.router.url;
         this.isContentLoaded = currentUrl !== '/account';
 
