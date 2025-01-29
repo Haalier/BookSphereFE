@@ -1,0 +1,30 @@
+<section class="manage-books">
+    <div class="manage-books__text">
+        <h3>Manage Books</h3>
+        <p>Results: {{ booksResults }}</p>
+    </div>
+    <div class="manage-books__box">
+        @for (book of books; track book._id) {
+            <app-book [book]="book" [user]="user"
+                      (deleteBook)="onBookDelete($event)"
+            ></app-book>
+        }
+    </div>
+
+    @if (books?.length > 0 && booksResults > limit) {
+        <button class="load-btn" (click)="loadMore()">Load more <span class="icon material-symbols-outlined">
+arrow_downward
+</span></button>
+    } @else {
+        <button class="load-btn" (click)="goBack()">Go back <span class="icon material-symbols-outlined">
+arrow_upward
+</span></button>
+    }
+</section>
+
+@if (showModal) {
+    <app-add-to-cart-popup [product]="book" (close)="onCloseModal($event)"></app-add-to-cart-popup>
+}
+@if (showDeleteModal) {
+    <app-delete-book [bookId]="bookToDelete" (close)="onDeleteModalClose($event)"></app-delete-book>
+}

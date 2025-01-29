@@ -1,0 +1,7 @@
+<section class="users">
+    <div class="users__box">
+        @for (user of users; track user._id) {
+            <app-user [user]="user"></app-user>
+        }
+    </div>
+</section>

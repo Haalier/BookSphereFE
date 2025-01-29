@@ -41,7 +41,6 @@ export class MyReviewsComponent implements OnInit {
     fetchMyReviews() {
         this.reviewsService.getUserReviews().pipe(takeUntilDestroyed(this.destroyRef)).subscribe(reviewsData => {
             this.reviews = reviewsData.reviews;
-            console.log(reviewsData.reviews);
         })
     }
 

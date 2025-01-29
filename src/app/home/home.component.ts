@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, ViewChild} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, ViewChild} from '@angular/core';
 import {Book} from '../models/book.model';
 import {CurrencyPipe, NgIf, NgStyle} from '@angular/common';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -15,6 +15,7 @@ import {MultiSelect, MultiSelectModule, MultiSelectSelectAllChangeEvent} from 'p
 import {BOOK_CATEGORIES} from '../utils/book-categories';
 import {RATING_OPTIONS} from '../utils/rating-options';
 import {EventService} from '../services/event.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'app-home',
@@ -34,6 +35,7 @@ export class HomeComponent implements OnInit {
     activatedRoute = inject(ActivatedRoute);
     router = inject(Router);
     authService = inject(AuthService);
+    destroyRef = inject(DestroyRef);
     categories: string[] = []
     isLoggedIn = false;
     isLoading = false;
@@ -58,7 +60,7 @@ export class HomeComponent implements OnInit {
     rating: number | string = '';
 
     ngOnInit() {
-        this.activatedRoute.queryParams.subscribe((params) => {
+        this.activatedRoute.queryParams.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
             const pageParam = params['page'];
             if (!pageParam) {
                 this.onFirstPage();
@@ -67,7 +69,7 @@ export class HomeComponent implements OnInit {
             this.fetchBooks(this.query);
         });
 
-        this.authService.user$.subscribe((user) => {
+        this.authService.user$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
             this.isLoggedIn = !!user;
 
             if (this.isLoggedIn) {
@@ -75,18 +77,18 @@ export class HomeComponent implements OnInit {
             }
         });
 
-        this.apiService.loading$.subscribe((loading) => {
+        this.apiService.loading$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((loading) => {
             this.isLoading = loading;
         });
-        this.booksService.bookResults$.subscribe((results) => {
+        this.booksService.bookResults$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((results) => {
             this.results = results;
             this.paginate();
         });
-        this.booksService.bookList$.subscribe((books) => {
+        this.booksService.bookList$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((books) => {
             this.books = books;
         });
 
-        this.eventService.clearFilters$.subscribe(() => {
+        this.eventService.clearFilters$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             this.rangeValues = [0, 40];
             this.selectedItems = [];
             this.selectAll = false;
@@ -211,7 +213,7 @@ export class HomeComponent implements OnInit {
     onSearch(searchForm: NgForm) {
         const query = searchForm.value.searchQuery;
         console.log(query);
-        this.searchService.searchFor(query).subscribe((books) => {
+        this.searchService.searchFor(query).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((books) => {
             this.results = books.results;
 
             if (this.results === 0) {
@@ -230,12 +232,12 @@ export class HomeComponent implements OnInit {
             quantity: 1,
         };
 
-        this.cartService.addToCart(data).subscribe(() => {
+        this.cartService.addToCart(data).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
             document.body.style.overflow = 'hidden';
             this.showModal = true;
         });
 
-        this.booksService.getBook(bookId, slug).subscribe((book) => {
+        this.booksService.getBook(bookId, slug).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((book) => {
             this.book = book.data.book
 
         })

@@ -58,7 +58,7 @@
                     <ul class="menu">
                         <hr/>
                         <li class="menu-item">
-                            <a href="" class="link" routerLink="/admin/books" routerLinkActive="active">
+                            <a (click)="onManageBooks()" class="link" routerLink="books" routerLinkActive="active">
                                 <div class="menu-item--left">
                                     <span class="icon material-symbols-outlined">menu_book</span>
                                     <p>Manage books</p>
@@ -67,7 +67,7 @@
                             </a>
                         </li>
                         <li class="menu-item">
-                            <a href="" class="link" routerLink="/admin/users" routerLinkActive="active">
+                            <a (click)="onManageUsers()" class="link" routerLink="users" routerLinkActive="active">
                                 <div class="menu-item--left">
                                     <span class="icon material-symbols-outlined">group</span>
                                     <p>Manage users</p>
@@ -102,7 +102,7 @@
                         @for (order of lastTwoOrders; track order._id) {
                             <app-order [order]="order"></app-order>
                         }
-                        @if (!orders) {
+                        @if (lastTwoOrders?.length === 0) {
                             <div class="empty">
                                 <h3>No order found</h3>
                                 <span class="icon material-symbols-outlined">package_2</span>

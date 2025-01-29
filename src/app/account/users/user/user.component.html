@@ -1,0 +1,18 @@
+<article class="user-content">
+    <div class="user-content__data">
+        <p class="avatar"><span class="icon material-symbols-outlined">face</span></p>
+        <p class="name">{{user().name}}</p>
+        <p class="email">{{user().email}}</p>
+        <p class="role">{{user().role}}</p>
+        <div class="active">
+            <p class="active-status">{{user().active}}</p>
+            <div class="active-circle" [ngClass]="user().active === true ? 'activated' : 'inactive'"></div>
+        </div>
+    </div>
+    <div class="btns">
+        <button class="edit-btn">Edit user</button>
+        <button
+                [ngClass]="isActive ? 'deactivate' : 'activated-btn'">{{ isActive ? "Deactivate user" :
+            "Activate user"}}</button>
+    </div>
+</article>

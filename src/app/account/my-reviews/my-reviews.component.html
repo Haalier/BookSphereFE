@@ -12,7 +12,7 @@
         </div>
     }
 
-    @if (!reviews) {
+    @if (reviews?.length === 0) {
         <div class="empty">
             <p class="empty__text">It seems that you have not given any review yet.</p>
             <span class="icon material-symbols-outlined">reviews</span>

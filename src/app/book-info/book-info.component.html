@@ -1,0 +1,62 @@
+<section class="book">
+  @if(book){
+  <div class="book__item">
+    <div class="book__item-title">
+      <h3>{{book.title}}</h3>
+      <p class="book-author">by <i>{{ book.author }}</i></p>
+    </div>
+    <div class="book__item-box">
+      <div class="book__item-box--one">
+        <div class="book__item-img">
+          <img [src]="book.photoUrl" [alt]="'The book-info: '+ book.title">
+        </div>
+      </div>
+      <div class="book__item-box--two">
+        <div class="book__item-info">
+
+          <p class="book-category"><span class="icon material-symbols-outlined">
+              category
+            </span> {{ book.category }}</p>
+          <app-star-rating [stars]="book.ratingsAverage" [size]="2"></app-star-rating>
+          <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
+          <p class="book-reviews">{{book.reviews?.length}} reviews</p>
+          <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>
+          @if(role === 'admin'){
+          <div class="book__item-add-to">
+            <button class="add-btn">Edit product</button>
+          </div>
+          } @else {
+          <div class="book__item-add-to">
+            <button class="add-btn" (click)="onAddToCart()">Add to cart</button>
+            <button class="buy-btn">Buy now</button>
+          </div>
+          }
+        </div>
+
+      </div>
+    </div>
+
+    <div class="book__item-description" #descriptionDiv>
+      {{ book.description }}
+    </div>
+    <button class='expand-btn' [class.hidden]="!isOverflowing" (click)="toggleExpand()">
+      {{ expanded ? 'Collapse Description' : 'Expand Description' }}
+      <span class="icon material-symbols-outlined">{{expanded ? "arrow_drop_up" : "arrow_drop_down"}}</span>
+    </button>
+
+  </div>
+  }
+</section>
+@if(book){
+<app-reviews #reviewsComponent [book]=book (reviewAdded)="onReviewAdded()"
+             (openEditModal)="onEditModalOpen($event)" (openDeleteModal)="onDeleteModalOpen($event)"></app-reviews>
+}
+
+@if(showEditModal){
+    <app-edit-review [review]="reviewForModal" [bookId]="bookId" (close)="onEditModalClose()"
+                     (update)="onReviewsUpdate()"></app-edit-review>
+}
+@if(showDeleteModal){
+    <app-delete-review [reviewId]="reviewForModal._id" (close)="onDeleteModalClose()"
+                       (delete)="onDeleteReview()"></app-delete-review>
+}

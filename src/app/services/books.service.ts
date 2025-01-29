@@ -65,4 +65,12 @@ export class BooksService {
             .get<BookResponse>(`${this.apiUrl}/${bookId}/${slug}`)
             .pipe(finalize(() => this.apiService.loadingSubject.next(false)));
     }
+
+    deleteBook(bookId: string) {
+        this.apiService.loadingSubject.next(true);
+        return this.http.delete<{
+            status: string,
+            data: null
+        }>(`${this.apiUrl}/${bookId}`).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+    }
 }

@@ -1,10 +1,11 @@
-import {Component, inject, OnInit, output} from '@angular/core';
+import {Component, DestroyRef, inject, OnInit, output} from '@angular/core';
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {ErrorService} from '../../services/error.service';
 import {AuthService} from '../../services/auth.service';
 import {User} from '../../models/user.model';
 import {Router} from '@angular/router';
 import {EventService} from '../../services/event.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 // interface UserData {
 //     status: string;
@@ -22,6 +23,7 @@ export class SettingsComponent implements OnInit {
     eventService = inject(EventService);
     errorService = inject(ErrorService);
     authService = inject(AuthService);
+    destroyRef = inject(DestroyRef);
     router = inject(Router);
     userData: User | null = null;
     errMsg?: string;
@@ -37,11 +39,11 @@ export class SettingsComponent implements OnInit {
     });
 
     ngOnInit(): void {
-        this.errorService.error$.subscribe((error) => {
+        this.errorService.error$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((error) => {
             this.errMsg = error?.error.message;
         })
 
-        this.authService.user$.subscribe((user) => {
+        this.authService.user$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((user) => {
             this.userData = user;
             if (this.userData) {
                 this.accountForm.patchValue({
@@ -71,7 +73,7 @@ export class SettingsComponent implements OnInit {
         }
 
 
-        this.authService.updateCurrentUser(dataToChange).subscribe((res) => {
+        this.authService.updateCurrentUser(dataToChange).pipe(takeUntilDestroyed(this.destroyRef)).subscribe((res) => {
             this.eventService.emitRefreshEvent();
             this.router.navigate(['/account']);
         });

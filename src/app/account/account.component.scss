@@ -334,13 +334,14 @@
         flex-grow: 1;
 
         h3 {
-          margin-bottom: 3rem;
+          margin-bottom: 8rem;
           font-size: 3rem;
           font-weight: 700;
         }
 
         span {
           font-size: 10rem;
+          color: $sphere-main;
         }
       }
     }
@@ -364,5 +365,7 @@
   height: 100%;
   max-width: inherit;
   flex-shrink: 1;
+  @include respons(xlarge){
   overflow-y: auto;
+  }
 }

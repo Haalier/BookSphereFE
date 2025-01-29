@@ -13,3 +13,11 @@ export interface User {
   createdAt?: string;
   updatedAt?: string;
 }
+
+export interface UserByAdmin{
+  _id?: string;
+  name: string;
+  email: string;
+  role: string;
+  active: boolean;
+}

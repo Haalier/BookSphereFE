@@ -36,7 +36,7 @@ export const routes: Routes = [
     {
         path: 'books/:bookId/:slug',
         loadComponent: () =>
-            import('./book/book.component').then(mod => mod.BookComponent),
+            import('./book-info/book-info.component').then(mod => mod.BookInfoComponent),
     },
     {
         path: 'cart',

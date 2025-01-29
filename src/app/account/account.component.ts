@@ -1,11 +1,12 @@
 import {Component, DestroyRef, inject, OnInit} from '@angular/core';
 import {AuthService, userResponseData} from '../services/auth.service';
 import {NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet, ActivatedRoute, NavigationStart} from '@angular/router';
-import {filter, map, Subscription} from 'rxjs';
+import {filter, map, Subscription, take} from 'rxjs';
 import {OrdersService} from '../services/orders.service';
 import {GetOrders, Order, OrderItem} from '../models/order.model';
 import {OrderComponent} from './order/order.component';
 import {EventService} from '../services/event.service';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 
 @Component({
@@ -30,41 +31,37 @@ export class AccountComponent implements OnInit {
     lastTwoOrders?: Order[];
 
     ngOnInit() {
-        const subscriptions: Subscription[] = [this.getUserData(),
-            this.router.events.pipe(filter(event => event instanceof NavigationStart || event instanceof NavigationEnd),
-                map((event: NavigationStart | NavigationEnd) => {
-                    if (event instanceof NavigationEnd) {
-                        return event.url !== '/account';
-                    }
-                    return true
-                })).subscribe(isLoaded => {
-                this.isContentLoaded = isLoaded;
-            }),
+        this.getUserData()
+        this.router.events.pipe(filter(event => event instanceof NavigationStart || event instanceof NavigationEnd),
+            map((event: NavigationStart | NavigationEnd) => {
+                if (event instanceof NavigationEnd) {
+                    return event.url !== '/account';
+                }
+                return true
+            })).pipe(takeUntilDestroyed(this.destroyRef)).subscribe(isLoaded => {
+            this.isContentLoaded = isLoaded;
+        })
 
-            this.eventService.refreshUserData$.subscribe((event) => {
-                this.getUserData();
-            }),
+        this.eventService.refreshUserData$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((event) => {
+            this.getUserData();
+        })
 
-            this.orderService.getOrders().subscribe((ordersData: GetOrders) => {
-                this.ordersData = ordersData;
-                this.orders = this.ordersData.orders;
-                this.orderItems = this.ordersData.orders?.flatMap((order) => order.items || []);
-                this.lastTwoOrders = ordersData.orders?.slice(-2);
-                this.lastTwoOrders = this.lastTwoOrders.reverse();
+        this.orderService.getOrders().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((ordersData: GetOrders) => {
+            this.ordersData = ordersData;
+            this.orders = this.ordersData.orders;
+            this.orderItems = this.ordersData.orders?.flatMap((order) => order.items || []);
+            this.lastTwoOrders = ordersData.orders?.slice(-2);
+            this.lastTwoOrders = this.lastTwoOrders.reverse();
 
-            })
-        ]
+        })
         const currentUrl = this.router.url;
         this.isContentLoaded = currentUrl !== '/account';
 
-        this.destroyRef.onDestroy(() => {
-            subscriptions.forEach(subscription => subscription.unsubscribe());
-        })
 
     }
 
     getUserData() {
-        return this.authService.getCurrentUser().subscribe((currentUserData) => {
+        return this.authService.getCurrentUser().pipe(takeUntilDestroyed(this.destroyRef)).subscribe((currentUserData) => {
             this.userData = currentUserData.user;
         })
     }
@@ -87,5 +84,13 @@ export class AccountComponent implements OnInit {
 
     onOrders() {
         this.router.navigate(['orders'], {relativeTo: this.ActivatedRoute});
+    }
+
+    onManageBooks() {
+        this.router.navigate(['books'], {relativeTo: this.ActivatedRoute});
+    }
+
+    onManageUsers() {
+        this.router.navigate(['users'], {relativeTo: this.ActivatedRoute});
     }
 }

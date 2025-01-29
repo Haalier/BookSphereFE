@@ -14,6 +14,8 @@ export class EventService {
   private refreshRatingSubject = new Subject<void>();
   refreshRating$ = this.refreshRatingSubject.asObservable();
 
+  private refreshBooksSubject = new Subject<void>();
+  refreshBooks$ = this.refreshBooksSubject.asObservable();
 
   emitRefreshEvent(){
     this.refreshSubject.next();
@@ -25,5 +27,9 @@ export class EventService {
 
   emitRefreshRating(){
     this.refreshRatingSubject.next();
+  }
+
+  emitRefreshBooks(){
+    this.refreshBooksSubject.next();
   }
 }

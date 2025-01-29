@@ -1,6 +1,10 @@
 @import 'mixins';
 @import "colors";
 
+:host{
+  width: 100%;
+}
+
 .reviews__box {
   display: flex;
   flex-direction: column;
@@ -18,12 +22,7 @@
     padding: 2rem;
   }
 
-  @include respons(xxlarge){
-    width: 350px;
-  }
-
   @include respons(desk){
-    width: 450px;
     padding: 1.5rem 3rem;
   }
 

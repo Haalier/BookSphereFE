@@ -1,0 +1,42 @@
+<section class="edit-book">
+
+    <form method="POST" class="edit-book__form" [formGroup]="bookEditForm" (ngSubmit)="onBookUpload()">
+
+        <div class="input-box input-box--upload">
+            <label for="file">Upload book image</label>
+            <input type="file" id="file" formControlName="file">
+        </div>
+
+        <div class="input-box">
+            <label for="title">Title</label>
+            <input type="text" id="title" formControlName="title">
+        </div>
+        <div class="input-box">
+            <label for="author">Author</label>
+            <input type="text" id="author" formControlName="author">
+        </div>
+        <div class="input-box">
+            <label for="desc">Description</label>
+            <textarea id="desc"  formControlName="desc"></textarea>
+        </div>
+        <div class="input-box">
+            <label for="category">Category</label>
+            <input type="text" id="category" formControlName="category">
+        </div>
+        <div class="input-nums">
+            <div class="input-nums__box">
+                <label for="pages">Pages</label>
+                <input type="number" id="pages" formControlName="pages" min="0">
+            </div>
+            <div class="input-nums__box">
+                <label for="price">Price</label>
+                <input type="number" id="price" formControlName="price" min="0">
+            </div>
+            <div class="input-nums__box">
+                <label for="stock">Stock</label>
+                <input type="number" id="stock" formControlName="stock" min="0">
+            </div>
+        </div>
+        <button class="upload-btn" type="submit">Upload</button>
+    </form>
+</section>

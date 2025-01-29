@@ -1,7 +1,7 @@
 import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {BehaviorSubject, finalize, Observable, tap} from 'rxjs';
-import {User} from '../models/user.model';
+import {User, UserByAdmin} from '../models/user.model';
 import {Router} from '@angular/router';
 import {ApiService} from './api.service';
 
@@ -65,6 +65,12 @@ export interface userResponseData {
     name: string;
     email: string;
     role: 'user' | 'admin';
+}
+
+export interface getUsersResponse {
+    status: string;
+    results: number;
+    users: UserByAdmin[];
 }
 
 @Injectable({
@@ -177,5 +183,10 @@ export class AuthService {
     updateCurrentUser(userData: { name?: string; email?: string; password?: string }): Observable<updateMeResponse> {
         this.apiService.loadingSubject.next(true);
         return this.http.patch<updateMeResponse>(`${this.apiUrl}/updateMe`, userData).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
+    }
+
+    getAllUsers() {
+        this.apiService.loadingSubject.next(true);
+        return this.http.get<getUsersResponse>(`${this.apiUrl}`).pipe(finalize(() => this.apiService.loadingSubject.next(false)));
     }
 }

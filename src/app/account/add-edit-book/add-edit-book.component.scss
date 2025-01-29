@@ -1,0 +1,65 @@
+@import "mixins";
+@import "colors";
+
+.edit-book {
+  width: 100%;
+  height: 100%;
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 2rem 1rem;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    background-color: $sphere-dark;
+    align-items: center;
+    gap: 1.5rem;
+
+    input, textarea{
+      padding: 0.5rem 1rem;
+      border: 1px solid $sphere-grey;
+      border-radius: 6px;
+    }
+
+    .input-box {
+      display: flex;
+      flex-direction: column;
+
+      &--upload {
+        text-align: center;
+        margin-bottom: 2rem;
+        input {
+          margin: 0 auto;
+        }
+      }
+    }
+
+    .input-nums {
+      display: flex;
+
+      &__box {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        input {
+          width: 70%;
+        }
+      }
+    }
+  }
+
+  .upload-btn {
+    margin: 1rem 0 1rem 0;
+    background-color: $sphere-main;
+    color: $white;
+    border-radius: 5px;
+    padding: .7rem 1.5rem;
+
+    &:hover, &:focus, &:active {
+      background-color: darken($sphere-main, 10%);
+    }
+  }
+}

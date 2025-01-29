@@ -47,7 +47,7 @@ export class CartComponent implements OnInit {
         console.log(updatedQuantity);
 
         if (updatedQuantity <= 0) {
-            if (confirm('Are you sure you want to delete this book?')) {
+            if (confirm('Are you sure you want to delete this book-info?')) {
                 return this.deleteFromCart(bookId);
             }
             return;

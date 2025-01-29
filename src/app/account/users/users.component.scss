@@ -1,0 +1,15 @@
+:host{
+  width: 100%;
+}
+
+.users{
+
+  &__box{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}

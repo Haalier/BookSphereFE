@@ -5,7 +5,7 @@
             <app-order [order]="order"></app-order>
         }
     </ul>
-    @if (!orders) {
+    @if (orders?.length === 0) {
         <div class="empty">
         <h3>No order found</h3>
         <span class="icon material-symbols-outlined">package_2</span>

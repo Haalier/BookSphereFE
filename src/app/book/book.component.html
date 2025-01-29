@@ -1,62 +1,33 @@
-<section class="book">
-  @if(book){
-  <div class="book__item">
-    <div class="book__item-title">
-      <h3>{{book.title}}</h3>
-      <p class="book-author">by <i>{{ book.author }}</i></p>
+<div class="product" (click)="onBook(book()._id, book().slug)">
+    <div class="product__image">
+        <img [src]="book().photoUrl" alt="Here should be an image of book">
     </div>
-    <div class="book__item-box">
-      <div class="book__item-box--one">
-        <div class="book__item-img">
-          <img [src]="book.photoUrl" [alt]="'The book: '+ book.title">
-        </div>
-      </div>
-      <div class="book__item-box--two">
-        <div class="book__item-info">
-
-          <p class="book-category"><span class="icon material-symbols-outlined">
-              category
-            </span> {{ book.category }}</p>
-          <app-star-rating [stars]="book.ratingsAverage" [size]="2"></app-star-rating>
-          <p class="book-ratings-count">{{book.ratingsQuantity}} ratings</p>
-          <p class="book-reviews">{{book.reviews?.length}} reviews</p>
-          <p class="book-price">{{book.price | currency: 'USD': 'symbol'}}</p>
-          @if(role === 'admin'){
-          <div class="book__item-add-to">
-            <button class="add-btn">Edit product</button>
-          </div>
-          } @else {
-          <div class="book__item-add-to">
-            <button class="add-btn" (click)="onAddToCart()">Add to cart</button>
-            <button class="buy-btn">Buy now</button>
-          </div>
-          }
+    <div class="product__info">
+        <h4 class="product__title">{{ book().title }}</h4>
+        <p class="product__author">by <i>{{ book().author }}</i></p>
+        <div class="product__info-bottom">
+            <p class="product__category"><span class="icon material-symbols-outlined">
+              menu_book
+            </span> {{ book().category }}</p>
+            <div class="product__rating-price-box">
+                <app-star-rating [stars]="book().ratingsAverage"></app-star-rating>
+                <p class="product__price">
+              <span class="icon material-symbols-outlined">
+                payments
+              </span> {{ book().price | currency:'USD':'symbol' }}
+                </p>
+            </div>
         </div>
 
-      </div>
+        <div class="product__add-to-cart">
+            @if (user().role !== 'admin') {
+                <a class="add-btn" (click)="onBookEdit(book()._id, $event)">Edit Book</a>
+                <a class="add-btn delete-btn" (click)="onBookDelete(book()._id, $event)">Delete Book</a>
+            } @else {
+                <a class="add-btn" (click)="onAddToCart(book()._id, book().slug, $event)">Add to cart</a>
+                <a class="buy-btn">Buy now</a>
+            }
+
+        </div>
     </div>
-
-    <div class="book__item-description" #descriptionDiv>
-      {{ book.description }}
-    </div>
-    <button class='expand-btn' [class.hidden]="!isOverflowing" (click)="toggleExpand()">
-      {{ expanded ? 'Collapse Description' : 'Expand Description' }}
-      <span class="icon material-symbols-outlined">{{expanded ? "arrow_drop_up" : "arrow_drop_down"}}</span>
-    </button>
-
-  </div>
-  }
-</section>
-@if(book){
-<app-reviews #reviewsComponent [book]=book (reviewAdded)="onReviewAdded()"
-             (openEditModal)="onEditModalOpen($event)" (openDeleteModal)="onDeleteModalOpen($event)"></app-reviews>
-}
-
-@if(showEditModal){
-    <app-edit-review [review]="reviewForModal" [bookId]="bookId" (close)="onEditModalClose()"
-                     (update)="onReviewsUpdate()"></app-edit-review>
-}
-@if(showDeleteModal){
-    <app-delete-review [reviewId]="reviewForModal._id" (close)="onDeleteModalClose()"
-                       (delete)="onDeleteReview()"></app-delete-review>
-}
+</div>
